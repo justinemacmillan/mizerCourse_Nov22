@@ -41,8 +41,8 @@ website:
       input-position: bottom
       repo-id: R_kgDOISYpnA
       category-id: DIC_kwDOISYpnM4CSJOj
-      data-loading: lazy
-      mapping: og:title
+      loading: lazy
+      mapping: title
   search: 
     location: navbar
     type: textbox
