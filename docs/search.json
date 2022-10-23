@@ -53,7 +53,7 @@
     "href": "index.html#on-line-meetings",
     "title": "Size-based multi-species fisheries modelling with mizer",
     "section": "On-line meetings",
-    "text": "On-line meetings\nThere will be an online zoom meeting at 3pm UK time (GMT) on every workday during the course. The purpose of these meetings is to add a social dimension to the course. Joining the meetings is optional. Each meeting will start with a brief walk-through of one of the course tutorials that will also be recorded and posted on the course website after the meeting. The rest of the meeting is for questions and exchange of experiences among the course participants, either among all participants or within breakout rooms.\nThe meetings are scheduled to last for one hour but you should feel free to join and leave meetings at any time, according to what you feel is useful to you. In fact, the zoom link works also outside the timetabled slots, so you can use it for extended discussions whenever you like.\nYou will receive an invitation to the zoom meetings after you have registered for the course.\n\nThis course is organised as a part of the Pyramids of Life, funded by UK Research and Innovation via the Sustainable Management of Marine Resources fund."
+    "text": "On-line meetings\nThere will be an online zoom meeting at 3pm UK time (GMT) on every workday during the course. The purpose of these meetings is to add a social dimension to the course. Joining the meetings is optional. Each meeting will start with a brief walk-through of one of the course tutorials that will also be recorded and posted on the course website after the meeting. The rest of the meeting is for questions and exchange of experiences among the course participants, either among all participants or within breakout rooms.\nThe meetings are scheduled to last for one hour but you should feel free to join and leave meetings at any time, according to what you feel is useful to you. In fact, the zoom link works also outside the timetabled slots, so you can use it for extended discussions whenever you like.\nYou will receive an invitation to the zoom meetings before the start of the course once you have registered.\n\nThis course is organised as a part of the Pyramids of Life, funded by UK Research and Innovation via the Sustainable Management of Marine Resources fund."
   },
   {
     "objectID": "prepare/use-git-and-github.html",
@@ -81,7 +81,14 @@
     "href": "prepare/index.html",
     "title": "Prepare for the mizer course",
     "section": "",
-    "text": "1) You can introduce yourself and your interests to your fellow participants.\n2) You can install the tools that we will use in the course.\n3) You can familiarise yourself with how we will be using Git and GitHub in this course for collaboration and feedback on your coursework.\n4) The course assumes that you are familiar with the basics of R programming. There are plenty of free resources to learn R. Some possible starting points are given at RStudio Education. If you find particularly nice tutorials or resources, why not post about them in the comments below?\nThat will allow for a flying start to the course."
+    "text": "While the course only starts on Monday the 7th of November, if you like you can already start preparations:\n1) You can introduce yourself and your interests to your fellow participants.\n2) You can install the tools that we will use in the course.\n3) You can familiarise yourself with how we will be using Git and GitHub in this course for collaboration and feedback on your coursework.\n4) The course assumes that you are familiar with the basics of R programming. There are plenty of free resources to learn R. Some possible starting points are given at RStudio Education. If you find particularly nice tutorials or resources, why not post about them in the comments below?\nThat will allow for a flying start to the course."
+  },
+  {
+    "objectID": "prepare/index.html#watch-video-introducing-mizer",
+    "href": "prepare/index.html#watch-video-introducing-mizer",
+    "title": "Prepare for the mizer course",
+    "section": "Watch video introducing mizer”",
+    "text": "Watch video introducing mizer”\nIn this video Ken Andersen introduces many of the concepts that we will be discussing in this course. However don’t feel that you have to take it all in at once. We will come back to these topics (and others) during the course where we hope to make them concrete by working hands-on with mizer."
   },
   {
     "objectID": "prepare/install-tools.html",
@@ -131,19 +138,5 @@
     "title": "Introduce yourself",
     "section": "",
     "text": "When you post a comment you will be asked to log in to GitHub. You will probably already have an account on GitHub. If not, please create one for yourself. You will need it to participate in this course. The page Use Git and GitHub explains how we will use GitHub in this course.\nYou can use Markdown syntax in your post. For example to see how to include a link to your homepage, see the section on Links.\nThe comments you post on this course website will also appear in the Comments section of the GitHub discussions for the course repository. Even after posting a comment you can go and edit the post on GitHub and it will be updated on this website as well.\nThe comments are threaded discussions. Please post your introduction as a new comment rather than as a reply to someone else’s introduction. You can use the replies if you want to respond to someone’s introduction for follow-ups.\nYou will find a comment section at the bottom of each course webpage. Please use it a lot to share your questions, thoughts and experiences as you go through the course."
-  },
-  {
-    "objectID": "prepare/watch-introduction.html",
-    "href": "prepare/watch-introduction.html",
-    "title": "Introduction to the mizer model",
-    "section": "",
-    "text": "Ken Andersen talks about the basic ideas underlying dynamic size-spectrum modelling with mizer."
-  },
-  {
-    "objectID": "prepare/watch-introduction.html#in-preparation",
-    "href": "prepare/watch-introduction.html#in-preparation",
-    "title": "Introduction to the mizer model",
-    "section": "In preparation",
-    "text": "In preparation"
   }
 ]

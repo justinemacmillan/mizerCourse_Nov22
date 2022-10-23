@@ -3,7 +3,6 @@ title: "Prepare for the mizer course"
 editor: visual
 ---
 
-
 While the course only starts on Monday the 7th of November, if you like you can already start preparations:
 
 1\) You can [introduce yourself](introduce-yourself.qmd) and your interests to your fellow participants.
@@ -14,4 +13,16 @@ While the course only starts on Monday the 7th of November, if you like you can 
 
 4\) The course assumes that you are familiar with the basics of R programming. There are plenty of free resources to learn R. Some possible starting points are given at [RStudio Education](https://education.rstudio.com/). If you find particularly nice tutorials or resources, why not post about them in the comments below?
 
-That will allow for a flying start to the course. 
+That will allow for a flying start to the course.
+
+## Watch video introducing mizer"
+
+In this video Ken Andersen introduces many of the concepts that we will be discussing in this course. However don't feel that you have to take it all in at once. We will come back to these topics (and others) during the course where we hope to make them concrete by working hands-on with mizer.
+
+```{r}
+#| echo: false
+vembedr::embed_url("https://youtu.be/_AeywguOA0o") |>
+    vembedr::use_align("center") |>
+    vembedr::use_rounded(10)
+```
+

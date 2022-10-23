@@ -60,8 +60,6 @@ website:
             href: prepare/install-tools.qmd
           - text: Use Git and GitHub
             href: prepare/use-git-and-github.qmd
-#          - text: Watch introduction
-#            href: prepare/watch-introduction.qmd
       - section: "Week 1: Understand"
         # href: understand/index.qmd
         # contents: 
