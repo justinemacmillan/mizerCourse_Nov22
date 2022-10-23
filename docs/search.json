@@ -1,0 +1,156 @@
+[
+  {
+    "objectID": "troubleshooting.html",
+    "href": "troubleshooting.html",
+    "title": "Troubleshooting",
+    "section": "",
+    "text": "On this page we will collect issues that people have come across while working on the course, together with the solutions. If you paste your error message into the search box on this course website, it should find the appropriate issue on this page in case it has been reported by someone else already.\nIf you can’t find your issue resolved on this page, make sure to post a comment.\nYou can help out by editing this page when you come across an issue and its solution. For example if you managed to find the solution yourself, please nevertheless edit this page to add your issue and your solution because it will save others time."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Size-based multi-species fisheries modelling with mizer",
+    "section": "",
+    "text": "2022 November 7 – 25"
+  },
+  {
+    "objectID": "index.html#size-based-ecosystem-models-with-the-r-package-mizer-and-applications-for-coastal-and-inland-ecosystems",
+    "href": "index.html#size-based-ecosystem-models-with-the-r-package-mizer-and-applications-for-coastal-and-inland-ecosystems",
+    "title": "Online mizer course",
+    "section": "Size based ecosystem models with the R package mizer and applications for coastal and inland ecosystems",
+    "text": "Size based ecosystem models with the R package mizer and applications for coastal and inland ecosystems\nIn this online course you will learn about the principles of size based community and ecosystem modelling, implementation of these principles in the R package mizer, learn about adaptation of mizer for shallow ecosystems with multiple resources, and learn how to build a new model with your own or example data and use it to investigate the ecosystem effect of changes in fishing or other stressors.\nThe course is led by Gustav Delius (University of York, UK) and Asta Audzijonyte (Nature Research Centre, Lithuania & University of Tasmania, Australia), with technical support by Romain Forestier (University of Tasmania). Invited speakers include Ken Haste Andersen and Julia Blanchard.\nParticipation is free. If you would like to participate in this course, please register."
+  },
+  {
+    "objectID": "index.html#tutorials-and-worksheets",
+    "href": "index.html#tutorials-and-worksheets",
+    "title": "Size-based multi-species fisheries modelling with mizer",
+    "section": "Tutorials and worksheets",
+    "text": "Tutorials and worksheets\nThe course has three week-long sections:\n\nWeek 1: Understand\nYou will gain an understanding of size spectra and their dynamics by exploring simple example systems hands-on with mizer.\nWeek 2: Build\nFollowing our example, you will build your own multi-species mizer model for the Celtic sea. We will collect the models from all participants to create an ensemble of models. You can also create a model for your own area of interest.\nWeek 3: Use\nWe will use the new ensemble of mizer models for the Celtic sea that you all helped to create in the previous week to explore the effects of changes in fishing and changes in resource dynamics. You will run your own model scenarios.\n\nThe course is organised into several tutorials each week. Each tutorial is associated with a worksheet in which you perform the exercises that are dotted throughout the tutorials. You will work through these tutorials and worksheets at times that are convenient for you."
+  },
+  {
+    "objectID": "index.html#on-line-meetings",
+    "href": "index.html#on-line-meetings",
+    "title": "Size-based multi-species fisheries modelling with mizer",
+    "section": "On-line meetings",
+    "text": "On-line meetings\nThere will be an online zoom meeting at 3pm UK time (GMT) on every workday during the course. The purpose of these meetings is to add a social dimension to the course. Joining the meetings is optional. Each meeting will start with a brief walk-through of one of the course tutorials that will also be recorded and posted on the course website after the meeting. The rest of the meeting is for questions and exchange of experiences among the course participants, either among all participants or within breakout rooms.\nThe meetings are scheduled to last for one hour but you should feel free to join and leave meetings at any time, according to what you feel is useful to you. In fact, the zoom link works also outside the timetabled slots, so you can use it for extended discussions whenever you like.\nYou will receive an invitation to the zoom meetings after you have registered for the course.\n\nThis course is organised as a part of the Pyramids of Life, funded by UK Research and Innovation via the Sustainable Management of Marine Resources fund."
+  },
+  {
+    "objectID": "prepare/use-git-and-github.html",
+    "href": "prepare/use-git-and-github.html",
+    "title": "Use Git and GitHub",
+    "section": "",
+    "text": "In this course we will collaborate via Git and GitHub. This means that if you have not used these tools before, then you will have to learn some new concepts and get used to a particular workflow. The investment of your time will more than pay off. Developing your research code with Git and GitHub has great advantages, and it’ll be great if this course gets you hooked on these tools. The use we make of Git and GitHub in this course is relatively simple, so it may be the perfect gateway drug.\nWe’ll start by first introducing some of the ideas theoretically, but then we will also show what the workflow looks like in practice. We will only scratch the surface, if you want to go deeper then Happy Git and GitHub for the useR is a useful resource."
+  },
+  {
+    "objectID": "prepare/use-git-and-github.html#theory",
+    "href": "prepare/use-git-and-github.html#theory",
+    "title": "Use Git and GitHub",
+    "section": "Theory",
+    "text": "Theory\nGit\nGit is a distributed version control system. So we will start by explaining the “version control” and the “distributed”. We’ll typeset typical Git terminology in bold.\nVersion control means that while you are working on your code or data files you can keep track of all the changes you are making. You can then later review the history of changes and, if necessary, revert to earlier versions. You may say that any cloud storage service like Google Drive or Dropbox does that as well, but there are important differences that we will now discuss.\n\nGit keeps the repository with all your changes on your local computer. The version control does not rely on an internet connection.\nYou explicitly say when you want a batch of changes to be stored in the repository. Saving changes to the files in your local file area does not yet modify the repository. You have to make a so-called commit to commit the changes you want to the repository.\nTypically you will add a commit message that summarises briefly what the changes are about. This makes it much easier to understand the development of your code later on.\n\nSo Git provides you full control over creating points at which you want to save your code and documents to your repository. The commit messages you add can be very detailed or short. Their goal is for you and your collaborators to know what has been changed between different commit steps.\nDistributed means that the repository typically does not reside only on a single computer. There can be clones of the repository on many other computers. For example, you might want your collaborators to have a copy of the repository for a common project that you are working on jointly. They can make commits to their clone of the repository in the same way you can make commits to yours.\nEven if you only intend to work on your code alone, you may want to have copies of it on all the computers you occasionally work at and you will then want to be able to commit changes from any of those computers and pick up those changes from any other computer. So below when we speak of your “collaborator”, that collaborator could be yourself on another computer.\nFrom time to time you will want to merge the changes from one clone to another to have a new common version that incorporates changes by all collaborators. For that there needs to be some communication via the internet, facilitated by a Git server.\nGitHub\nGitHub is a service that hosts a clone of your repository on your account and runs a Git server, so that you and your collaborators do not have to run your own Git servers. Instead you can push any commits that you made into your local Git repository to the GitHub clone and then your collaborators can pull those changes from there into their own clones.\nSo with Git and GitHub we have a very different workflow than what you get when you collaborate using for example a Google Drive folder. There are more steps before your collaborator sees your changes, namely:\n\nyou save your code changes on your computer to the directory that is associated with the git repository,\nyou select or stage which of your changed code files you want to commit to your local repository,\nyou commit those selected changes to your repository with a commit message,\nyou push your commits to your online GitHub repository,\nyour collaborators pull your commits from GitHub,\nthese commits automatically get merged into their clone,\nthe changed files are checked out from their clone into the corresponding directory on their local computer drive.\n\nThere are circumstances where the standard workflow fails. If you attempt to pull commits from GitHub that change files that you have also modified locally but not yet committed, then the pull will fail with an error message.\nIf you and a collaborator independently made commits to your respective clones that touched the same lines of code then there may be merge conflicts that need to be resolved. If something like this happens to you then congratulations: you have arrived in more advanced Git territory than we will discuss in this tutorial. If at some point during the course something like this happens to you, let us know by posting a comment and we or some git-savy participant will give advice.\nThis more involved workflow takes a bit of getting used to, but is definitely the best way to work on code and data. If you follow the guidelines about committing your code changes regularly you will easily go back to earlier versions of your code if you need to, work with multiple people on the same code development, return to old coding projects that need reviewing, and be a part of open and reproducible science. So next you will get to try this out in practice."
+  },
+  {
+    "objectID": "prepare/use-git-and-github.html#practice",
+    "href": "prepare/use-git-and-github.html#practice",
+    "title": "Use Git and GitHub",
+    "section": "Practice",
+    "text": "Practice\nFor each week of this course you will get a Git repository with worksheets for you to complete. This repository will be set up for you on GitHub. You will clone that repository to your computer at the start of each week. Then during the week you will commit your work to that repository and push it back to GitHub. This gives me a chance to see your work and to comment on it. These repositories will be private repositories, visible only to you and me, unless you yourself give others access to it. Below you will get a preparatory repository (also private) on which you can practice the workflow.\nIf you do not yet have an account on GitHub, please go there now and sign up. If you do have an account, please also go there and sign in.\nConnect RStudio to GitHub\nWe will be interacting with Git and GitHub via RStudio. This just requires some initial setup but will be very convenient from then on. Of course, if you are already using GitHub from within RStudio, then you can skip the steps below that you have gone through on your computer in the past.\nRStudio needs a personal access token for accessing GitHub. The following command will bring you to the GitHub webpage that creates that personal access token:\n\nusethis::create_github_token()\n\n\n\n\n\nYou can edit the Note to something like “mizer course” or whatever will remind you later what this was for. You can leave the rest of the form as it is and scroll down to the bottom and press the “Generate token” button. That will lead you to a page that displays your new token:\n\n\n\n\nCopy the token to your clipboard (using the button circled in the above screenshot). Switch to RStudio and issue the command\n\ngitcreds::gitcreds_set()\n\nThis will prompt you to enter your token. Paste in that token from your clipboard and press Enter. That completes the set-up. You will not have to do this again on this computer, but if you switch to a new computer, you will need the token again. Therefore it is a good idea to save this token somewhere safe. But you can also always create new tokens in the same way as described above.\nIf you run into difficulties with the above, please post about it in the comments section at the bottom of this page. If you want to dig in deeper yourself, you can take a look at the troubleshooting section in “Happy Git and GitHub for the useR”. But even if you manage to solve some problem yourself, please let us know about it in the comments.\nCreate repository\nTo create your practice repository, please follow the following link:\nhttps://classroom.github.com/a/z51vdBgM\nOnce you are logged into GitHub, this should bring you to a screen asking you to accept an assignment.\n\n\n\n\nPlease click on “Accept the assignment”. This will first tell you that your repository is being prepared and that you should refresh the page in your browser.\n\n\n\n\nWhen you hit the refresh button on your browser after just a short moment, you should see a page with a URL for your new repository on GitHub.\n\n\n\n\nPlease follow that URL to your repository’s home page. This page displays the README at the bottom. There you for example find a points bar where you accumulate points as you complete the exercises in the worksheet. We are now interested in the big green “Code” button which, when clicked, will give a popup with the URL for cloning your repository.\n\n\n\n\nClone repository\nNow we can use RStudio to clone this repository to your computer. For this you create a new RStudio project by clicking on the project drop-down menu at the top-right of the RStudio window and selecting “New Project…”.\n\n\n\n\nThat will open a dialog where you first choose “Version Control” and then choose “Git”.\n\n\n\n\n\n\n\n\n\n\nIn the resulting dialog window you paste in the repository URL that you copied from GitHub. You also specify the directory in your file area where you want the project directory to be saved. To do that click the “Browse…” button and find a location that is convenient for you. You may want to create a dedicated directory for this mizer course and then select that. But avoid creating a directory path that is too long. We have seen problems arise for people who used pathnames longer than 100 characters.\n\n\n\n\nThen click “Create Project”. RStudio now communicates with GitHub to download a clone of the repository and it also checks out all the files contained in the repository to the newly created directory. You can see them in the “Files” tab in RStudio.\n\n\n\n\nContinue in worksheet\nIn the Files tab you will in particular see a file called “worksheet-use-git-and-github.Rmd”. That is the worksheet for this tutorial. Please click on the file name in the Files tab of RStudio to open this worksheet in the RStudio editor. The editor has a “Source” mode and a “Visual” mode. Try out both and see which one you prefer.\n\n\n\n\n\n\n\n\n\n\nNow just follow the instructions in that worksheet. This will guide you through the process of performing your first commits to your repository and pushes to GitHub.\nAs you work through the exercises, you will get some automatic feedback. You can also always ask for personal feedback from me. The details are described in the worksheet. But if you run into a problem that you think might be of interest to others as well, please post in the comments below."
+  },
+  {
+    "objectID": "prepare/index.html",
+    "href": "prepare/index.html",
+    "title": "Prepare for the mizer course",
+    "section": "",
+    "text": "1) You can introduce yourself and your interests to your fellow participants.\n2) You can install the tools that we will use in the course.\n3) You can familiarise yourself with how we will be using Git and GitHub in this course for collaboration and feedback on your coursework.\n4) The course assumes that you are familiar with the basics of R programming. There are plenty of free resources to learn R. Some possible starting points are given at RStudio Education. If you find particularly nice tutorials or resources, why not post about them in the comments below?\nThat will allow for a flying start to the course."
+  },
+  {
+    "objectID": "prepare/install-tools.html",
+    "href": "prepare/install-tools.html",
+    "title": "Install tools",
+    "section": "",
+    "text": "For this course you will need access to a machine with an installation of R, Git, RStudio and some important R packages, including, of course, mizer itself and mizerExperimental. Below we give the necessary information to allow you to install these tools.\nIf you run into difficulties, please make a post in the Comments section below. It is quite likely that someone else on the course has encountered similar difficulties and that someone has ideas on how to solve them.\nIf you already have some of these tools installed, please make sure that the version you have is recent."
+  },
+  {
+    "objectID": "prepare/install-tools.html#r",
+    "href": "prepare/install-tools.html#r",
+    "title": "Install tools",
+    "section": "R",
+    "text": "R\nMizer is compatible with R versions 3.1 and later. However in this course we will assume that you have a version newer than 4.0. So if you are still using 3.x, now is the time to upgrade. You can install or upgrade R on your computer by following the instructions at https://cran.r-project.org/ for your particular platform. In fact, upgrading follows the same procedure as installing from scratch.\nAlternatively, if you can not or do not want to install R on your computer, you can also work with R and RStudio in your internet browser by creating yourself a free account at https://rstudio.cloud. There you can then install mizer as described above. Running mizer in the RStudio Cloud may be slightly slower than running it locally on your machine, but the speed is usually quite acceptable."
+  },
+  {
+    "objectID": "prepare/install-tools.html#rstudio",
+    "href": "prepare/install-tools.html#rstudio",
+    "title": "Install tools",
+    "section": "RStudio",
+    "text": "RStudio\nThis course assumes that you will be using RStudio to work with R. There is really no reason not to use RStudio and it makes a lot of things much easier.\nRStudio develops rapidly and adds useful features all the time and so it is best if you install the latest version. This course was written with version 2022.07.2. If you already have RStudio installed but it is an older version, the way to upgrade is to just install the newest version. The old version will automatically be replaced by the new.\nIf you are new to RStudio, the video on the RStudio IDE homepage is well worth watching."
+  },
+  {
+    "objectID": "prepare/install-tools.html#r-packages",
+    "href": "prepare/install-tools.html#r-packages",
+    "title": "Install tools",
+    "section": "R Packages",
+    "text": "R Packages\nR packages extend the functionality of R. mizer itself is such an R package. There is a central repository for R packages called CRAN which hosts all of the packages needed for this course, except for the mizerExperimental package. To install them on your computer just start RStudio and then in the console issue the command\n\ninstall.packages(c(\"mizer\", \"tidyverse\", \"plotly\", \"remotes\", \"usethis\",\n                   \"rmarkdown\", \"rstudioapi\"))\n\nThe mizerExperimental package is for code that is still experimental and thus changes frequently. Therefore it is hosted in a GitHub repository. You install it with\n\nremotes::install_github(\"sizespectrum/mizerExperimental\")"
+  },
+  {
+    "objectID": "prepare/install-tools.html#git",
+    "href": "prepare/install-tools.html#git",
+    "title": "Install tools",
+    "section": "Git",
+    "text": "Git\nGit is a distributed version control system that we will use in this course. We will discuss that more on the page Use Git and GitHub.\nGit may already be installed on your system. If you are in RStudio, then you can issue the following command in the “Terminal” tab:\ngit --version\nIf that comes back with a version number, then git is already installed. The current Git version is 2.25.1. If you have an older version then keep this in mind and if you should at some point notice that Git is not behaving the same for you as for others, then you might want to install the latest version. Or simply install the latest version now to be on the safe side.\nTo install Git follow the links at https://git-scm.com/downloads for your operating system. You do not need a GUI client for Git because you will be using Git from within RStudio. After you have installed Git, you may want to restart RStudio.\nFinally, you should tell Git about yourself by running the following command in the RStudio Console, where of course you change the name and email address to your own:\n\nusethis::use_git_config(user.name = \"Jane Doe\", \n                        user.email = \"jane@example.org\")"
+  },
+  {
+    "objectID": "prepare/install-tools.html#issues",
+    "href": "prepare/install-tools.html#issues",
+    "title": "Install tools",
+    "section": "Issues",
+    "text": "Issues\nAs with all computer-related things, unexpected problems are likely to crop up. Be sure to post about them below. Alternatively you can also report issues by clicking on the “Report an issue” link that you find at the bottom of the right side-bar. That will create an entry in the GitHub issue tracker.\nIf you have a correction to this page or want to suggest an edit, use the “Edit this page” link. Don’t worry: we will need to approve your edits before they go live, so you can feel free to edit as much as you like.\nThis course should be a collaborative experience. You will find the “Edit this page” and “Report an issue” links on every tutorial page and you will find a comments section on every page of the course website. Never hesitate to use them."
+  },
+  {
+    "objectID": "prepare/introduce-yourself.html",
+    "href": "prepare/introduce-yourself.html",
+    "title": "Introduce yourself",
+    "section": "",
+    "text": "When you post a comment you will be asked to log in to GitHub. You will probably already have an account on GitHub. If not, please create one for yourself. You will need it to participate in this course. The page Use Git and GitHub explains how we will use GitHub in this course.\nYou can use Markdown syntax in your post. For example to see how to include a link to your homepage, see the section on Links.\nThe comments you post on this course website will also appear in the Comments section of the GitHub discussions for the course repository. Even after posting a comment you can go and edit the post on GitHub and it will be updated on this website as well.\nThe comments are threaded discussions. Please post your introduction as a new comment rather than as a reply to someone else’s introduction. You can use the replies if you want to respond to someone’s introduction for follow-ups.\nYou will find a comment section at the bottom of each course webpage. Please use it a lot to share your questions, thoughts and experiences as you go through the course."
+  },
+  {
+    "objectID": "prepare/watch-introduction.html",
+    "href": "prepare/watch-introduction.html",
+    "title": "Introduction to the mizer model",
+    "section": "",
+    "text": "Ken Andersen talks about the basic ideas underlying dynamic size-spectrum modelling with mizer."
+  },
+  {
+    "objectID": "prepare/watch-introduction.html#in-preparation",
+    "href": "prepare/watch-introduction.html#in-preparation",
+    "title": "Introduction to the mizer model",
+    "section": "In preparation",
+    "text": "In preparation"
+  },
+  {
+    "objectID": "index.html#size-based-multi-species-fisheries-modelling-with-mizer",
+    "href": "index.html#size-based-multi-species-fisheries-modelling-with-mizer",
+    "title": "Online mizer course",
+    "section": "Size-based multi-species fisheries modelling with mizer",
+    "text": "Size-based multi-species fisheries modelling with mizer\nIn this hands-on online course you will learn about the principles of size based fisheries modelling and the implementation of these principles in the R package mizer. You will build a mizer model for the Celtic sea from scratch and will also be encouraged to build a model for your own area of interest. You will then run various scenarios to explore how the ecosystem reacts to changes in fishing or other stressors.\nThe course is led by Gustav Delius (University of York, UK). Invited speakers include Ken Haste Andersen and Julia Blanchard. The course is based on an earlier version created in collaboration with Asta Audzijonyte (Nature Research Centre, Lithuania & University of Tasmania, Australia).\nParticipation is free. If you would like to participate in this course, please register."
+  },
+  {
+    "objectID": "index.html#an-online-course",
+    "href": "index.html#an-online-course",
+    "title": "Size-based multi-species fisheries modelling with mizer",
+    "section": "An online course",
+    "text": "An online course\nIn this hands-on online course you will learn about the principles of size based fisheries modelling and the implementation of these principles in the R package mizer. You will build a mizer model for the Celtic sea from scratch and will also be encouraged to build a model for your own area of interest. You will then run various scenarios to explore how the ecosystem reacts to changes in fishing or other stressors.\nThe course is led by Gustav Delius (University of York, UK). Invited speakers include Ken Haste Andersen and Julia Blanchard. The course is based on an earlier version created in collaboration with Asta Audzijonyte (Nature Research Centre, Lithuania & University of Tasmania, Australia).\nParticipation is free. If you would like to participate in this course, please register."
+  },
+  {
+    "objectID": "troubleshooting.html#long-pathnames",
+    "href": "troubleshooting.html#long-pathnames",
+    "title": "Troubleshooting",
+    "section": "Long pathnames",
+    "text": "Long pathnames\nIf your R project is located inside a directory with a very long path name, you might get an error message because R will not be able to access the path.\n\n‘Warning in gzfile(file, “wb”): cannot open the compressed file …’\n\nSolution: make sure you create your R project in a higher directory with a shorter path"
+  },
+  {
+    "objectID": "troubleshooting.html#github-keeps-asking-for-password",
+    "href": "troubleshooting.html#github-keeps-asking-for-password",
+    "title": "Troubleshooting",
+    "section": "Github keeps asking for password",
+    "text": "Github keeps asking for password\nFor some users, Github asks for username and password (or personal access token) every time you want to push your commits to Github. This can happen if your Git version is too old.\nSolution: install the latest version of Git."
+  }
+]

@@ -1,0 +1,17 @@
+---
+title: "Prepare for the mizer course"
+editor: visual
+---
+
+
+While the course only starts on Monday the 7th of November, if you like you can already start preparations:
+
+1\) You can [introduce yourself](introduce-yourself.qmd) and your interests to your fellow participants.
+
+2\) You can [install the tools](install-tools.qmd) that we will use in the course.
+
+3\) You can familiarise yourself with how we will be [using Git and GitHub](use-git-and-github.qmd) in this course for collaboration and feedback on your coursework.
+
+4\) The course assumes that you are familiar with the basics of R programming. There are plenty of free resources to learn R. Some possible starting points are given at [RStudio Education](https://education.rstudio.com/). If you find particularly nice tutorials or resources, why not post about them in the comments below?
+
+That will allow for a flying start to the course. 

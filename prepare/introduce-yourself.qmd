@@ -1,0 +1,15 @@
+---
+title: "Introduce yourself"
+---
+
+It will be nice to know who your fellow course participants are and what their interests are. So if you can, please post a comment at the bottom of this page with some information about yourself. If you have previous experiences with size-based fishery models, you can describe that. Or you can tell us what you are hoping to get out of this course. You can include a link to your homepage or your ORCID profile, for example. 
+
+When you post a comment you will be asked to log in to GitHub. You will probably already have an account on GitHub. If not, please create one for yourself. You will need it to participate in this course. The page [Use Git and GitHub](use-git-and-github.qmd) explains how we will use GitHub in this course. 
+
+You can use [Markdown syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) in your post. For example to see how to include a link to your homepage, see the section on [Links](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#links).
+
+The comments you post on this course website will also appear in the [Comments](https://github.com/sizespectrum/mizerCourse_Nov22/discussions/categories/comments) section of the GitHub discussions for the course repository. Even after posting a comment you can go and edit the post on GitHub and it will be updated on this website as well.
+
+The comments are threaded discussions. Please post your introduction as a new comment rather than as a reply to someone else's introduction. You can use the replies if you want to respond to someone's introduction for follow-ups.
+
+You will find a comment section at the bottom of each course webpage. Please use it a lot to share your questions, thoughts and experiences as you go through the course.
