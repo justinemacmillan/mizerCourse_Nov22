@@ -33,6 +33,16 @@ website:
     site: "@mizer_model"
     creator: "gustavdelius"
   opengraph: true
+  comments:
+    giscus:
+      repo: sizespectrum/mizerCourse_Nov22
+      category: Comments
+      reactions-enabled: false
+      input-position: bottom
+      repo-id: R_kgDOISYpnA
+      category-id: DIC_kwDOISYpnM4CSJOj
+      data-loading: lazy
+      mapping: og:title
   search: 
     location: navbar
     type: textbox
@@ -89,16 +99,3 @@ website:
         #     href: use/further-scenarios.qmd
       - text: Troubleshooting
         href: troubleshooting.qmd
-
-
-comments:
-  giscus:
-    repo: sizespectrum/mizerCourse_Nov22
-    category: Comments
-    reactions-enabled: false
-    input-position: bottom
-    repo-id: R_kgDOISYpnA
-    category-id: DIC_kwDOISYpnM4CSJOj
-    data-loading: lazy
-    mapping: og:title
-    
