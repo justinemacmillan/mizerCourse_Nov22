@@ -25,7 +25,7 @@ execute:
 
 website:
   title: "mizer course"
-  site-url: "https://courseNov22.mizer.sizespectrum.org"
+  site-url: "https://mizer.course.nov22.sizespectrum.org"
   favicon: images/favicon-16x16.png
   repo-url: https://github.com/sizespectrum/mizerCourse_Nov22
   repo-actions: [edit, issue]
@@ -53,7 +53,7 @@ website:
 #          - text: Watch introduction
 #            href: prepare/watch-introduction.qmd
       - section: "Week 1: Understand"
-        href: understand/index.qmd
+        # href: understand/index.qmd
         # contents: 
           # - text: Observed size spectra
           #   href: understand/observed-size-spectra.qmd

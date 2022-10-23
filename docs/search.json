@@ -7,6 +7,20 @@
     "text": "On this page we will collect issues that people have come across while working on the course, together with the solutions. If you paste your error message into the search box on this course website, it should find the appropriate issue on this page in case it has been reported by someone else already.\nIf you can’t find your issue resolved on this page, make sure to post a comment.\nYou can help out by editing this page when you come across an issue and its solution. For example if you managed to find the solution yourself, please nevertheless edit this page to add your issue and your solution because it will save others time."
   },
   {
+    "objectID": "troubleshooting.html#long-pathnames",
+    "href": "troubleshooting.html#long-pathnames",
+    "title": "Troubleshooting",
+    "section": "Long pathnames",
+    "text": "Long pathnames\nIf your R project is located inside a directory with a very long path name, you might get an error message because R will not be able to access the path.\n\n‘Warning in gzfile(file, “wb”): cannot open the compressed file …’\n\nSolution: make sure you create your R project in a higher directory with a shorter path"
+  },
+  {
+    "objectID": "troubleshooting.html#github-keeps-asking-for-password",
+    "href": "troubleshooting.html#github-keeps-asking-for-password",
+    "title": "Troubleshooting",
+    "section": "Github keeps asking for password",
+    "text": "Github keeps asking for password\nFor some users, Github asks for username and password (or personal access token) every time you want to push your commits to Github. This can happen if your Git version is too old.\nSolution: install the latest version of Git."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Size-based multi-species fisheries modelling with mizer",
@@ -14,11 +28,11 @@
     "text": "2022 November 7 – 25"
   },
   {
-    "objectID": "index.html#size-based-ecosystem-models-with-the-r-package-mizer-and-applications-for-coastal-and-inland-ecosystems",
-    "href": "index.html#size-based-ecosystem-models-with-the-r-package-mizer-and-applications-for-coastal-and-inland-ecosystems",
-    "title": "Online mizer course",
-    "section": "Size based ecosystem models with the R package mizer and applications for coastal and inland ecosystems",
-    "text": "Size based ecosystem models with the R package mizer and applications for coastal and inland ecosystems\nIn this online course you will learn about the principles of size based community and ecosystem modelling, implementation of these principles in the R package mizer, learn about adaptation of mizer for shallow ecosystems with multiple resources, and learn how to build a new model with your own or example data and use it to investigate the ecosystem effect of changes in fishing or other stressors.\nThe course is led by Gustav Delius (University of York, UK) and Asta Audzijonyte (Nature Research Centre, Lithuania & University of Tasmania, Australia), with technical support by Romain Forestier (University of Tasmania). Invited speakers include Ken Haste Andersen and Julia Blanchard.\nParticipation is free. If you would like to participate in this course, please register."
+    "objectID": "index.html#an-online-course",
+    "href": "index.html#an-online-course",
+    "title": "Size-based multi-species fisheries modelling with mizer",
+    "section": "An online course",
+    "text": "An online course\nIn this hands-on online course you will learn about the principles of size based fisheries modelling and the implementation of these principles in the R package mizer. You will build a mizer model for the Celtic sea from scratch and will also be encouraged to build a model for your own area of interest. You will then run various scenarios to explore how the ecosystem reacts to changes in fishing or other stressors.\nThe course is led by Gustav Delius (University of York, UK). Invited speakers include Ken Haste Andersen and Julia Blanchard. The course is based on an earlier version created in collaboration with Asta Audzijonyte (Nature Research Centre, Lithuania & University of Tasmania, Australia)."
   },
   {
     "objectID": "index.html#tutorials-and-worksheets",
@@ -126,31 +140,10 @@
     "text": "In preparation"
   },
   {
-    "objectID": "index.html#size-based-multi-species-fisheries-modelling-with-mizer",
-    "href": "index.html#size-based-multi-species-fisheries-modelling-with-mizer",
-    "title": "Online mizer course",
-    "section": "Size-based multi-species fisheries modelling with mizer",
-    "text": "Size-based multi-species fisheries modelling with mizer\nIn this hands-on online course you will learn about the principles of size based fisheries modelling and the implementation of these principles in the R package mizer. You will build a mizer model for the Celtic sea from scratch and will also be encouraged to build a model for your own area of interest. You will then run various scenarios to explore how the ecosystem reacts to changes in fishing or other stressors.\nThe course is led by Gustav Delius (University of York, UK). Invited speakers include Ken Haste Andersen and Julia Blanchard. The course is based on an earlier version created in collaboration with Asta Audzijonyte (Nature Research Centre, Lithuania & University of Tasmania, Australia).\nParticipation is free. If you would like to participate in this course, please register."
-  },
-  {
-    "objectID": "index.html#an-online-course",
-    "href": "index.html#an-online-course",
+    "objectID": "index.html#free-registration",
+    "href": "index.html#free-registration",
     "title": "Size-based multi-species fisheries modelling with mizer",
-    "section": "An online course",
-    "text": "An online course\nIn this hands-on online course you will learn about the principles of size based fisheries modelling and the implementation of these principles in the R package mizer. You will build a mizer model for the Celtic sea from scratch and will also be encouraged to build a model for your own area of interest. You will then run various scenarios to explore how the ecosystem reacts to changes in fishing or other stressors.\nThe course is led by Gustav Delius (University of York, UK). Invited speakers include Ken Haste Andersen and Julia Blanchard. The course is based on an earlier version created in collaboration with Asta Audzijonyte (Nature Research Centre, Lithuania & University of Tasmania, Australia).\nParticipation is free. If you would like to participate in this course, please register."
-  },
-  {
-    "objectID": "troubleshooting.html#long-pathnames",
-    "href": "troubleshooting.html#long-pathnames",
-    "title": "Troubleshooting",
-    "section": "Long pathnames",
-    "text": "Long pathnames\nIf your R project is located inside a directory with a very long path name, you might get an error message because R will not be able to access the path.\n\n‘Warning in gzfile(file, “wb”): cannot open the compressed file …’\n\nSolution: make sure you create your R project in a higher directory with a shorter path"
-  },
-  {
-    "objectID": "troubleshooting.html#github-keeps-asking-for-password",
-    "href": "troubleshooting.html#github-keeps-asking-for-password",
-    "title": "Troubleshooting",
-    "section": "Github keeps asking for password",
-    "text": "Github keeps asking for password\nFor some users, Github asks for username and password (or personal access token) every time you want to push your commits to Github. This can happen if your Git version is too old.\nSolution: install the latest version of Git."
+    "section": "Free registration",
+    "text": "Free registration\nParticipation is free. If you would like to participate in this course, please register.\nIf you have any questions, email me at gustav.delius@gmail.com"
   }
 ]
