@@ -37,21 +37,21 @@
   {
     "objectID": "index.html#free-registration",
     "href": "index.html#free-registration",
-    "title": "Size-based multi-species fisheries modelling with mizer",
+    "title": "mizer course",
     "section": "Free registration",
     "text": "Free registration\nParticipation is free. If you would like to participate in this course, please register.\nIf you have any questions, email me at gustav.delius@gmail.com"
   },
   {
     "objectID": "index.html#tutorials-and-worksheets",
     "href": "index.html#tutorials-and-worksheets",
-    "title": "Size-based multi-species fisheries modelling with mizer",
+    "title": "mizer course",
     "section": "Tutorials and worksheets",
     "text": "Tutorials and worksheets\nThe course has three week-long sections:\n\nWeek 1: Understand\nYou will gain an understanding of size spectra and their dynamics by exploring simple example systems hands-on with mizer.\nWeek 2: Build\nFollowing our example, you will build your own multi-species mizer model for the Celtic sea. We will collect the models from all participants to create an ensemble of models. You can also create a model for your own area of interest.\nWeek 3: Use\nWe will use the new ensemble of mizer models for the Celtic sea that you all helped to create in the previous week to explore the effects of changes in fishing and changes in resource dynamics. You will run your own model scenarios.\n\nThe course is organised into several tutorials each week. Each tutorial is associated with a worksheet in which you perform the exercises that are dotted throughout the tutorials. You will work through these tutorials and worksheets at times that are convenient for you."
   },
   {
     "objectID": "index.html#on-line-meetings",
     "href": "index.html#on-line-meetings",
-    "title": "Size-based multi-species fisheries modelling with mizer",
+    "title": "mizer course",
     "section": "On-line meetings",
     "text": "On-line meetings\nThere will be an online zoom meeting at 3pm UK time (GMT) on every workday during the course. The purpose of these meetings is to add a social dimension to the course. Joining the meetings is optional. Each meeting will start with a brief walk-through of one of the course tutorials that will also be recorded and posted on the course website after the meeting. The rest of the meeting is for questions and exchange of experiences among the course participants, either among all participants or within breakout rooms.\nThe meetings are scheduled to last for one hour but you should feel free to join and leave meetings at any time, according to what you feel is useful to you. In fact, the zoom link works also outside the timetabled slots, so you can use it for extended discussions whenever you like.\nYou will receive an invitation to the zoom meetings before the start of the course once you have registered.\n\nThis course is organised as a part of the Pyramids of Life, funded by UK Research and Innovation via the Sustainable Management of Marine Resources fund."
   },
@@ -138,5 +138,12 @@
     "title": "Introduce yourself",
     "section": "",
     "text": "When you post a comment you will be asked to log in to GitHub. You will probably already have an account on GitHub. If not, please create one for yourself. You will need it to participate in this course. The page Use Git and GitHub explains how we will use GitHub in this course.\nYou can use Markdown syntax in your post. For example to see how to include a link to your homepage, see the section on Links.\nThe comments you post on this course website will also appear in the Comments section of the GitHub discussions for the course repository. Even after posting a comment you can go and edit the post on GitHub and it will be updated on this website as well.\nThe comments are threaded discussions. Please post your introduction as a new comment rather than as a reply to someone else’s introduction. You can use the replies if you want to respond to someone’s introduction for follow-ups.\nYou will find a comment section at the bottom of each course webpage. Please use it a lot to share your questions, thoughts and experiences as you go through the course."
+  },
+  {
+    "objectID": "index.html#online-course",
+    "href": "index.html#online-course",
+    "title": "mizer course",
+    "section": "Online course",
+    "text": "Online course\n2022 November 7 – 25\nIn this hands-on online course you will learn about the principles of size based fisheries modelling and the implementation of these principles in the R package mizer. You will build a mizer model for the Celtic sea from scratch and will also be encouraged to build a model for your own area of interest. You will then run various scenarios to explore how the ecosystem reacts to changes in fishing or other stressors.\nThe course is led by Gustav Delius (University of York, UK). Invited speakers include Ken Haste Andersen and Julia Blanchard. The course is based on an earlier version created in collaboration with Asta Audzijonyte (Nature Research Centre, Lithuania & University of Tasmania, Australia)."
   }
 ]
