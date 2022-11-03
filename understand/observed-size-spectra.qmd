@@ -2,7 +2,23 @@
 title: "Observed size spectra"
 ---
 
-In this tutorial you will take observational data and plot the resulting size spectra for the community and for individual species. This will give you a concrete understanding of what size spectra are. There are various different ways of how size spectra can be represented, and this is a common source of confusion. We will discuss this in detail.
+In this tutorial you will take observational data and plot the resulting size spectra for the community and for individual species. This will give you a concrete understanding of what size spectra are. There are various different ways of how size spectra can be represented, and this is a common source of confusion. Hence this tutorial is quite long, so let us start by giving a summary. We'll then repeat the summary at the end of the tutorial by which time the points in the summary will hopefully make perfect sense to you.
+
+## Summary
+
+1\)  It is very useful to know how many organisms of different sizes there are. This is what size spectra show.
+
+2\)  We can represent size spectra in different ways. One is to bin the data and plot histograms. The drawback is that the height of the bars in a histogram depend on our choice of bins. A bin from 1 to 2g will have fewer individuals than a bin from 1 to 10g.
+
+3\)  To avoid the dependence on bin sizes, we use **densities**, where the total number of individuals or the total biomass of individuals in each bin are divided by the width of the bin. We refer to these as the number density or the biomass density respectively.
+
+3\)  The number density looks very different from the biomass density. There will be a lot of very small individuals, so the number density at small sizes will be large, but each individual weighs little, so their total biomass will not be large. 
+
+5\)  When we work with a logarithmic weight axis, then it is natural to use densities in log weight, where the numbers of individuals in each bin are divided by the width of the bin on the log axis. We refer to these as the number density in log weight or the biomass density in log weight respectively.
+
+6\)  Community size spectra are approximately power laws. When displayed on log-log axes, they look like straight lines. The slope of the number density is approximately -2, the slope of the biomass density and the number density in log weight is approximately -1, and the slope of the biomass density in log weight is approximately 0, i.e., the biomass density in log weight is approximately constant. The latter is called the Sheldon spectrum.
+
+7\)  The individual species size spectra are not approximately power laws and thus do not look like straight lines on log-log axes. The approximate power law only emerges when we add all the species spectra together.
 
 ## Introduction
 
@@ -28,14 +44,7 @@ And in many other references listed in the sizespectrum.org [publications](https
 
 ## Example code
 
-These tutorials contain a lot of working R code, because learning R coding for mizer is best done by looking at example code. We envisage that you may want to copy and paste the code from this tutorial into your tutorial worksheet to try it out and possibly modify it to see what happens.
-
-```{r}
-#| echo: false
-vembedr::embed_url("https://youtu.be/bkWde39r2Pk") |>
-    vembedr::use_align("center") |>
-    vembedr::use_rounded(10)
-```
+These tutorials contain a lot of working R code, because learning R coding for mizer is best done by looking at example code. The content of these tutorials is also contained in the corresponding tutorial worksheet in this week's worksheet repository. That makes it easy for you to re-run the code yourself. After a while we hope that you will start experimenting with making modifications to the code. This is further encouraged by the exercises that you will find dotted throughout the tutorials. The tutorial worksheets contain more information on how to work through those exercises and commit your work.
 
 To analyse and plot the data we will be making use of the [tidyverse](https://www.tidyverse.org/) package, in particular [dplyr](https://dplyr.tidyverse.org/) and [ggplot2](https://ggplot2.tidyverse.org/). If you are not familiar with these, you can learn what is needed just by studying the example code in this tutorial. Before we can use a package we need to load it in from the package library with the `library()` function:
 
@@ -52,20 +61,20 @@ You will find explanations of the code if you expand the "R details" sections lo
 So let's see if we can find Sheldon's pattern ourselves. First we load the data.
 
 ```{r }
-data <- readRDS("size-data.rds")
-str(data)
+size_data <- readRDS("size-data.rds")
+str(size_data)
 ```
 
 ::: {.callout-note collapse="true"}
 ### Expand for R details
 
-The `readRDS()` function loads the file "size-data.rds" which contains the data frame with the size data. We assign this data frame to the variable `data` for use below and then, to get an impression of what is in the data frame we use the `str()` function.
+The `readRDS()` function loads the file "size-data.rds" which contains the data frame with the size data. We assign this data frame to the variable `size_data` for use below and then, to get an impression of what is in the data frame, we use the `str()` function.
 :::
 
-The data consists of measurements of the length in centimetres of `r nrow(data)` fish of various species. The species included are
+The data consists of measurements of the length in centimetres of `r nrow(size_data)` fish of various species. The species included are
 
 ```{r}
-unique(data$species)
+unique(size_data$species)
 ```
 
 This data was assembled by Ken Andersen at DTU Aqua in Copenhagen. The `length` in centimetres $l$ was converted to `weight` in grams $w$ using the standard allometric relationship
@@ -74,7 +83,7 @@ $$ w = a\, l ^ b,$$
 
 where the coefficient $a$ and the exponent $b$ are species-specific parameters (we'll discuss how to find such species parameters in a [later tutorial](../build/find-species-parameters.qmd)). The reason we like to work with weight as the measure of a fish's size is that there are well-known allometric relationships between weight and physiological rates. For example, metabolic rate is generally expected to scale as $w^{3/4}$ and mortality to scale as $w^{-1/4}$, as we will be discussing in the section on [allometric rates](single-species-spectra.qmd#allometric-rates) in the next tutorial.
 
-::: callout-important
+::: callout-note
 When not otherwise specified, all lengths are given in centimetres \[cm\] and all weights are given in grams \[g\].
 :::
 
@@ -83,7 +92,7 @@ When not otherwise specified, all lengths are given in centimetres \[cm\] and al
 To get an impression of the size distribution of the fish, we plot a histogram of the fish weights.
 
 ```{r message=FALSE}
-p <- ggplot(data) +
+p <- ggplot(size_data) +
     geom_histogram(aes(weight), fill = "blue", colour = "black") +
     scale_x_continuous(name = "Weight [g]") +
     scale_y_continuous(name = "Number of fish")
@@ -96,7 +105,7 @@ p
 
 We have used the [ggplot2](https://ggplot2.tidyverse.org/) package, included in the tidyverse package, to make the plot. It is much more powerful and convenient than the base plot commands. It implements the "grammar of graphics". If you are not already using ggplot2 it is worth your time to familiarise yourself with it. However for the purpose of this tutorial, you can simply pick up the syntax from the examples we give.
 
-In the above we first specify with `ggplot(data)` that the graph shall be based on the data frame `data` that we loaded previously. We then add features to the graph with the `+`.
+In the above we first specify with `ggplot(size_data)` that the graph shall be based on the data frame `size_data` that we loaded previously. We then add features to the graph with the `+`.
 
 First `geom_histogram()` specifies that we want a histogram plot. The argument specifies the variable to be represented. Note how this is wrapped in a call to `aes()`. Don't ask why, that is the way the grammar of graphics likes it. The specification of how the variables are tied to the aesthetics of the graph will always be given withing the `aes()` function.
 
@@ -126,7 +135,7 @@ The second way to deal with the fact that there are so many more small fish than
 ```{r }
 (log_breaks <- seq(from = 0, to = 11, by = 1))
 
-(binbreaks <- 2 ^ log_breaks)
+(bin_breaks <- 2 ^ log_breaks)
 ```
 
 ::: {.callout-note collapse="true"}
@@ -142,9 +151,9 @@ The reason we have put parentheses `( ... )` around the assignments in the above
 Now we can use these logarithmically spaced bins in the histogram while also keeping the logarithmic y-axis.
 
 ```{r message=FALSE}
-p2 <- ggplot(data) +
+p2 <- ggplot(size_data) +
     geom_histogram(aes(weight), fill = "blue", colour = "black",
-                   breaks = binbreaks) +
+                   breaks = bin_breaks) +
     labs(x = "Weight [g]",
          y = "Number of fish") +
     scale_y_log10()
@@ -155,18 +164,15 @@ The heights are now slightly more even among the bins, because the largest bin i
 
 It is very important that you break up your reading of the tutorials with some hands-on work that builds on what you have just learned. Therefore you will find exercises throughout the tutorials. You have now reached the first exercise. You will find that it can be accomplished using the R functions you have already learned about. Please do your work in the worksheet that accompanies this tutorial and that you will find in this week's worksheet repository.
 
-If you have not yet created this week's worksheet repository, you can do so by following this link to accept your assignments for week 1:
-
-<https://classroom.github.com/a/5cnr1H7R>
-
-Once your repository has been created on GitHub, you will be given the URL that you need to clone it to your computer by creating a new project in RStudio. To do that you will need to follow the same steps as in the [Use Git and GitHub](../prepare/use-git-and-github.qmd) tutorial. You may want to review the instructions in the [Create repository](../prepare/use-git-and-github.qmd#create-repository) and [Clone repository](../prepare/use-git-and-github.html#clone-repository) sections.
+::: {.callout-important}
+If you have not yet created this week's worksheet repository, you may want to the "[Worksheets](index.qmd#worksheets)" section on the index page for this week where you find instructions.
 
 You will find the worksheet for this tutorial in the file "worksheet1-observed-size-spectra.Rmd" in your worksheet repository for this week. In that worksheet you will find the following first exercise:
 
 ::: {.callout-caution collapse="false"}
 ### Exercise 1
 
-Now you want to double the number of logarithmically-sized bins used to get a more detailed picture of the size spectrum. So instead of using 11 bins to cover the range from 1g to 2048g, where each bin is twice as large as the previous, you want to use 22 bins where each bin is larger than the previous one by a factor of $\sqrt{2}$.
+Now you want to double the number of logarithmically-sized bins used, in order to get a more detailed picture of the size spectrum. So instead of using 11 bins to cover the range from 1g to 2048g, where each bin is twice as large as the previous, you want to use 22 bins where each bin is larger than the previous one by a factor of $\sqrt{2}$.
 
 Create the vector with the breaks between the bins and then use that when you plot the histogram.
 :::
@@ -197,8 +203,8 @@ Because it is important to understand this concept of **density**, we will calcu
 To understand better what the histogram did and to improve the plots further, we bin the data ourselves. We do this by first adding a bin number to each observation, which indicates in which bin the weight of the fish lies.
 
 ```{r }
-data_with_bins <- data |>
-    mutate(bin = cut(weight, breaks = binbreaks, right = FALSE,
+data_with_bins <- size_data |>
+    mutate(bin = cut(weight, breaks = bin_breaks, right = FALSE,
                      labels = FALSE))
 head(data_with_bins)
 ```
@@ -209,13 +215,13 @@ head(data_with_bins)
 We used the pipe operator `|>` that simply pipes the output of the code preceeding it into the first argument of the function following it. So the above code is equivalent to
 
 ```{r eval=FALSE}
-data_with_bins <- mutate(data, bin = cut(weight, breaks = binbreaks, 
+data_with_bins <- mutate(size_data, bin = cut(weight, breaks = bin_breaks, 
                                          right = FALSE, labels = FALSE))
 ```
 
 The pipe operator becomes really useful only if you do a longer sequence of operations on data. You will see examples of its use later.
 
-The `mutate()` function can add new columns to a data frame or modify existing columns. In the above example it adds a new column `bin`. The entries in that column are here calculated by the function `cut` that returns the label of the bin into which an observation falls. We specify the bin boundaries with the `breaks = binbreaks` to be the boundaries we have calculated above. The `right = FALSE` means that in case an observation falls exactly on a right bin boundary, it is not included in that bin but instead in the next bin. The `labels = FALSE` means that the bins are not labelled by the intervals but simply by integer codes.
+The `mutate()` function can add new columns to a data frame or modify existing columns. In the above example it adds a new column `bin`. The entries in that column are here calculated by the function `cut` that returns the label of the bin into which an observation falls. We specify the bin boundaries with the `breaks = bin_breaks` to be the boundaries we have calculated above. The `right = FALSE` means that in case an observation falls exactly on a right bin boundary, it is not included in that bin but instead in the next bin. The `labels = FALSE` means that the bins are not labelled by the intervals but simply by integer codes.
 :::
 
 We then group the data by bin and calculate the number of fish in each bin
@@ -242,7 +248,7 @@ The numbers in each bin give us the heights of the histogram above.
 The values for `Numbers` of course depend on the size of the bins we have chosen. Wider bins will have more fish in them. It is therefore convenient to divide these numbers by the bin widths to get the average number density in the bins.
 
 ```{r}
-bin_width <- diff(binbreaks)
+bin_width <- diff(bin_breaks)
 
 binned_numbers <- binned_numbers |> 
     mutate(Number_dens = Numbers / bin_width[bin])
@@ -342,14 +348,14 @@ The term lambda or $\lambda$ is widely used in size spectrum terminology and it 
 Of course the approach we took above of estimating the exponent in the power law from the binned data is not ideal. If one has access to unbinned data, as we have here, one should always use that unbinned data. So the better way to estimate the slope or exponent from our data would be to ask: "If we view our set of observed fish sizes as a random sample from the population described by the power law, for which exponent would our observations be the most likely". In other words, we should do a maximum likelihood estimation of the exponent. We'll skip the mathematical details and just tell you the result that the maximum likelihood estimate for the power-law exponent $\lambda$ is $$\lambda = 1+\frac{n}{\sum_{i=1}^n\log\frac{w_i}{w_{min}}},$$ where $n$ is the number of observed fish, $w_i$ is the weight of the $i$th fish and $w_{min}$ is the weight of the smallest fish. For our data this gives
 
 ```{r}
-w_min = min(data$weight)
-lambda <- 1 + nrow(data) / sum(log(data$weight / w_min))
+w_min = min(size_data$weight)
+lambda <- 1 + nrow(size_data) / sum(log(size_data$weight / w_min))
 lambda
 ```
 
 You can see that this approach, which gives equal weight to each observation rather than giving equal weight to each bin, gives a lower value for $\lambda$, namely $\lambda \approx 1.71$ instead of $\lambda \approx 2.24$. This is quite a big difference. But this is still not the end of the story, because we did not take measurement error into account. We assumed that we sampled perfectly. But in reality, small individuals are much easier to miss than large ones, so our data is almost certainly under-reporting the number of small individuals, which leads to a smaller $\lambda$ or more shallow size spectra. Also, in many ecosystems large fish have been removed by fishing, so we might also be missing them. This would lead to steeper slopes and larger $\lambda$. But this is a separate set of analsyes.
 
-To estimate slopes properly we should try to observe the power law over a wider range of sizes, all the way from bacteria to whales. This is what Sheldon et.al. did in 1972 and he observed that $\lambda \approx 2$. More thorough investigations since then have led to values just slightly above $2$ on average. TODO: references.
+To estimate slopes properly we should try to observe the power law over a wider range of sizes, all the way from bacteria to whales. This is what Sheldon et.al. did in 1972 and he observed that $\lambda \approx 2$. More thorough investigations since then have led to values just slightly above $2$ on average.
 
 ## Biomass density
 
@@ -370,7 +376,7 @@ binned_biomass <- data_with_bins |>
 Make a plot of the biomass density similarly to how we plotted the number density above, using logarithmic axes and also plotting the straight-line approximation.
 :::
 
-Fitting a same linear model to the binned biomass density data now gives
+Fitting a linear model to the binned biomass density data now gives
 
 ```{r}
 (model <- lm(log(Biomass_dens) ~ log(bin_midpoint), data = binned_biomass))
@@ -387,7 +393,7 @@ Above, we calculated densities by dividing the total number or total biomass in 
 We saw [earlier](#logarithmic-w-axis) that when we plot the logarithmically-sized bins on a logarithmic w axis they are all equally sized. We can calculate the size of the bins in log weight:
 
 ```{r}
-log10_breaks <- log10(binbreaks)
+log10_breaks <- log10(bin_breaks)
 log10_bin_width <- diff(log10_breaks)
 log10_bin_width
 ```
@@ -438,11 +444,10 @@ $$B_{\log w}(w) = w\, B(w) \propto w\, N_{\log}(w) = w^2 N(w).$$
 
 Sheldon's observation was that $B_{\log w}(w)$ is approximately constant over a large range of sizes $w$ from bacteria to whales. That corresponds to the earlier phrasing of Sheldon's observation that $N(w)\propto w^{-\lambda}$ with $\lambda$ close to 2. Here is a very important and interesting summary about the slopes:
 
-**The slope of the number density is approximately -2, the slope of the biomass density and the number density in log weight is approximately -1, and the slope of the biomass density in log weight is approximately 0, i.e., the biomass density in log weight is approximately constant.**
+::: {.callout-important}
+The slope of the number density is approximately -2, the slope of the biomass density and the number density in log weight is approximately -1, and the slope of the biomass density in log weight is approximately 0, i.e., the biomass density in log weight is approximately constant.
+:::
 
-
-:::{.callout-caution collapse="true"}
-### Expand for technical detail
 When we talk of "log weight", we have to define what we mean. Weight is a dimensionful quantity. We need to choose a unit before we can take the logarithm. In mizer we choose to measure weight in grams. So when we say "log weight", we mean the logarithm of the weight measured in grams. The result is a dimensionless quantity.
 
 We also need to specify the base of the logarithm. The ggplot package likes to work with log10, mizer also follows that convention, therefore that is what we chose in the above graphs. It does not matter: choosing a different base just rescales the density by an overall factor.
@@ -454,7 +459,7 @@ The different densities have different units. This is the result of two factors:
 * $B_{\log w}(w)$ has unit grams.
 
 We know that one should be careful when plotting quantities with different dimensions on the same axis because the result depends on the units chosen. Above we chose grams as our unit.
-:::
+
 
 
 ## Size spectra of individual species
@@ -462,7 +467,7 @@ We know that one should be careful when plotting quantities with different dimen
 So far we have looked at the community spectrum, where we ignored the species identity of the fish. We will now look at the spectra of the individual species. We'll plot them all on the same graph and display them with [plotly](https://plotly.com/r/) so that you can hover over the resulting graph to see which line corresponds to which species. We also include the community size spectrum in black for comparison. The lines look smoother than earlier because now we use kernel density estimation rather than binning to estimate the densities.
 
 ```{r}
-p <- ggplot(data) +
+p <- ggplot(size_data) +
     geom_density(aes(weight, stat(count), colour = species), adjust = 4) +
     geom_density(aes(weight, stat(count)), colour = "black", lwd = 1.2, adjust = 4) +
     scale_x_continuous(trans = "log10", name = "Weight [g]") +
@@ -500,7 +505,7 @@ We will discuss species size spectra more in the next tutorial, where we will lo
 
 2\)  We can represent size spectra in different ways. One is to bin the data and plot histograms. The drawback is that the height of the bars in a histogram depend on our choice of bins. A bin from 1 to 2g will have fewer individuals than a bin from 1 to 10g.
 
-3\)  To avoid the dependence on bin sizes, we use densities, where the total number of individuals or the total biomass of individuals in each bin are divided by the width of the bin. We refer to these as the number density or the biomass density respectively.
+3\)  To avoid the dependence on bin sizes, we use **densities**, where the total number of individuals or the total biomass of individuals in each bin are divided by the width of the bin. We refer to these as the number density or the biomass density respectively.
 
 3\)  The number density looks very different from the biomass density. There will be a lot of very small individuals, so the number density at small sizes will be large, but each individual weighs little, so their total biomass will not be large. 
 
