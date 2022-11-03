@@ -43,3 +43,8 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# dev branch only
+_freeze/*
+docs/*
+*_files/
