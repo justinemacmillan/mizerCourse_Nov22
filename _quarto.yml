@@ -61,18 +61,18 @@ website:
           - text: Use Git and GitHub
             href: prepare/use-git-and-github.qmd
       - section: "Week 1: Understand"
-        # href: understand/index.qmd
-        # contents: 
-          # - text: Observed size spectra
-          #   href: understand/observed-size-spectra.qmd
-          # - text: Single species spectra
-          #   href: understand/single-species-spectra.qmd
-          # - text: Predation, growth and mortality
-          #   href: understand/predation-growth-and-mortality.qmd
-          # - text: Species interactions
-          #   href: understand/species-interactions.qmd
-          # - text: Dynamics of size spectra
-          #   href: understand/dynamics-of-spectra.qmd
+        href: understand/index.qmd
+        contents:
+        - text: Observed size spectra
+          href: understand/observed-size-spectra.qmd
+        - text: Single species spectra
+          href: understand/single-species-spectra.qmd
+        - text: Predation, growth and mortality
+          href: understand/predation-growth-and-mortality.qmd
+        - text: Species interactions
+          href: understand/species-interactions.qmd
+        - text: Dynamics of size spectra
+          href: understand/dynamics-of-spectra.qmd
       - section: "Week 2: Build"
         # href: build/index.qmd
         # contents:
