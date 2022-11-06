@@ -416,8 +416,8 @@ ggplot(psi_changed_maturity) +
 At this point let's take a little break and learn how to draw two curves in the same graph. How can we see the old maturity curve and the new maturity curve in the same plot? First we add an extra column to each dataframe describing it
 
 ```{r}
-psi$type = "original"
-psi_changed_maturity$type = "changed"
+psi$type <- "original"
+psi_changed_maturity$type <- "changed"
 ```
 
 Then we bind the two data frames together
@@ -426,13 +426,14 @@ Then we bind the two data frames together
 psi_combined <- rbind(psi, psi_changed_maturity)
 ```
 
-and send that combined data frame to `ggplot()`
+and send that combined data frame first to `ggplot()`. We also run the plot through `plotly::ggplotly()` to make it interactive, but that is of course entirely optional. 
 
 ```{r}
-ggplot(psi_combined) +
+p <- ggplot(psi_combined) +
     geom_line(aes(x = w, y = value, colour = type)) +
     labs(x = "Weight [g]",
          y = "Proportion invested into reproduction")
+plotly::ggplotly(p)
 ```
 
 This change in the maturity curve of course implies a change in the growth rates.
