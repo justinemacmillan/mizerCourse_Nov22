@@ -347,21 +347,15 @@ We also have put the text for the axis labels into the calls to scale_x_log10() 
 A straight line on a log-log plot indicates a power-law relationship between the variables with the slope of the line being the exponent in the power law.
 :::
 
-```{r}
-#| include: false
-coeff <- signif(model$coefficients[[1]], 3)
-exponent <- signif(model$coefficients[[2]], 3)
-```
-
-If we denote the number density at weight $w$ by $N(w)$, then the above tells us that $$\log(N(w)) \approx `r coeff` + \log(w)^{`r exponent`}.$$
+If we denote the number density at weight $w$ by $N(w)$, then the above tells us that $$\log(N(w)) \approx 14.6 -2.24 \log(w).$$
 
 If we exponentiate both sides to get rid of the logarithms this gives
 
 $$
-N(w) \approx \exp(`r coeff`) w^{`r exponent`} = N(1) w^{-\lambda}
+N(w) \approx \exp(14.6) w^{-2.24} = N(1) w^{-\lambda}
 $$
 
-with $\lambda \approx `r -exponent`$.
+with $\lambda \approx 2.24$.
 
 The term lambda or $\lambda$ is widely used in size spectrum terminology and it denotes the size spectrum slope. A steeper slope (larger $\lambda$ value) means that there are relatively fewer large fish compared to small fish. A more shallow slope (smaller $\lambda$) indicates a relatively larger number of large fish. Now you know how these slopes are calculated.
 
@@ -411,7 +405,7 @@ Fitting a linear model to the binned biomass density data now gives
 lm(log(Biomass_density) ~ log(bin_midpoint), data = binned_biomass)
 ```
 
-Note that number density and biomass density have very different slopes, because een though there are lots of fish, each of them contributes little biomass while the fewer large fish each contribute a large biomass. The slope is `r signif(model$coefficients[[2]], 4)` for the biomass density whereas it was `r exponent` for the number density.
+Note that number density and biomass density have very different slopes, because even though there are lots of fish, each of them contributes little biomass while the fewer large fish each contribute a large biomass. The slope is -1.265 for the biomass density whereas it was -2.24 for the number density.
 
 In formulas, if we denote the biomass density by $B(w)$ then $B(w) = w N(w)$. Therefore if the number density scales with the exponent $\lambda$ as $N(w) \propto w^{-\lambda}$ then the biomass density will scale as $B(w)\propto w^{1-\lambda}$.
 
