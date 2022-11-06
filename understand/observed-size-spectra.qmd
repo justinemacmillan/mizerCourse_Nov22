@@ -288,7 +288,7 @@ binned_numbers <- binned_numbers |>
 
 p_number_density <- ggplot(binned_numbers) +
     geom_line(aes(x = bin_midpoint, y = Number_density)) +
-    labs(x = "Weight [g]", y = "Number density")
+    labs(x = "Weight [g]", y = "Number density [1/g]")
 p_number_density
 ```
 
@@ -331,7 +331,7 @@ This tells us that the straight-line approximation has a slope of about `r signi
 ggplot(binned_numbers, aes(x = bin_midpoint, y = Number_density)) +
     geom_line() + 
     scale_x_log10(name = "Weight [g]") + 
-    scale_y_log10(name = "Number density") +
+    scale_y_log10(name = "Number density [1/g]") +
     geom_smooth(method = 'lm')
 ```
 
@@ -453,7 +453,7 @@ long_data <- binned_data |>
 ggplot(long_data, aes(x = bin_midpoint, y = Density, colour = Type)) +
     geom_line() + 
     scale_x_log10(name = "Weight [g]") + 
-    scale_y_log10(name = "Number density") +
+    scale_y_log10(name = "Density") +
     geom_smooth(method = 'lm', se = FALSE)
 ```
 
@@ -469,7 +469,7 @@ We added the `se = FALSE` argument to `geom_smooth()` to avoid plotting the conf
 
 We see that the number density in log weight has the same slope as the biomass density. The biomass density in log weight has the smallest slope.
 
-The different densities have different units. One should be explicit about units when plotting quantities with different units on the same axis because the height of the curves depends on the units chosen. The units of the densities we plotted are determined by two factors: 1) Biomass is measured in grams whereas Numbers are dimensionless and 2) bin widths are measured in grams whereas bin widths in log weight are dimensionless. The densities, obtained by dividing either Biomass or Numbers by either bin widths or bin widths in log weight, have the following units:
+The different densities have different units. One should be explicit about units when plotting quantities with different units on the same axis because the height (but not the slope) of the curves depends on the units chosen. The units of the densities we plotted are determined by two factors: 1) Biomass is measured in grams whereas Numbers are dimensionless and 2) bin widths are measured in grams whereas bin widths in log weight are dimensionless. The densities, obtained by dividing either Biomass or Numbers by either bin widths or bin widths in log weight, have the following units:
 
 -   $N(w)$ has unit 1/grams,
 -   $B(w)$ and $N_{\log w}(w)$ are dimensionless,
