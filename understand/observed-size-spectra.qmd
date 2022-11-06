@@ -327,7 +327,7 @@ model
 
 This tells us that the straight-line approximation has a slope of about `r signif(model$coefficients[[2]], 3)`. We can also ask ggplot to put this line into the plot, together with its 95% confidence interval:
 
-```{r warning=FALSE}
+```{r message=FALSE}
 ggplot(binned_numbers, aes(x = bin_midpoint, y = Number_density)) +
     geom_line() + 
     scale_x_log10(name = "Weight [g]") + 
@@ -436,7 +436,7 @@ binned_data <-
 ```
 
 ::: {.callout-note collapse="true"}
-### R details
+### Expand for R details
 
 The `left_join()` function combines the columns of the two data frames. The columns listed in the `by =` argument are those that are common between the two data frames. We end up with a data frame that contains in addition to those common columns also the columns `Number`, `Number_density`, `Biomass` and \`Biomass_density.
 
@@ -445,7 +445,7 @@ Then we add three further columns: `bin_width_log_w` holds the width of each bin
 
 We next create a plot that shows all these four densities together.
 
-```{r}
+```{r message=FALSE}
 long_data <- binned_data |>
     pivot_longer(cols = contains("density"),
                  names_to = "Type", values_to = "Density")
@@ -476,7 +476,7 @@ The different densities have different units. One should be explicit about units
 -   $B_{\log w}(w)$ has unit grams.
 
 ::: {.callout-caution collapse="false"}
-### Exercise 3:
+### Exercise 3
 
 Use the `lm()` function to determine the slope of the straight-line fit to the biomass density in log weight in this log-log plot.
 :::
@@ -497,7 +497,7 @@ The slope of the number density is approximately -2, the slope of the biomass de
 
 So far we have looked at the community spectrum, where we ignored the species identity of the fish. We will now look at the spectra of the individual species. We'll plot them all on the same graph and display them with [plotly](https://plotly.com/r/) so that you can hover over the resulting graph to see which line corresponds to which species. We also include the community size spectrum in black for comparison. The lines look smoother than earlier because now we use kernel density estimation rather than binning to estimate the densities.
 
-```{r}
+```{r warning=FALSE}
 p <- ggplot(size_data) +
     geom_density(aes(weight, stat(count), colour = species), adjust = 4) +
     geom_density(aes(weight, stat(count)), colour = "black", lwd = 1.2, adjust = 4) +
