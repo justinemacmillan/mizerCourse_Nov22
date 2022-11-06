@@ -26,9 +26,9 @@ In this and the next tutorial we want to keep the size-spectrum aspects of the m
 
 In this tutorial we will only be interested in the shape of the size spectrum, i.e., in how the total number of individuals is distributed over the different sizes. We are not yet interested in the overall abundance of the species. The overall abundance would be influenced by the total rate of reproduction and recruitment for the species. This in turn would be influenced by the size spectrum, because that determines how many of the individuals are mature. This dynamic feedback will of course become important when we build real-world models in week 2 and use them in week 3. But for now we have enough on our plate without thinking also about this.
 
-Mizer collects all the parameters describing a size-spectrum model into one object of class `MizerParams`. You do not need to set up this object by hand but instead there are several wrapper functions in mizer that create the object for you for various types of models, and also many functions for changing specific parameters in a model. We will use the `newSingleSpeciesParams()` function to set up a model describing a single fish species living in an ecosystem whose community size spectrum is given by a power-law.
+Mizer collects all the parameters describing a size-spectrum model into one object of class `MizerParams`. You do not need to set up this object by hand because there are several wrapper functions in mizer that create the object for you for various types of models, and also many functions for changing specific parameters in a model. We will use the `newSingleSpeciesParams()` function to set up a model describing a single fish species living in an ecosystem whose community size spectrum is given by a power-law.
 
-The `newSingleSpeciesParams()` function has many arguments that allow you to specify parameters for the fish species as well as for the community, but all these arguments have default values, so we can simply call the function without specifying those arguments. We will only specify the power-law exponent `lambda` of the background community. Note that in mizer the size spectrum exponent refers to the number density on a linear weight axis x and is therefore expected to be around 2.
+The `newSingleSpeciesParams()` function has many arguments that allow you to specify parameters for the fish species as well as for the community, but all these arguments have default values, so we can simply call the function without specifying those arguments. We will only specify the power-law exponent `lambda` of the background community. Note that in mizer the size spectrum exponent refers to the number density and is therefore expected to be around 2.
 
 ```{r}
 params <- newSingleSpeciesParams(lambda = 2.05)
@@ -70,7 +70,11 @@ While the `plotSpectra()` function gives us a plot of the number density, it wou
 n <- initialN(params)
 ```
 
-As you can see in the "Environment" pane in RStudio, `n` is a matrix with 1 row and 101 columns. The one row corresponds to the one species. In a multispecies model there would be one row for each species, holding the number density for that species. The 101 columns are for the number densities in each of the 101 size classes. By default mizer uses 100+1 size clases (or size bins), although you can easily change that. In fact, `n` is a named array, i.e., each row and each column has names. These we can extract with the `dimnames()` function.
+As you can see in the "Environment" pane in RStudio, `n` is a matrix with 1 row and 101 columns.
+
+![](../images/n_env.png)
+
+The one row corresponds to the one species. In a multispecies model there would be one row for each species, holding the number density for that species. The 101 columns are for the number densities in each of the 101 size classes. By default mizer uses 100+1 size clases (or size bins), although you can easily change that. In fact, `n` is a named array, i.e., each row and each column has names. These we can extract with the `dimnames()` function.
 
 ```{r}
 dimnames(n)
@@ -166,21 +170,27 @@ cumulative_biomass[] <- cumsum(biomass)
 # Normalise this so that it is given as a percentage of the total biomass
 cdf <- cumulative_biomass / cumulative_biomass[1, 101] * 100
 # Melt the array to a data frame and then plot
-ggplot(melt(cdf), aes(x = w, y = value)) +
+p_biomass_cdf <- ggplot(melt(cdf), aes(x = w, y = value)) +
     geom_line() + 
     labs(x = "Weight [g]",
          y = "% of total biomass")
+p_biomass_cdf
 ```
+
+::: {.callout-note collapse="true"}
+### Expand for R details
+
+Mizer likes to work with arrays instead of data frames. Our variables `n`, `biomass`, `cumulative_biomass` and `cdf` are all arrays. I hope you noticed the magic how R can do calculations with all entries of an array in one go.
+
+ggplot2 on the other hand likes to work with data frames instead of arrays. The function `melt()` allows us to convert the mizer arrays into data frames suitable for `ggplot()`. You will see this discussed again later.
+:::
 
 This plot shows us for example that 50% of the individuals are smaller than 12.5g and only a very small percentage is larger than 75g.
 
 The biomass density is the slope of this graph. We can also plot the cumulative biomass distribution function on a logarithmic weight axis:
 
 ```{r}
-ggplot(melt(cdf), aes(x = w, y = value)) +
-    geom_line() +
-    labs(x = "Weight [g]",
-         y = "% of total biomass") +
+p_biomass_cdf +
     scale_x_log10()
 ```
 
@@ -210,7 +220,7 @@ You can again see in the "Environment" pane that this is a matrix with one row f
 growth_rate[1, 61]
 ```
 
-(because we had seen that the 61st size class starts at 1 gram). This is the instantaneous per-capita growth rate, measured in grams per year. Note that in mizer all rates are measured in units of year, but for many people daily values are easier to understand. Since growth rate here is an instantaneous rate we can simply divide it by 365 to get a daily rate (although note that mizer does not simulate processes on daily time steps). This gives us a growth rate per day for a 1g sized fish of
+(because we had seen that the 61st size class starts at 1 gram). This is the instantaneous per-capita growth rate, measured in grams per year. Note that in mizer all rates are measured in units of 1/year, but for many people daily values are easier to understand. Since growth rate here is an instantaneous rate we can simply divide it by 365 to get a daily rate (although note that mizer does not simulate processes on daily time steps). This gives us a growth rate in grams per day for a 1g sized fish of
 
 ```{r}
 growth_rate[1, 61] / 365
@@ -235,7 +245,6 @@ p <- ggplot(growth_rate_frame) +
     geom_line(aes(x = w, y = value)) +
     scale_x_log10(name = "Weight [g]") +
     scale_y_log10(name = "Growth rate [g/year]")
-
 p
 ```
 
@@ -279,7 +288,7 @@ Then fit a linear model to determine the slope and and intercept and thus the al
 
 ## Slope of juvenile spectrum
 
-We have seen that for juvenile fish the growth rate and the death rate are both power laws with exponents $p=3/4$ and $r=p-1=-1/4$ respectively. By solving a differential equation we can derive that the juvenile spectrum also follows a power law: $$N(w) = N_0\ w^{-\mu_0/g_0 - p}$$
+We have seen that for juvenile fish the growth rate and the death rate are both power laws with exponents $p=3/4$ and $r=p-1=-1/4$ respectively. By solving a differential equation we can derive that the juvenile spectrum also follows a power law: $$N(w) = N_0\ w^{-\mu_0/g_0 - p}.$$
 
 I won't do the maths here with you (and you probably don't want me to anyway), but we can see that the result makes sense. It tells us that the number density drops of faster with size if the mortality rate coefficient $\mu_0$ is higher or if the growth rate coefficient $g_0$ is smaller, which is what we would expect.
 
@@ -293,7 +302,6 @@ ggplot(nf) +
   geom_line(aes(x = w, y = value)) +
   scale_x_log10(name = "Weight [g]") +
   scale_y_log10(name = "Number density [1/g]")
-
 ```
 
 That confirms what we had seen earlier, that for fish less than 10 grams the number density is a power law. To determine the exponent of the power law we need the slope of that straight line in the log-log plot, and the easiest way to do that is to fit a linear model to the log variables:
@@ -338,7 +346,6 @@ p <- ggplot(psi) +
     geom_line(aes(x = w, y = value)) +
     labs(x = "Weight [g]",
          y = "Proportion invested into reproduction")
-
 p
 ```
 
@@ -438,7 +445,7 @@ Make a plot showing the growth rates of the original model and of the model with
 
 ### Effect of changed maturity
 
-Next let us look at how the change in the maturity parameters affects the steady state spectrum. First need to calculate the new steady state using the function `singleSpeciesSteady()`.
+Next let us look at how the change in the maturity parameters and the resulting change in the growth rate affects the steady state spectrum. First we need to calculate the new steady state using the function `singleSpeciesSteady()`.
 
 ```{r}
 params_changed_maturity <- singleSpeciesSteady(params_changed_maturity)
@@ -452,7 +459,7 @@ plotSpectra2(params, name1 = "Early maturity",
              power = 2, resource = FALSE, wlim = c(10, NA))
 ```
 
-As expected, the bump happens later due to the larger maturity size and it is less pronounced, because the maturity curve is less steep. This means that fish do not suddenly start investing most of their energy into reproduction, but still keep growing while they are maturity. Since they are still growing they will be moving from one size class to another and fewer individuals will accumulate in one size class.
+As expected, the bump happens later due to the larger maturity size and it is less steep, because the maturity curve is less steep. This means that fish do not suddenly start investing most of their energy into reproduction, but still keep growing while they are maturity. Since they are still growing they will be moving from one size class to another and fewer individuals will accumulate in one size class.
 
 This was our first investigation of how the shape of a species size spectrum changes as model parameters are changed. We will do much more in this direction in the next tutorial in which we discuss how growth and mortality are determined through predation.
 
