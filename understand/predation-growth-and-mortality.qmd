@@ -68,42 +68,12 @@ The dip in the growth rate may not seem very significant in the above plot, but 
 params_starved <- singleSpeciesSteady(params_starved)
 ```
 
-We can now plot this:
+We can now visualise the difference in the size spectra with the `plotSpectra2()` function:
 
 ```{r}
-plotSpectra(params_starved, power = 2)
-```
-
-It would again be nice to put this onto the same plot as the original model. So we need to adapt our previous method for combining plots to the case where the plot is created by one of mizer's built-in plot functions.
-
-We first get the data frames behind the plots by specifying the `return_data = TRUE` argument.
-
-```{r}
-bf_original <- plotSpectra(params, power = 2, wlim = c(1e-3, NA),
-                           return_data = TRUE)
-bf_starved <- plotSpectra(params_starved, power = 2, wlim = c(1e-3, NA),
-                          return_data = TRUE)
-```
-
-We add an extra column `Model` to each data frame describing it and then bind the two data frames together:
-
-```{r}
-bf_original$Model <- "Original"
-bf_starved$Model <- "Reduced prey"
-
-bf <- rbind(bf_original, bf_starved)
-```
-
-We send the combined data frame to ggplot, specifying that the linetype should be determined by the variable `Model`:
-
-```{r}
-spectra_plot <- ggplot(bf, aes(x = w, y = value, colour = Legend, 
-                               linetype = Model)) +
-    geom_line() +
-    scale_x_log10("Weight [g]") +
-    scale_y_log10("Biomass density [g]") + 
-    # The following uses the same colours as the built-in plot functions
-    scale_colour_manual(values = getColours(params), limits = force)
+spectra_plot <- plotSpectra2(params, name1 = "Original",
+             params_starved, name2 = "Reduced prey",
+             power = 2)
 spectra_plot
 ```
 
@@ -133,7 +103,7 @@ Here we hand over to you to investigate what happens when the prey abundance is 
 ::: {.callout-caution collapse="false"}
 ### Exercise 1
 
-Make a single plot, similar to the one above, comparing the steady state biomass density in log weight in the original model with that when the community abundance is increased by a factor of 10 in the size range from 1mg to 10mg.
+Make a single plot, similar to the one above, comparing the steady state biomass density in log weight in the original model with that when the community abundance is **increased** by a factor of 10 in the size range from 1mg to 10mg.
 :::
 
 ## How predation is modelled
@@ -207,15 +177,9 @@ initialNResource(params_pk) <- initialNResource(params_starved)
 # Find the new steady state, because conditions have changed.
 params_pk <- singleSpeciesSteady(params_pk)
 
-bf_pk <- plotSpectra(params_pk, power = 2, return_data = TRUE)
-bf_pk$Model <- "Reduced prey, large PPMR"
-bf <- rbind(bf_original, bf_starved, bf_pk)
-ggplot(bf, aes(x = w, y = value, colour = Legend, linetype = Model)) +
-    geom_line() +
-    scale_x_log10("Weight [g]") +
-    scale_y_log10("Biomass density [g]") + 
-    # The following uses the same colours as the built-in plot functions
-    scale_colour_manual(values = getColours(params), limits = force)
+plotSpectra2(params_starved, name1 = "beta = 100",
+             params_pk, name2 = "beta = 1000",
+             power = 2)
 ```
 
 The dip is indeed happening later.

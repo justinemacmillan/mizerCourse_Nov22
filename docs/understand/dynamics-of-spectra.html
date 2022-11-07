@@ -307,34 +307,24 @@ Important
 </div>
 <section id="projections" class="level3"><h3 class="anchored" data-anchor-id="projections">Projections</h3>
 <p>In the previous tutorial, in the section on <a href="../understand/species-interactions.html#trophic-cascades">trophic cascades</a>, we already simulated the size-spectrum dynamics to find the new steady state. But we only looked at the final outcome once the dynamics had settled down to the new steady state. We reproduce the code here:</p>
-<div class="cell" data-hash="dynamics-of-spectra_cache/html/unnamed-chunk-2_3707dd371f1719e77c0b8502f3cb0c7e">
+<div class="cell" data-hash="dynamics-of-spectra_cache/html/unnamed-chunk-2_039e34552b5c7d6a1b41fe0702b38eba">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create trait-based model</span></span>
 <span><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sizespectrum.org/mizer/reference/newTraitParams.html">newTraitParams</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>    <span class="co"># run to steady state with constant reproduction rate</span></span>
 <span>    <span class="fu">steady</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="co"># turn of reproduction and instead keep egg abundance constant</span></span>
 <span>    <span class="fu"><a href="https://sizespectrum.org/mizer/reference/setRateFunction.html">setRateFunction</a></span><span class="op">(</span><span class="st">"RDI"</span>, <span class="st">"constantEggRDI"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://sizespectrum.org/mizer/reference/setRateFunction.html">setRateFunction</a></span><span class="op">(</span><span class="st">"RDD"</span>, <span class="st">"noRDD"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The resource carrying capacity has been commented and therefore will not be recalculated from the resource parameters.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Convergence was achieved in 6 years.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The resource carrying capacity has been commented and therefore will not be recalculated from the resource parameters.</code></pre>
-</div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># We make a copy of the model</span></span>
+<span>    <span class="fu"><a href="https://sizespectrum.org/mizer/reference/setRateFunction.html">setRateFunction</a></span><span class="op">(</span><span class="st">"RDD"</span>, <span class="st">"noRDD"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># We make a copy of the model</span></span>
 <span><span class="va">mp_lessRes</span> <span class="op">&lt;-</span> <span class="va">mp</span></span>
 <span><span class="co"># and set the resource interaction to 0.8 for species 8 to 11</span></span>
 <span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/species_params.html">species_params</a></span><span class="op">(</span><span class="va">mp_lessRes</span><span class="op">)</span><span class="op">$</span><span class="va">interaction_resource</span><span class="op">[</span><span class="fl">8</span><span class="op">:</span><span class="fl">11</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0.8</span></span>
 <span></span>
 <span><span class="co"># We run the dynamics until we reach steady state</span></span>
-<span><span class="va">mp_lessRes_steady</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sizespectrum.org/mizer/reference/projectToSteady.html">projectToSteady</a></span><span class="op">(</span><span class="va">mp_lessRes</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Convergence was achieved in 24 years.</code></pre>
-</div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># We compare the steady states</span></span>
+<span><span class="va">mp_lessRes_steady</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sizespectrum.org/mizer/reference/projectToSteady.html">projectToSteady</a></span><span class="op">(</span><span class="va">mp_lessRes</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># We compare the steady states</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/mizerExperimental/man/plotSpectra2.html">plotSpectra2</a></span><span class="op">(</span><span class="va">mp_lessRes_steady</span>, name1 <span class="op">=</span> <span class="st">"less resource"</span>, </span>
 <span>             <span class="va">mp</span>, name2 <span class="op">=</span> <span class="st">"original"</span>,</span>
 <span>             total <span class="op">=</span> <span class="cn">TRUE</span>, power <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -345,11 +335,11 @@ Important
 </div>
 <p>But we can also save and then display the spectra of all the species at intermediate times. This is what the <code><a href="https://sizespectrum.org/mizer/reference/project.html">project()</a></code> function does. It projects the current state forward in time and saves the result of that simulation in a larger object, a MizerSim object, which contains the resulting time series of size spectra. Let’s use it to project forward by 24 years.</p>
 <div class="cell" data-hash="dynamics-of-spectra_cache/html/unnamed-chunk-3_b26923161a0d668854e4cebb35c21a97">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sim_lessRes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sizespectrum.org/mizer/reference/project.html">project</a></span><span class="op">(</span><span class="va">mp_lessRes</span>, t_max <span class="op">=</span> <span class="fl">24</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sim_lessRes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sizespectrum.org/mizer/reference/project.html">project</a></span><span class="op">(</span><span class="va">mp_lessRes</span>, t_max <span class="op">=</span> <span class="fl">24</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can now use this MizerSim object in the <code><a href="https://sizespectrum.org/mizer/reference/animateSpectra.html">animateSpectra()</a></code> function to create an animation showing the change in the size spectra over time.</p>
 <div class="cell" data-hash="dynamics-of-spectra_cache/html/unnamed-chunk-4_dbf8405caf4605e67b25d98db75537b0">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/animateSpectra.html">animateSpectra</a></span><span class="op">(</span><span class="va">sim_lessRes</span>, total <span class="op">=</span> <span class="cn">TRUE</span>, power <span class="op">=</span> <span class="fl">2</span>, </span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/animateSpectra.html">animateSpectra</a></span><span class="op">(</span><span class="va">sim_lessRes</span>, total <span class="op">=</span> <span class="cn">TRUE</span>, power <span class="op">=</span> <span class="fl">2</span>, </span>
 <span>               ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1e-8</span>, <span class="cn">NA</span><span class="op">)</span>, wlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1e-3</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="htmlwidget-c73b24d471b4cdc24375" style="width:100%;height:464px;" class="plotly html-widget"></div>
@@ -360,38 +350,38 @@ Important
 <p><strong>Note</strong>, for some species size spectra at the largest size class drop all the way to very small values (e.g.&nbsp;10^-7) and for others they stop higher. This is just a discretisation artifact and is not important. Try to ignore it.</p>
 <p>Of course we can also get at the numeric values of the spectra at different times. First of all the function <code><a href="https://sizespectrum.org/mizer/reference/getTimes.html">getTimes()</a></code> gives the times at which simulation results are available in the MizerSim object:</p>
 <div class="cell" data-hash="dynamics-of-spectra_cache/html/unnamed-chunk-5_cd64a13ada25a69fc20dac8f7b0897a2">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/getTimes.html">getTimes</a></span><span class="op">(</span><span class="va">sim_lessRes</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/getTimes.html">getTimes</a></span><span class="op">(</span><span class="va">sim_lessRes</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]  0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24</code></pre>
 </div>
 </div>
 <p>The function <code><a href="https://sizespectrum.org/mizer/reference/N.html">N()</a></code> returns a three-dimensional array (time x species x size) with the number density of consumers. To get for example the number density for the 2nd species after 5 years in the 1st size class we do</p>
 <div class="cell" data-hash="dynamics-of-spectra_cache/html/unnamed-chunk-6_3b0a8c9125526116c35f12a5459b2c89">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/N.html">N</a></span><span class="op">(</span><span class="va">sim_lessRes</span><span class="op">)</span><span class="op">[</span><span class="fl">6</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/N.html">N</a></span><span class="op">(</span><span class="va">sim_lessRes</span><span class="op">)</span><span class="op">[</span><span class="fl">6</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.621407</code></pre>
 </div>
 </div>
 <p>If the function <code><a href="https://sizespectrum.org/mizer/reference/getBiomass.html">getBiomass()</a></code> is supplied with a MizerSim object then it returns an array (time x species) containing the biomass in grams at each time step for all species. So for example the biomass in grams of the 2nd species after 5 years is</p>
 <div class="cell" data-hash="dynamics-of-spectra_cache/html/unnamed-chunk-7_b03441307e991bdabaa3aadf32a631e2">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/getBiomass.html">getBiomass</a></span><span class="op">(</span><span class="va">sim_lessRes</span><span class="op">)</span><span class="op">[</span><span class="fl">6</span>, <span class="fl">2</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/getBiomass.html">getBiomass</a></span><span class="op">(</span><span class="va">sim_lessRes</span><span class="op">)</span><span class="op">[</span><span class="fl">6</span>, <span class="fl">2</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.003434511</code></pre>
 </div>
 </div>
 <p>The biomass time series can be plotted with <code><a href="https://sizespectrum.org/mizer/reference/plotBiomass.html">plotBiomass()</a></code>:</p>
 <div class="cell" data-hash="dynamics-of-spectra_cache/html/unnamed-chunk-8_20cf0abfbf292081ad681ad0abe7bd61">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/plotBiomass.html">plotBiomass</a></span><span class="op">(</span><span class="va">sim_lessRes</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/plotBiomass.html">plotBiomass</a></span><span class="op">(</span><span class="va">sim_lessRes</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="dynamics-of-spectra_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Mizer provides many more functions to analyse the results of a simulation, some of which you will learn later in this course.</p>
+<p>Mizer provides many more functions to analyse the results of a simulation, some of which you will learn later about in this course.</p>
 </section></section><section id="reproduction-dynamics" class="level2"><h2 class="anchored" data-anchor-id="reproduction-dynamics">Reproduction dynamics</h2>
 <p>The above simulation was run with constant abundance in the smallest size class for each species. This of course is not realistic. The abundance of the smallest individuals depends on the rate at which mature individuals spawn offspring, and this in turn depends, among other things, on the abundance of mature individuals. So if the abundance of mature individuals goes down drastically, as it did for species 8 to 11 above, then the abundance of offsprings for those species will go down as well.</p>
 <p>To see the effect we run the same code as above after deleting the two lines that turned off the reproduction dynamics. We also specify with <code>t_save = 2</code> that we want to save the spectrum only every second year, which speeds up the display of the animation.</p>
 <div class="cell" data-hash="dynamics-of-spectra_cache/html/unnamed-chunk-9_aa20e1833b3397d8711c56fe7c69254e">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create trait-based model</span></span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create trait-based model</span></span>
 <span><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sizespectrum.org/mizer/reference/newTraitParams.html">newTraitParams</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>    <span class="co"># run to steady state with constant reproduction rate</span></span>
 <span>    <span class="fu">steady</span><span class="op">(</span><span class="op">)</span></span>
@@ -422,7 +412,7 @@ R_{di} = \frac{\rm{erepro}}{2 w_{min}} E_R.
 </span></p>
 <p>This is calculated in mizer with <code><a href="https://sizespectrum.org/mizer/reference/getRDI.html">getRDI()</a></code>:</p>
 <div class="cell" data-hash="dynamics-of-spectra_cache/html/unnamed-chunk-10_41ddd7583de2f5cd72813598331e02a0">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/getRDI.html">getRDI</a></span><span class="op">(</span><span class="va">mp</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/getRDI.html">getRDI</a></span><span class="op">(</span><span class="va">mp</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          1           2           3           4           5           6 
 0.344090412 0.211705188 0.130253809 0.080140004 0.049306967 0.030336622 
@@ -432,7 +422,7 @@ R_{di} = \frac{\rm{erepro}}{2 w_{min}} E_R.
 </div>
 <p>The <code>erepro</code> parameter or reproduction efficiency can vary between 0 and 1 (although 0 would be bad) and reflects the fact that only a fraction of energy invested into reproduction can make into viable eggs or larvae.</p>
 </section><section id="density-dependence-in-reproduction" class="level3"><h3 class="anchored" data-anchor-id="density-dependence-in-reproduction">Density-dependence in reproduction</h3>
-<p>Note that what mizer models is not the rate of recruitment but the rate of egg production. The size spectrum dynamics then determine how many of those larvae grow up and survive to be recruited to the fishery.</p>
+<p>Note that mizer models the rate of egg production. The size spectrum dynamics then determine how many of those larvae grow up and survive to be recruited to the fishery.</p>
 <div class="callout-important callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -458,10 +448,10 @@ Important
 </div>
 </div>
 <p>This figure shows two graphs of <span class="math inline">R_{dd}</span> (solid lines), one for higher <span class="math inline">R_{max}</span> (black) and one for lower <span class="math inline">R_{max}</span> (blue). The values of <span class="math inline">R_{max}</span> are indicated by the dotted lines. The dashed lines show the density-independent rate <span class="math inline">R_{di}</span>.</p>
-<p>The important fact to observe is that the solid curves becomes more shallow as <span class="math inline">R_{max}</span> gets closer to the actual reproduction rate <span class="math inline">R_{dd}</span>. This slope determines how big the effect of a change in investment into reproduction (for example due to a change in spawning stock biomass) is on the reproduction rate. As the energy invested in reproduction changes away from the steady state value E_R on the x-axis, the the solid curves shows how much the reproduction rate changes on the y-axis. The change is smaller along the shallower blue line, the one that corresponds to the <span class="math inline">R_{max}</span> value that is closer to <span class="math inline">R_{dd}</span>. The result is that a species with a low ration between <span class="math inline">R_max</span> and <span class="math inline">R_{dd}</span> will be less impacted by depletion of its spawning stock by fishing, for example. This ratio we will refer to as the reproduction level and we will discuss it in the next section.</p>
+<p>The important fact to observe is that the solid curves becomes more shallow as <span class="math inline">R_{max}</span> gets closer to the actual reproduction rate <span class="math inline">R_{dd}</span>. This slope determines how big the effect of a change in investment into reproduction (for example due to a change in spawning stock biomass) is on the reproduction rate. As the energy invested in reproduction changes away from the steady state value E_R on the x-axis, the the solid curves shows how much the reproduction rate changes on the y-axis. The change is smaller along the shallower blue line, the one that corresponds to the <span class="math inline">R_{max}</span> value that is closer to <span class="math inline">R_{dd}</span>. The result is that a species with a low ratio between <span class="math inline">R_{max}</span> and <span class="math inline">R_{dd}</span> will be less impacted by depletion of its spawning stock by fishing, for example. This ratio we will refer to as the <strong>reproduction level</strong> and we will discuss it in the next section.</p>
 <p>This density-dependent rate of reproduction is calculated in mizer with <code><a href="https://sizespectrum.org/mizer/reference/getRDD.html">getRDD()</a></code>:</p>
 <div class="cell" data-hash="dynamics-of-spectra_cache/html/unnamed-chunk-12_24d66d583c074cc6ef2c82e7c33348b3">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/getRDD.html">getRDD</a></span><span class="op">(</span><span class="va">mp</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/getRDD.html">getRDD</a></span><span class="op">(</span><span class="va">mp</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          1           2           3           4           5           6 
 0.258067809 0.158778891 0.097690357 0.060105003 0.036980226 0.022752467 
@@ -479,7 +469,7 @@ Important
 <p>The ratio <span class="math inline">R_{dd} / R_{max}</span> we denote as the <strong>reproduction level</strong>. This name may remind you of the feeding level, which was the ratio betweenthe actual feeding rate and the the maximum feeding rate and described the level of density dependence coming from satiation. It takes a value between 0 and 1. It follows from our discussion in the previous section that a species with a high reproduction level is more resilient to changes.</p>
 <p>We can get the reproduction levels of the different species with <code><a href="https://sizespectrum.org/mizer/reference/getReproductionLevel.html">getReproductionLevel()</a></code>:</p>
 <div class="cell" data-hash="dynamics-of-spectra_cache/html/unnamed-chunk-13_721954f10c68a9dad909484399928d00">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/getReproductionLevel.html">getReproductionLevel</a></span><span class="op">(</span><span class="va">mp</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/getReproductionLevel.html">getReproductionLevel</a></span><span class="op">(</span><span class="va">mp</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   1    2    3    4    5    6    7    8    9   10   11 
 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 </code></pre>
@@ -487,15 +477,15 @@ Important
 </div>
 <p>We see that by default <code><a href="https://sizespectrum.org/mizer/reference/newTraitParams.html">newTraitParams()</a></code> had given all species the same reproduction level. We can change the reproduction level with the <code><a href="https://sizespectrum.org/mizer/reference/setBevertonHolt.html">setBevertonHolt()</a></code> function. We can set different reproduction levels for each species, but here we will simply set it to 0.9 for all species:</p>
 <div class="cell" data-hash="dynamics-of-spectra_cache/html/unnamed-chunk-14_2c049617cec688d637682dbb1a8af168">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mp9</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sizespectrum.org/mizer/reference/setBevertonHolt.html">setBevertonHolt</a></span><span class="op">(</span><span class="va">mp</span>, reproduction_level <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mp9</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sizespectrum.org/mizer/reference/setBevertonHolt.html">setBevertonHolt</a></span><span class="op">(</span><span class="va">mp</span>, reproduction_level <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Changing the reproduction level has no effect on the steady state, because that only depends on the rate of egg production <span class="math inline">R_dd</span> and that is kept fixed when changing the reproduction level. We can check that by running our new model to steady state and plotting that steady state together with the original steady state. They overlap perfectly.</p>
 <div class="cell" data-hash="dynamics-of-spectra_cache/html/unnamed-chunk-15_b61845defaf7d0b95b3b3678e0780481">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mp9</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sizespectrum.org/mizer/reference/projectToSteady.html">projectToSteady</a></span><span class="op">(</span><span class="va">mp9</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mp9</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sizespectrum.org/mizer/reference/projectToSteady.html">projectToSteady</a></span><span class="op">(</span><span class="va">mp9</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Convergence was achieved in 3 years.</code></pre>
 </div>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mizerExperimental/man/plotSpectra2.html">plotSpectra2</a></span><span class="op">(</span><span class="va">mp</span>, name1 <span class="op">=</span> <span class="st">"reproduction_level = 0.25"</span>,</span>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mizerExperimental/man/plotSpectra2.html">plotSpectra2</a></span><span class="op">(</span><span class="va">mp</span>, name1 <span class="op">=</span> <span class="st">"reproduction_level = 0.25"</span>,</span>
 <span>             <span class="va">mp9</span>, name2 <span class="op">=</span> <span class="st">"reproduction_level = 0.9"</span>,</span>
 <span>             total <span class="op">=</span> <span class="cn">TRUE</span>, power <span class="op">=</span> <span class="fl">2</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1e-8</span>, <span class="cn">NA</span><span class="op">)</span>, wlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1e-3</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -504,7 +494,7 @@ Important
 </div>
 <p>However the reproduction level has an effect on how sensitive the system is to changes. As an example, let us look at the dynamics that is triggered by the reduction in interaction with the resource by species 8 through 11.</p>
 <div class="cell" data-hash="dynamics-of-spectra_cache/html/unnamed-chunk-16_d28afedf4311addfedb5795c76ba6d57">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># We make a copy of the model</span></span>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># We make a copy of the model</span></span>
 <span><span class="va">mp_lessRes9</span> <span class="op">&lt;-</span> <span class="va">mp9</span></span>
 <span><span class="co"># and set the resource interaction to 0.8 for species 8 to 11</span></span>
 <span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/species_params.html">species_params</a></span><span class="op">(</span><span class="va">mp_lessRes9</span><span class="op">)</span><span class="op">$</span><span class="va">interaction_resource</span><span class="op">[</span><span class="fl">8</span><span class="op">:</span><span class="fl">11</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0.8</span></span>

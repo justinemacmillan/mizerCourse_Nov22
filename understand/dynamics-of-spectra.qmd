@@ -42,7 +42,7 @@ library(tidyverse)
 
 In the previous tutorial, in the section on [trophic cascades](species-interactions.qmd#trophic-cascades), we already simulated the size-spectrum dynamics to find the new steady state. But we only looked at the final outcome once the dynamics had settled down to the new steady state. We reproduce the code here:
 
-```{r}
+```{r message=FALSE}
 # Create trait-based model
 mp <- newTraitParams() |> 
     # run to steady state with constant reproduction rate
@@ -107,7 +107,7 @@ The biomass time series can be plotted with `plotBiomass()`:
 plotBiomass(sim_lessRes)
 ```
 
-Mizer provides many more functions to analyse the results of a simulation, some of which you will learn later in this course.
+Mizer provides many more functions to analyse the results of a simulation, some of which you will learn later about in this course.
 
 ## Reproduction dynamics
 
@@ -158,7 +158,7 @@ The `erepro` parameter or reproduction efficiency can vary between 0 and 1 (alth
 
 ### Density-dependence in reproduction
 
-Note that what mizer models is not the rate of recruitment but the rate of egg production. The size spectrum dynamics then determine how many of those larvae grow up and survive to be recruited to the fishery.
+Note that mizer models the rate of egg production. The size spectrum dynamics then determine how many of those larvae grow up and survive to be recruited to the fishery.
 
 ::: {.callout-important collapse="false"}
 The stock-recruitment relationship is an emergent phenomenon in mizer, with several sources of density dependence. Firstly, the amount of energy invested into reproduction depends on the energy income of the spawners, which is density-dependent due to competition for prey. Secondly, the proportion of larvae that grow up to recruitment size depends on the larval mortality, which depends on the density of predators, and on larval growth rate, which depends on density of prey.
@@ -205,7 +205,7 @@ ggplot(rbind(df, df2)) +
 
 This figure shows two graphs of $R_{dd}$ (solid lines), one for higher $R_{max}$ (black) and one for lower $R_{max}$ (blue). The values of $R_{max}$ are indicated by the dotted lines. The dashed lines show the density-independent rate $R_{di}$.
 
-The important fact to observe is that the solid curves becomes more shallow as $R_{max}$ gets closer to the actual reproduction rate $R_{dd}$. This slope determines how big the effect of a change in investment into reproduction (for example due to a change in spawning stock biomass) is on the reproduction rate. As the energy invested in reproduction changes away from the steady state value E_R on the x-axis, the the solid curves shows how much the reproduction rate changes on the y-axis. The change is smaller along the shallower blue line, the one that corresponds to the $R_{max}$ value that is closer to $R_{dd}$. The result is that a species with a low ration between $R_max$ and $R_{dd}$ will be less impacted by depletion of its spawning stock by fishing, for example. This ratio we will refer to as the reproduction level and we will discuss it in the next section.
+The important fact to observe is that the solid curves becomes more shallow as $R_{max}$ gets closer to the actual reproduction rate $R_{dd}$. This slope determines how big the effect of a change in investment into reproduction (for example due to a change in spawning stock biomass) is on the reproduction rate. As the energy invested in reproduction changes away from the steady state value E_R on the x-axis, the the solid curves shows how much the reproduction rate changes on the y-axis. The change is smaller along the shallower blue line, the one that corresponds to the $R_{max}$ value that is closer to $R_{dd}$. The result is that a species with a low ratio between $R_{max}$ and $R_{dd}$ will be less impacted by depletion of its spawning stock by fishing, for example. This ratio we will refer to as the **reproduction level** and we will discuss it in the next section.
 
 This density-dependent rate of reproduction is calculated in mizer with `getRDD()`:
 

@@ -55,7 +55,7 @@ The species interact with each other via predator-prey interactions. These inter
 plotlyDeath(mp, species = "8")
 ```
 
-The horizontal axis shows the size of the individual whose mortality we are looking at. Towards the left we see the mortality of the small larvae, as we move towards the right we move to larger individuals. So the main important message from this graph is that as an individual grows up, their main predators change.
+The horizontal axis shows the size of the individual whose mortality we are looking at. Towards the left we see the mortality of the small larvae, as we move towards the right we move to larger individuals. So the main important message from this graph is that as an individual grows up their main predators change.
 
 You might have expected that species 8 would be predated upon by the larger species 9, 10 and 11. And for large individuals of species 8, these three species do indeed form the dominant source of predation mortality, but we see also that smaller individuals of species 8 are predominantly predated upon by predators from smaller species. This arises because each predator prefers to feed at a certain fraction of its own size (which is set to 1/100th in this model), so the larger predators loose interest in the larvae and concentrate on the larger prey.
 
@@ -69,7 +69,7 @@ In the absence of other information, our simple trait-based model just assumes t
 plotDeath(mp, species = "8", proportion = FALSE)
 ```
 
-The plotDeath() function is extremely useful when building your own model, both as a proportion of mortality and as an absolute rate. It is important to know where the majority of mortality on your species and its various sizes come from. So make sure you remember it and use it a lot.
+The `plotDeath()` function is extremely useful when building your own model. It is important to know where the majority of mortality on your species and its various sizes come from. So make sure you remember it and use it a lot.
 
 ## Income from other species
 
@@ -92,7 +92,7 @@ Note, that it is very important to explore diets of species in your model, so, l
 ::: {.callout-caution collapse="false"}
 ### Exercise 1
 
-Now, check how the diets of other species look like. Start from species 1 (smallest one) and all the way to species 11.
+Now, check what the diets of other species look like. Start from species 1 (smallest one) and go all the way to species 11.
 
 Which of the following statements is true?
 
@@ -129,18 +129,20 @@ In reality we might have some knowledge about predators' diet preferences, or ab
 It is important to note that you should not set an entry in the interaction matrix to 0 just because a particular prey is never recorded in the stomach of a predator. It may well be that the predator species consumes the larvae of the prey species at some stage of their life and these larvae are simply not recorded in the stomach content.
 :::
 
-Sometimes the interaction matrix is used to encode spatial overlap of species in a large ecosystem, as in this [application of mizer to the North Sea](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/1365-2664.12238). In this case the interaction matrix might be estimated from spatial surveys assessing species spatial overlap. The interaction matrix can encode lots of effects and it will have a large impact on the model behaviour.
+Sometimes the interaction matrix is used to encode spatial overlap of species in a large ecosystem, as in this [application of mizer to the North Sea](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/1365-2664.12238). In this case the interaction matrix might be estimated from spatial surveys assessing species spatial overlap. The interaction matrix can encode lots of effects.
 
 So let's go ahead and change one value in the interaction matrix.
 
 ```{r}
 # We get the interaction matrix and assign it to a variable.
 interaction_modified <- getInteraction(mp)
-# We change row 11 (predator species 11) and column 2 (prey species 2) to a smaller value
+# We change row 11 (predator species 11) and column 2 (prey species 2) 
+# to a smaller value
 interaction_modified[11, 2] <- 0.2
-# and save the MizerParams object with the new interaction matrix in a new variable
+# and save the MizerParams object with the new interaction matrix 
+# in a new variable
 mp_modified <- setInteraction(mp, interaction_modified)
-#check that it looks correct
+# check that it looks correct
 getInteraction(mp_modified)
 ```
 
@@ -296,12 +298,10 @@ You will be prompted for your answer in the worksheet for this tutorial.
 
 ## Summary and recap
 
-1\) When using mizer models it is very important to investigate who eats whom and where mortality comes from. So we need to use functions plotDeath() and plotsDiet() often.
+1)  When using mizer models it is very important to investigate who eats whom and where mortality comes from. We do this with the functions `plotDeath()` and `plotDiet()`.
 
-2\) It is important to remember that the amount of different species consumed will depend on the biomasses of these species in the suitable size range. If all values of the species interaction matrix are set to 1 then consumption will simply be proportional to the relative abundance of the prey species.
+2)  The contribution of different species to the diet of a predator depends on the abundances of the species in the size range preferred by the predator.
 
-3\) The species interaction matrix is important as it defines availability of each species to predation by other species. By changing the interaction matrix we can make our models more realistic and more complex. But with so many parameters in the matrix we need to have a clear set of rules on how these values should be set.
+3)  The species interaction matrix defines availability of each species to predation by other species. By changing the interaction matrix we can make our models more realistic and more complex.
 
-4\) Many implementations of mizer models assume that resource availability to all species is always 1. Modelers might want to reduce this availability to a smaller value, but it will have a large impact on the model dynamics.
-
-5\) Trophic cascades are one of the coolest things in multi-species models and the reason we build these models. We want to understand how changes in one species and its sizes will affect the ecosystem and, in turn, the same species. Mizer has many ways how we can explore such trophic cascades.
+4)  Trophic cascades are one of the coolest things in multi-species models and the reason we build these models. We want to understand how changes in one species and its sizes will affect the ecosystem and, in turn, the same species. Mizer has many ways how we can explore such trophic cascades.
