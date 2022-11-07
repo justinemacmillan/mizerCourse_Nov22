@@ -115,7 +115,7 @@ The above simulation was run with constant abundance in the smallest size class 
 
 To see the effect we run the same code as above after deleting the two lines that turned off the reproduction dynamics. We also specify with `t_save = 2` that we want to save the spectrum only every second year, which speeds up the display of the animation.
 
-```{r}
+```{r message=FALSE}
 # Create trait-based model
 mp <- newTraitParams() |> 
     # run to steady state with constant reproduction rate

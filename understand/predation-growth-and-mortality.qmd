@@ -53,7 +53,7 @@ gf_original$Model <- "Original"
 gf_starved <- melt(getEGrowth(params_starved))
 gf_starved$Model <- "Reduced prey"
 gf <- rbind(gf_original, gf_starved)
-growth_rates_plot <- ggplot(gf, aes(x = w, y = value, colour = Model)) +
+growth_rates_plot <- ggplot(gf, aes(x = w, y = value, linetype = Model)) +
     geom_line() +
     scale_x_log10("Weight [g]") +
     scale_y_log10("Growth rate [g/year]")
@@ -235,7 +235,7 @@ Do not confuse the prey preference with the diet. Just because a predator might 
 ::: {.callout-caution collapse="false"}
 ### Exercise 2
 
-Change the parameters of the predation kernel to `beta = 50` and `sigma = 2` and plot the predation kernel of a predator of size 1g. You should see that the predation kernel is truncated so that the predator never feeds on prey larger than themselves.
+Change the parameters of the predation kernel to `beta = 50` and `sigma = 2` and plot the predation kernel of a predator of size 1g. What do you observe?
 
 Next, plot the steady state arising with this feeding kernel when the prey abundance is artificially reduced by a factor of 10 in the size range between 1mg and 10mg as in previous examples. What do you observe? Are you surprised?
 :::
