@@ -72,8 +72,8 @@ We can now visualise the difference in the size spectra with the `plotSpectra2()
 
 ```{r}
 spectra_plot <- plotSpectra2(params, name1 = "Original",
-             params_starved, name2 = "Reduced prey",
-             power = 2)
+                             params_starved, name2 = "Reduced prey",
+                             power = 2)
 spectra_plot
 ```
 

@@ -329,10 +329,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">params_starved</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mizerExperimental/man/singleSpeciesSteady.html">singleSpeciesSteady</a></span><span class="op">(</span><span class="va">params_starved</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can now visualise the difference in the size spectra with the <code><a href="https://rdrr.io/pkg/mizerExperimental/man/plotSpectra2.html">plotSpectra2()</a></code> function:</p>
-<div class="cell" data-hash="predation-growth-and-mortality_cache/html/unnamed-chunk-6_2ddf19b23fa25bfb32622fcd005dfc7f">
+<div class="cell" data-hash="predation-growth-and-mortality_cache/html/unnamed-chunk-6_eb6960a5194175a3ea611d5c21f55ebd">
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">spectra_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mizerExperimental/man/plotSpectra2.html">plotSpectra2</a></span><span class="op">(</span><span class="va">params</span>, name1 <span class="op">=</span> <span class="st">"Original"</span>,</span>
-<span>             <span class="va">params_starved</span>, name2 <span class="op">=</span> <span class="st">"Reduced prey"</span>,</span>
-<span>             power <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span>                             <span class="va">params_starved</span>, name2 <span class="op">=</span> <span class="st">"Reduced prey"</span>,</span>
+<span>                             power <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">spectra_plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="predation-growth-and-mortality_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
