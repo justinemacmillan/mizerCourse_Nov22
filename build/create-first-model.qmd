@@ -14,7 +14,7 @@ Once we are happy with the steady state of the model, we turn the reproduction a
 
 We will concentrate on building models with the correct steady state this week and then tune the behaviour away from steady state next week.
 
-In this tutorial we will take the species parameters that we assembled in the previous tutorial for the Curonian Lagoon and use the `newMultispeciesParams()` function to build a mizer model with them. We will let mizer choose most of the defaults and then adjust a few things so that the model has a steady state that has the observed species biomasses and growth curves. We will not do any fine-tuning of the steady state because the first big improvement that we will make in the next tutorial will be to add multiple resource spectra, as is appropriate for this shallow coastal ecosystem.
+In this tutorial we will take the species parameters that we assembled in the previous tutorial for the Celtic Sea ICES (International Council for Exploration of the Seas) areas 7e-j, and use the `newMultispeciesParams()` function to build a mizer model with them. We will let mizer choose most of the defaults and then adjust a few things so that the model has a steady state that has the observed species biomasses and growth curves. We will not do any fine-tuning of the steady state because the first big improvement that we will make in the next tutorial will be to add multiple resource spectra, as is appropriate for this shallow coastal ecosystem.
 
 As always, we start by updating and loading packages.
 
@@ -31,14 +31,14 @@ Now the creation of the mizer model is a 5-step process.
 We have the species parameters, the gear parameters and the interaction matrix for our model saved as .csv files and we discussed these in the previous tutorial. So here we only need to read in those files.
 
 ```{r}
-curonian_species_params <- read.csv("curonian_species_params.csv")
-curonian_gear_params <- read.csv("curonian_gear_params.csv")
-curonian_interaction <- read.csv("curonian_interaction.csv", row.names = 1)
+celtic_species_params <- read.csv("celtic_species_params.csv", row.names = 1)
+celtic_gear_params <- read.csv("celtic_gear_params.csv", row.names = 1)
+celtic_interaction <- read.csv("celtic_interaction.csv", row.names = 1)
 ```
 
 We use `rownames = 1` to let `read.csv` know that the first column in the spreadsheet, which contains the predator names, should be used as the names of the rows of the interaction matrix.
 
-When you repeat this work in your worksheet, you can check that the data was read in correctly by clicking on `curonian_species_params`, `curonian_species_params` and `curonian_interaction` in the "Environment" tab. That will open the data frames in your editor window for you to inspect.
+When you repeat this work in your worksheet, you can check that the data was read in correctly by clicking on `celtic_species_params`, `celtic_species_params` and `celtic_interaction` in the "Environment" tab. That will open the data frames in your editor window for you to inspect.
 
 We will now set up a multi-species mizer model using the function `newMultispeciesParams()`. Besides the species parameters, the gear parameters and the interaction matrix, the other information that flows into a multi-species model are the resource parameters, the allometric exponents `n` and `p` and the fishing effort.
 
@@ -46,12 +46,12 @@ We let mizer choose defaults for the resource parameters. By default, the resour
 
 Last week we discussed that our choice for the allometric exponents $n$ (growth exponent) and $p$ (metabolic exponent) is to take them both equal to $3/4$. By default these exponents in multi-species models are set to different values, so we will overwrite the defaults in our `newMultispeciesParams()` command.
 
-With this information we call the function `newMultispeciesParams()` which returns a MizerParams object that we save in the variable `cur_model` (lazy shorthand for "Curonian model"):
+With this information we call the function `newMultispeciesParams()` which returns a MizerParams object that we save in the variable `cel_model` (lazy shorthand for "Celtic Sea model"):
 
 ```{r}
-cur_model <- newMultispeciesParams(species_params = curonian_species_params,
-                                   gear_params = curonian_gear_params,
-                                   interaction = curonian_interaction, 
+cel_model <- newMultispeciesParams(species_params = celtic_species_params,
+                                   gear_params = celtic_gear_params,
+                                   interaction = celtic_interaction, 
                                    initial_effort = 0.3,
                                    lambda = 2.05, n = 3/4, p = 3/4)
 ```
@@ -65,7 +65,7 @@ Mizer chose the coefficient `ks` of the metabolic rate for each species so that 
 Finally mizer has set a constant background mortality `z0` that scales with the species' asymptotic size. Let's look at the result:
 
 ```{r}
-species_params(cur_model) |> select(h, ks, z0)
+species_params(cel_model) |> select(h, ks, z0)
 ```
 
 ## Step 2: Project to steady state
@@ -73,7 +73,7 @@ species_params(cur_model) |> select(h, ks, z0)
 The `newMultispeciesParams()` function is not very good at choosing a good initial community configuration. Let's have a look at what it has set up:
 
 ```{r}
-plotSpectra(cur_model, power = 2)
+plotSpectra(cel_model, power = 2)
 ```
 
 There is a lot wrong here. The species spectra lack the characteristic bulge at adult sizes. Also the species spectra do not line up nicely with the abundance of the resource. But most importantly, these spectra are not close to their steady state values.
@@ -81,7 +81,7 @@ There is a lot wrong here. The species spectra lack the characteristic bulge at 
 We will now project to the steady state, which will finally give us realistic species spectra. To do this we use the special function `steady()` which implements our trick of keeping the reproduction rate and the resource spectrum constant.
 
 ```{r}
-cur_model <- steady(cur_model)
+cel_model <- steady(cel_model)
 ```
 
 We can ignore the warning from the `setBevertonHolt()` function about unrealistic reproductive efficiencies. Those warnings are an artefact of how the reproduction level is set by default by the `matchBiomasses()` function. We could fix those defaults, but we are not yet concerned with the reproduction dynamics so we don't have to do that and just ignore the warnings.
@@ -93,7 +93,7 @@ Remember, the steady() function does not yet calibrate your model to any observe
 Now let us look at the spectra in the steady state:
 
 ```{r}
-plotlySpectra(cur_model, power = 2)
+plotlySpectra(cel_model, power = 2)
 ```
 
 ::: {.callout-caution collapse="true"}
@@ -102,12 +102,12 @@ plotlySpectra(cur_model, power = 2)
 The `steady()` function is not guaranteed to find the steady state. It may be that the steady state is actually unstable. In that case the system evolves towards an oscillating state instead. Luckily, this is rare for realistic parameters, but may well happen while you are still trying to find the correct parameters. Let us illustrate this in a modified model. We decrease the width of the feeding kernel for all species to `sigma = 1` and increase the slope of the resource spectrum to `lambda = 2.2`. We know from mathematical studies that both of these changes have a destabilising effect.
 
 ```{r}
-modified_species_params <- curonian_species_params
+modified_species_params <- celtic_species_params
 modified_species_params$sigma <- 1
 
 modified_model <- 
     newMultispeciesParams(species_params = modified_species_params,
-                          interaction = curonian_interaction,
+                          interaction = celtic_interaction,
                           initial_effort = 0.3,
                           lambda = 2.2, n = 3/4, p = 3/4)
 ```
@@ -118,7 +118,7 @@ Now let us see what happens when we try to run this system to steady state:
 modified_model <- steady(modified_model)
 ```
 
-The simulation has not yet converged to a steady state after running the simulation for 99 years. There are now two possibilities: 1) we just need to be a bit more patient and run the simulations for longer or 2) the system will continue to oscillate for ever. To diagnose this, we want to see the time evolution. We tell the `steady()` function that we want it to return a MizerSim object with the time series of spectra from the simulation.
+The simulation has not yet converged to a steady state after running the simulation for 1.5 years. There are now two possibilities: 1) we just need to be a bit more patient and run the simulations for longer or 2) the system will continue to oscillate for ever. To diagnose this, we want to see the time evolution. We tell the `steady()` function that we want it to return a MizerSim object with the time series of spectra from the simulation.
 
 ```{r}
 sim <- steady(modified_model, return_sim = TRUE)
@@ -140,7 +140,7 @@ We will not go into a discussion of whether the oscillating state reflects the t
 Mizer is agnostic of whether you want to measure biomass per square meter, or per square kilometer, or for the entire area of the fishery or whatever. So initially it had set things up on an arbitrarily chosen scale. We can see this if we compare the biomasses of the species in the model with the observed biomasses from your species parameter file with the `plotBiomassVsSpecies()` function:
 
 ```{r}
-plotBiomassVsSpecies(cur_model)
+plotBiomassVsSpecies(cel_model)
 ```
 
 This shows for each species the model biomass (open circle) and the observed biomass (filled square) on a logarithmic y-axis. The line connecting model value and observed value is for visual purposes only. We see that model values and observed values are many orders of magnitude apart.
@@ -148,13 +148,13 @@ This shows for each species the model biomass (open circle) and the observed bio
 Using your supplied biomass observations, mizer can now change the scale of our model so that the total biomass in the model coincides with the total observed biomass, summed over all species.
 
 ```{r}
-cur_model <- calibrateBiomass(cur_model)
+cel_model <- calibrateBiomass(cel_model)
 ```
 
 Of course for the individual species the model biomasses will still disagree with the observed biomasses, with some being too high while others are too low. Just the total summed over all species agrees between model and observation.
 
 ```{r}
-plotBiomassVsSpecies(cur_model)
+plotBiomassVsSpecies(cel_model)
 ```
 
 ## Step 4: Rescale species spectra
@@ -162,8 +162,8 @@ plotBiomassVsSpecies(cur_model)
 To fix the discrepancy between the model biomasses and the observed biomasses we simply need to rescale the model abundance of each species by the appropriate factor. The `matchBiomasses()` function does this for us.
 
 ```{r}
-cur_model <- matchBiomasses(cur_model)
-plotBiomassVsSpecies(cur_model)
+cel_model <- matchBiomasses(cel_model)
+plotBiomassVsSpecies(cel_model)
 ```
 
 Now the circles and squares lie exactly on top of each other. This is expected, because we simply changed the relative biomasses of species in the model.
@@ -175,13 +175,13 @@ There are similar functions `matchNumbers()` and `matchYields()` that you would 
 After we have rescaled the spectra of the individual species, the system is no longer in a steady state. All species now experience a new prey distribution and a new predator distribution and so their growth and death rates have changed, which requires us to run the dynamics again to find the new steady state. So we essentially go back to step 2 and project to steady state:
 
 ```{r}
-cur_model <- steady(cur_model)
+cel_model <- steady(cel_model)
 ```
 
 The function tell us that running the dynamics for 99 years was not enough to converge sufficiently close to the steady state. In other words, the state was still changing after 99 years. There are now two possibilities: 1) we simply need to be a bit more patient or 2) the dynamics will never converge to a steady state but instead continue to oscillate for ever. Let's hope for the first option and call `steady()` repeatedly in the hope to eventually converge to a steady state.
 
 ```{r}
-cur_model <- steady(cur_model)
+cel_model <- steady(cel_model)
 ```
 
 We were lucky and it worked eventually.
@@ -189,7 +189,7 @@ We were lucky and it worked eventually.
 But while the system settled down to the new steady state, the species biomasses have changed, so they now no longer agree with observation.
 
 ```{r}
-plotBiomassVsSpecies(cur_model)
+plotBiomassVsSpecies(cel_model)
 ```
 
 We appear to be in a bind: If we match the biomasses we are no longer at steady state, if we run to steady state we no longer match the biomasses. But notice that the discrepancies are not as big as previously. So we don't give up but simply keep iterating, by repeatedly matching biomasses and running to steady state.
@@ -198,26 +198,26 @@ After repeating the cycle of matching biomasses and running to steady state 10 m
 
 ```{r}
 #| warning: false
-cur_model <- cur_model |>
+cel_model <- cel_model |>
     matchBiomasses() |> steady() |> matchBiomasses() |> steady() |>
     matchBiomasses() |> steady() |> matchBiomasses() |> steady() |>
     matchBiomasses() |> steady() |> matchBiomasses() |> steady() |>
     matchBiomasses() |> steady() |> matchBiomasses() |> steady() |>
     matchBiomasses() |> steady() |> matchBiomasses() |> steady()
-plotBiomassVsSpecies(cur_model)
+plotBiomassVsSpecies(cel_model)
 ```
 
 And here is how the spectra look with the correct observed biomasses:
 
 ```{r}
-plotSpectra(cur_model, power = 2)
+plotSpectra(cel_model, power = 2)
 ```
 
 Note that above we only repeated `matchBiomasses()` and `steady()`. We did not repeat `calibrateBiomasses()`. We could have done that, i.e., we could have run
 
 ```{r}
 #| eval: false
-cur_model <- cur_model |>
+cel_model <- cel_model |>
     calibrateBiomass() |> matchBiomasses() |> steady() |>
     calibrateBiomass() |> matchBiomasses() |> steady() |>
     calibrateBiomass() |> matchBiomasses() |> steady() |>
@@ -226,10 +226,10 @@ cur_model <- cur_model |>
 
 This is what we proposed in [this blog post](https://blog.mizer.sizespectrum.org/posts/2021-08-20-a-5-step-recipe-for-tuning-the-model-steady-state/). Either method works.
 
-We can now save the resulting model to disk for future use. We choose the file name to remind us that this is the version of the model with a single resource only. We will add a benthic resource in the next tutorial.
+We can now save the resulting model to disk for future use. We choose the file name to remind us that this is the version of the model with a single resource only. 
 
 ```{r}
-saveParams(cur_model, "cur_model_single.rds")
+saveParams(cel_model, "cur_model_single.rds")
 ```
 
 ## Exercise
