@@ -1,18 +1,18 @@
-"","species","gear","sel_func","knife_edge_size","catchability"
-"Herring, knife_edge_gear","Herring","knife_edge_gear","knife_edge",101.515728300244,0.5361117564855
-"Sprat, knife_edge_gear","Sprat","knife_edge_gear","knife_edge",6.18196047362489,0.513601872864375
-"Cod, knife_edge_gear","Cod","knife_edge_gear","knife_edge",1124.21582338652,0.465695620446958
-"Haddock, knife_edge_gear","Haddock","knife_edge_gear","knife_edge",208.231883526894,0.148063702684883
-"Whiting, knife_edge_gear","Whiting","knife_edge_gear","knife_edge",67.4556524855657,0.4842844155535
-"Blue whiting, knife_edge_gear","Blue whiting","knife_edge_gear","knife_edge",20.5302145779641,0.0526404522991118
-"Norway Pout, knife_edge_gear","Norway Pout","knife_edge_gear","knife_edge",18.6216187603765,0.0801341779365828
-"Poor Cod, knife_edge_gear","Poor Cod","knife_edge_gear","knife_edge",27.9130245235344,0.0105298622939252
-"European Hake, knife_edge_gear","European Hake","knife_edge_gear","knife_edge",281.269762527227,0.786853578923792
-"Monkfish, knife_edge_gear","Monkfish","knife_edge_gear","knife_edge",543.46877204377,0.319006665012917
-"Horse Mackerel, knife_edge_gear","Horse Mackerel","knife_edge_gear","knife_edge",34.3455176990624,0.295744102686827
-"Mackerel, knife_edge_gear","Mackerel","knife_edge_gear","knife_edge",161.383546797926,0.564377380688708
-"Common Dab, knife_edge_gear","Common Dab","knife_edge_gear","knife_edge",9.32003433997716,0.682477301455292
-"Plaice, knife_edge_gear","Plaice","knife_edge_gear","knife_edge",117.919064538124,0.611284602838542
-"Megrim, knife_edge_gear","Megrim","knife_edge_gear","knife_edge",127.695045117798,0.687633349757792
-"Sole, knife_edge_gear","Sole","knife_edge_gear","knife_edge",55.1007513951312,0.189167525945692
-"Boarfish, knife_edge_gear","Boarfish","knife_edge_gear","knife_edge",14.2796382755789,0.127794416069846
+"species","gear","sel_func","knife_edge_size","catchability"
+"Herring","knife_edge_gear","knife_edge",101.515728300244,0.5361117564855
+"Sprat","knife_edge_gear","knife_edge",6.18196047362489,0.513601872864375
+"Cod","knife_edge_gear","knife_edge",1124.21582338652,0.465695620446958
+"Haddock","knife_edge_gear","knife_edge",208.231883526894,0.148063702684883
+"Whiting","knife_edge_gear","knife_edge",67.4556524855657,0.4842844155535
+"Blue whiting","knife_edge_gear","knife_edge",20.5302145779641,0.0526404522991118
+"Norway Pout","knife_edge_gear","knife_edge",18.6216187603765,0.0801341779365828
+"Poor Cod","knife_edge_gear","knife_edge",27.9130245235344,0.0105298622939252
+"European Hake","knife_edge_gear","knife_edge",281.269762527227,0.786853578923792
+"Monkfish","knife_edge_gear","knife_edge",543.46877204377,0.319006665012917
+"Horse Mackerel","knife_edge_gear","knife_edge",34.3455176990624,0.295744102686827
+"Mackerel","knife_edge_gear","knife_edge",161.383546797926,0.564377380688708
+"Common Dab","knife_edge_gear","knife_edge",9.32003433997716,0.682477301455292
+"Plaice","knife_edge_gear","knife_edge",117.919064538124,0.611284602838542
+"Megrim","knife_edge_gear","knife_edge",127.695045117798,0.687633349757792
+"Sole","knife_edge_gear","knife_edge",55.1007513951312,0.189167525945692
+"Boarfish","knife_edge_gear","knife_edge",14.2796382755789,0.127794416069846
