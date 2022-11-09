@@ -118,7 +118,7 @@ Now let us see what happens when we try to run this system to steady state:
 modified_model <- steady(modified_model)
 ```
 
-The simulation has not yet converged to a steady state after running the simulation for 1.5 years. There are now two possibilities: 1) we just need to be a bit more patient and run the simulations for longer or 2) the system will continue to oscillate for ever. To diagnose this, we want to see the time evolution. We tell the `steady()` function that we want it to return a MizerSim object with the time series of spectra from the simulation.
+The simulation  converged to a steady state after running the simulation for 25.5 years. There are cases when the simulation fails to converge. In such an event there are two possibilities: 1) we just need to be a bit more patient and run the simulations for longer or 2) the system will continue to oscillate for ever. To diagnose this, we want to see the time evolution. We tell the `steady()` function that we want it to return a MizerSim object with the time series of spectra from the simulation.
 
 ```{r}
 sim <- steady(modified_model, return_sim = TRUE)
@@ -178,7 +178,7 @@ After we have rescaled the spectra of the individual species, the system is no l
 cel_model <- steady(cel_model)
 ```
 
-The function tell us that running the dynamics for 99 years was not enough to converge sufficiently close to the steady state. In other words, the state was still changing after 99 years. There are now two possibilities: 1) we simply need to be a bit more patient or 2) the dynamics will never converge to a steady state but instead continue to oscillate for ever. Let's hope for the first option and call `steady()` repeatedly in the hope to eventually converge to a steady state.
+The function tell us that running the dynamics for 22.5 years was  enough to converge sufficiently close to the steady state. In other words, the state is not changing after 22.5 years. While this case converges, there are cases where convergence may not happen due to two possibilities: 1) we simply need to be a bit more patient or 2) the dynamics will never converge to a steady state but instead continue to oscillate for ever. Let's hope for the first option and call `steady()` repeatedly in the hope to eventually converge to a steady state.
 
 ```{r warning=FALSE}
 cel_model <- steady(cel_model)
