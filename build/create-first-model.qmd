@@ -14,7 +14,7 @@ Once we are happy with the steady state of the model, we turn the reproduction a
 
 We will concentrate on building models with the correct steady state this week and then tune the behaviour away from steady state next week.
 
-In this tutorial we will take the species parameters that we assembled in the previous tutorial for the Celtic Sea ICES (International Council for Exploration of the Seas) areas 7e-j, and use the `newMultispeciesParams()` function to build a mizer model with them. We will let mizer choose most of the defaults and then adjust a few things so that the model has a steady state that has the observed species biomasses and growth curves. We will not do any fine-tuning of the steady state because the first big improvement that we will make in the next tutorial will be to add multiple resource spectra, as is appropriate for this shallow coastal ecosystem.
+In this tutorial we will take the species parameters that we assembled in the previous tutorial for the Celtic Sea ICES (International Council for Exploration of the Seas) areas 7e-j, and use the `newMultispeciesParams()` function to build a mizer model with them. We will let mizer choose most of the defaults and then adjust a few things so that the model has a steady state that has the observed species biomasses and growth curves. 
 
 As always, we start by updating and loading packages.
 
@@ -31,8 +31,8 @@ Now the creation of the mizer model is a 5-step process.
 We have the species parameters, the gear parameters and the interaction matrix for our model saved as .csv files and we discussed these in the previous tutorial. So here we only need to read in those files.
 
 ```{r}
-celtic_species_params <- read.csv("celtic_species_params.csv", row.names = 1)
-celtic_gear_params <- read.csv("celtic_gear_params.csv", row.names = 1)
+celtic_species_params <- read.csv("celtic_species_params.csv")
+celtic_gear_params <- read.csv("celtic_gear_params.csv")
 celtic_interaction <- read.csv("celtic_interaction.csv", row.names = 1)
 ```
 
@@ -118,7 +118,7 @@ Now let us see what happens when we try to run this system to steady state:
 modified_model <- steady(modified_model)
 ```
 
-The simulation has not yet converged to a steady state after running the simulation for 1.5 years. There are now two possibilities: 1) we just need to be a bit more patient and run the simulations for longer or 2) the system will continue to oscillate for ever. To diagnose this, we want to see the time evolution. We tell the `steady()` function that we want it to return a MizerSim object with the time series of spectra from the simulation.
+The simulation  converged to a steady state after running the simulation for 25.5 years. There are cases when the simulation fails to converge. In such an event there are two possibilities: 1) we just need to be a bit more patient and run the simulations for longer or 2) the system will continue to oscillate for ever. To diagnose this, we want to see the time evolution. We tell the `steady()` function that we want it to return a MizerSim object with the time series of spectra from the simulation.
 
 ```{r}
 sim <- steady(modified_model, return_sim = TRUE)
@@ -178,7 +178,7 @@ After we have rescaled the spectra of the individual species, the system is no l
 cel_model <- steady(cel_model)
 ```
 
-The function tell us that running the dynamics for 99 years was not enough to converge sufficiently close to the steady state. In other words, the state was still changing after 99 years. There are now two possibilities: 1) we simply need to be a bit more patient or 2) the dynamics will never converge to a steady state but instead continue to oscillate for ever. Let's hope for the first option and call `steady()` repeatedly in the hope to eventually converge to a steady state.
+The function tell us that running the dynamics for 22.5 years was  enough to converge sufficiently close to the steady state. In other words, the state is not changing after 22.5 years. While this case converges, there are cases where convergence may not happen due to two possibilities: 1) we simply need to be a bit more patient or 2) the dynamics will never converge to a steady state but instead continue to oscillate for ever. Let's hope for the first option and call `steady()` repeatedly in the hope to eventually converge to a steady state.
 
 ```{r}
 cel_model <- steady(cel_model)
