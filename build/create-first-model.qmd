@@ -31,8 +31,8 @@ Now the creation of the mizer model is a 5-step process.
 We have the species parameters, the gear parameters and the interaction matrix for our model saved as .csv files and we discussed these in the previous tutorial. So here we only need to read in those files.
 
 ```{r}
-celtic_species_params <- read.csv("celtic_species_params.csv", row.names = 1)
-celtic_gear_params <- read.csv("celtic_gear_params.csv", row.names = 1)
+celtic_species_params <- read.csv("celtic_species_params.csv")
+celtic_gear_params <- read.csv("celtic_gear_params.csv")
 celtic_interaction <- read.csv("celtic_interaction.csv", row.names = 1)
 ```
 
