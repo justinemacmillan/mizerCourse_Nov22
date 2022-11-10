@@ -4,39 +4,37 @@ title: "Refine model"
 
 ## Introduction
 
-We have a basic model with two background resources. This model produces somewhat reasonable diets, reasonable growth and we also managed to fit the model to the observed average biomasses. But there are more things we want to tune and match, while still staying in a steady state, with constant reproduction and resource levels. We have average catch data and size distributions of catches. We also want predators to eat more fish. So let's explore how we can tune our model further.
+We have a basic model with one background resource. This model produces somewhat reasonable diets, reasonable growth and we also managed to fit the model to the observed average biomasses. But there are more things we want to tune and match, while still staying in a steady state, with constant reproduction and resource levels. We have average catch data and size distributions of catches. We also want predators to eat more fish. So let's explore how we can tune our model further.
 
-A large fraction of tuning can be done using a `tuneParams()` R Shiny gadget that is integrated into mizerExperimental. But because we are using a multiple resource add-on, we will need to install a different branch of mizerExperimental, which will include an updated `tuneParams()` R Shiny gadget that incorporates multiple resources. This is still work in progress, so please be patient if you find bugs or some other annoying features (please report them, so we can keep improving the tools). To install a specific branch (in our case tuneMR branch) of a package located on GitHub we need to indicate it in the `ref=` argument. You might need to restart your R session for this to work. Also, remember that next time, if you want to use the main branch of mizerExperimental (without multiple resources) you will need to reinstall it, but without the `ref=` parameter.
+A large fraction of tuning can be done using a `tuneParams()` R Shiny gadget that is integrated into mizerExperimental. You might need to restart your R session for this to work. 
 
 ```{r}
 #| message: false
-remotes::install_github("sizespectrum/mizerExperimental", ref = "tuneMR")
-remotes::install_github("sizespectrum/mizerMR")
+remotes::install_github("sizespectrum/mizerExperimental")
 library(mizerExperimental)
-library(mizerMR)
 library(tidyverse)
 ```
 
-Now let's load our latest model with two background resources. If you found your own species parameters for roach (and perhaps for breams) and used those parameters in tutorial 2 and 3, you will load your own model version.
+Now let's load our latest model with a background resource. If you found your own species parameters for cod and used those parameters in tutorial 2 and 3, you will load your own model version.
 
 ```{r}
-cur_model_coarse <- readParams("cur_model_coarse.rds")
+cel_model_coarse <- readParams("cel_model_single.rds")
 ```
 
 ## Catch data
 
-We will also load data on the size distribution of catches. Such data is often collected in data-poor fisheries, so it will be useful to see how we can use such data for model calibration. This specific dataset is not really from commercial fisheries in Curonian lagoon, but from some years of scientific surveys, where only commercial mesh sizes were used. 
+We will also load data on the size distribution of catches. Such data is often collected in data-poor fisheries, so it will be useful to see how we can use such data for model calibration. This specific dataset  was sourced from Scientific, Technical and Economic Committee for Fisheries  [(STECF)](https://stecf.jrc.ec.europa.eu/dd/fdi) and was restricted to England and Wales. 
 
 ```{r}
-catch_lengths <- readRDS("catch.rds")
+catch_lengths <- read.csv("catch.csv")
 head(catch_lengths)
 ```
-You can see that for each species we have numbers of individuals observed in 2cm wide length bins (the `dl` column indicates the width of each bin).
+You can see that for each species we have numbers of individuals observed in 1cm wide length bins (the `dl` column indicates the width of each bin).
 
 Remember that in the species parameter data frame we included a column of `yield_observed` that gives the average annual commercial catches over a certain time period. These are not accurate, but it does not matter here because we use them for illustration purposes only.
 
 ```{r}
-species_params(cur_model_coarse) |> select(species, yield_observed)
+species_params(cel_model_coarse) |> select(species, yield_observed)
 ```
 
 ## Calibrating total yield
@@ -45,16 +43,16 @@ Let's first check whether the model yield matches the observed yield.
 
 ```{r}
 #| warning: false
-plotYieldVsSpecies(cur_model_coarse)
+plotYieldVsSpecies(cel_model_coarse)
 ```
 
-The observed yield is some orders of magnitude larger than model yield. This is because our yield and biomasses are in different units or scales. The biomasses we used for calibration are relative biomasses from scientific surveys. It is hard to know how exactly to scale them to area, so we just used the relative values. The yield, on the other hand, is the reported commercial yield for the entire model area. So naturally they are on very different scales. What we need to do now is to rescale our biomasses so they are in approximately the same units.
+The observed yield is some orders of magnitude larger/smaller than model yield. This is because our yield and biomasses are in different units or scales. The biomasses we used for calibration are relative biomasses from scientific surveys. It is hard to know how exactly to scale them to area, so we just used the relative values. The yield, on the other hand, is the reported commercial yield for the entire model area. So naturally they are on very different scales. What we need to do now is to rescale our biomasses so they are in approximately the same units.
 
 Let's calibrate the yield, like we calibrated biomasses. If you didn't have the biomasses for your system, but know the yield and fishing mortalities, this is how you would calibrate your model.
 
 ```{r}
-cur_model <- calibrateYield(cur_model_coarse)
-plotYieldVsSpecies(cur_model)
+cel_model <- calibrateYield(cel_model_coarse)
+plotYieldVsSpecies(cel_model)
 ```
 
 Now the yields are in a similar scale, and this has rescaled abundances of all species by the same factor (like one would calibrate a device). We now still need to rescale our biomass observations by the same factor so convert them from their relative scale to the same absolute scale as the yields.
@@ -63,17 +61,17 @@ Now the yields are in a similar scale, and this has rescaled abundances of all s
 # Find the scaling factor by dividing abundances of calibrated and initial model 
 # (We can use any species and any size, because they all were scaled by the 
 # same factor.)
-scaling_factor <- initialN(cur_model)[1, 1] / initialN(cur_model_coarse)[1, 1]
+scaling_factor <- initialN(cel_model)[1, 1] / initialN(cel_model_coarse)[1, 1]
 scaling_factor
 # Rescale the observed biomass values by that factor
-species_params(cur_model)$biomass_observed <- 
-    species_params(cur_model)$biomass_observed * scaling_factor
+species_params(cel_model)$biomass_observed <- 
+    species_params(cel_model)$biomass_observed * scaling_factor
 ```
 
 Now that we have scaled both the model biomasses and the observed biomasses by the same factor, they are of course again in agreement:
 
 ```{r}
-plotBiomassVsSpecies(cur_model)
+plotBiomassVsSpecies(cel_model)
 ```
 
 ## Exploring catch size distributions
@@ -81,39 +79,39 @@ plotBiomassVsSpecies(cur_model)
 Now we want to know whether our modelled and observed catch size distributions agree. The `plotYieldVsSize()` function lets us see how well they match:
 
 ```{r}
-plotYieldVsSize(cur_model, species = "breams", catch = catch_lengths, 
+plotYieldVsSize(cel_model, species = "Haddock", catch = catch_lengths, 
                 x_var = "Length")
 ```
 
-They don't match very well at all. The modelled catch has a peak earlier than the observed catch. Clearly our guess that for each species the selectivity reaches 50% at 30cm length is incorrect. There are R tools to estimate selectivity curves, but we will just assume that 50% selectivity is at 35cm (inflection point of the logistic selectivity curve) and 25% selectivity is at 32 cm (value, defining steepness of the curve). We will adjust these values using gear_params() function.
+They don't match very well at all. The modelled catch has a peak earlier than the observed catch. There are R tools to estimate selectivity curves, but we will just assume that 50% selectivity is at 45cm (inflection point of the logistic selectivity curve) and 25% selectivity is at 40 cm (value, defining steepness of the curve). We will adjust these values using gear_params() function.
 
 Let us look at the current gear parameter data frame first.
 ```{r}
 # Let's look at our gear params first 
-gear_params(cur_model)
+gear_params(cel_model)
 ```
 
-We notice that the row names are made up of the species name and the gear name, separated by a comma. So we can change the selectivity parameters specifically for breams with
+We notice that the row names are made up of the species name and the gear name, separated by a comma. So we can change the selectivity parameters specifically for haddock with
 ```{r}
-# Modify the l50 and l25 for breams
-gear_params(cur_model)["breams, Main", "l50"] <- 35
-gear_params(cur_model)["breams, Main", "l25"] <- 32
+# Modify the l50 and l25 for haddock
+gear_params(cel_model)["Haddock, Commercial", "l50"] <- 45
+gear_params(cel_model)["Haddock, Commercial", "l25"] <- 40
 
 #check the match between model and observed catch size distributions
-plotYieldVsSize(cur_model, species = "breams", catch = catch_lengths, 
+plotYieldVsSize(cel_model, species = "Haddock", catch = catch_lengths, 
                 x_var = "Length")
 ```
 
 This looks much better. But now that we have changed fishing selectivity we need to find a new steady state. It is important to run `steady()` frequently, while making small changes to the model parameters. If we accumulate too many changes, finding a new steady state might be harder.
 
 ```{r}
-cur_model <- steady(cur_model)
+cel_model <- steady(cel_model)
 ```
 
-Note that even this small change in the selectivity of the gear has increased the biomass of breams, as would be expected. 
+Note that even this small change in the selectivity of the gear has increased the biomass of haddock, as would be expected. 
 
 ```{r}
-plotBiomassVsSpecies(cur_model)
+plotBiomassVsSpecies(cel_model)
 ```
 
 This illustrates a general point: as we change parameters to get one aspect of the model to agree with observations, other aspects will stop to agree. 
@@ -124,10 +122,10 @@ Of course, the size distributions of catches will depends on fishing mortality, 
 
 ```{r}
 #| eval: false
-cur_model <- tuneParams(cur_model, catch = catch_lengths)
+cel_model <- tuneParams(cel_model, catch = catch_lengths)
 ```
 
-Note how we assign the return value from the `tuneParams()` function back to the `cur_model` variable. That way we capture the changes that we make in the gadget.
+Note how we assign the return value from the `tuneParams()` function back to the `cel_model` variable. That way we capture the changes that we make in the gadget.
 
 ```{r}
 #| echo: false

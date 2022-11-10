@@ -247,9 +247,7 @@ celtic_gear_params <- read.csv("celtic_gear_params.csv", row.names = 1)
 celtic_gear_params
 ```
 
-You see that by default we only have a single gear, that we call "knife_edge_gear". It targets all species in our model. The value "knife_edge" in the `sel_func` column states that we model the size selectivity where weights greater or equal to knife_edge_size are selected. 
-
-Alternatively, a sigmoid shaped selectivity can be used by stating the value "sigmoid_length" in the `sel_func` column. In such a case we model the size selectivity of the gear by a sigmoidal curve that is specified by giving the length `l50` in cm at which 50% of the individuals are selected by the gear and the length `l25` in cm at which 25% of the individuals are selected by the gear. 
+You see that by default we only have a single gear, that we call "Commercial". It targets all species in our model. We have a sigmoid shaped selectivity with a value "sigmoid_length" in the `sel_func` column. We model the size selectivity of the gear by a sigmoidal curve that is specified by giving the length `l50` in cm at which 50% of the individuals are selected by the gear and the length `l25` in cm at which 25% of the individuals are selected by the gear. 
 
 The `catchability` column specifies how vulnerable the species are to commercial fishing. Some species live close to the shore or are otherwise less vulnerable to commercial fishing, so we will set their `catchability` to 0.7 or even to 0.01 for poor cod.
 
