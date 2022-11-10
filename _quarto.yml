@@ -32,7 +32,7 @@ website:
   twitter-card:
     site: "@mizer_model"
     creator: "gustavdelius"
-  opengraph: true
+  open-graph: true
   comments:
     giscus:
       repo: sizespectrum/mizerCourse_Nov22
