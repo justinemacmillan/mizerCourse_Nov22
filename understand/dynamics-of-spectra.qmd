@@ -81,7 +81,7 @@ animateSpectra(sim_lessRes, total = TRUE, power = 2,
 
 Go ahead, press the Play button.
 
-**Note**, for some species size spectra at the largest size class drop all the way to very small values (e.g. 10\^-7) and for others they stop higher. This is just a discretisation artifact and is not important. Try to ignore it.
+**Note**, for some species size spectra at the largest size class drop all the way to very small values (e.g. 10\^-7) and for others they stop higher. This is just a discretisation artefact and is not important. Try to ignore it.
 
 Of course we can also get at the numeric values of the spectra at different times. First of all the function `getTimes()` gives the times at which simulation results are available in the MizerSim object:
 
@@ -164,7 +164,7 @@ Note that mizer models the rate of egg production. The size spectrum dynamics th
 The stock-recruitment relationship is an emergent phenomenon in mizer, with several sources of density dependence. Firstly, the amount of energy invested into reproduction depends on the energy income of the spawners, which is density-dependent due to competition for prey. Secondly, the proportion of larvae that grow up to recruitment size depends on the larval mortality, which depends on the density of predators, and on larval growth rate, which depends on density of prey.
 :::
 
-However there are other sources of density dependence that are not explicitly modelled mechanistically in mizer. An example would be a limited carrying capacity of suitable spawning grounds and other spatial effects. So mizer has another species parameter $R_{max}$ that gives the maximum possible rate of recruitment. Imposing a finite maximum reproduction rate leads to a non-linear relationship between energy invested and eggs hatched. This density-dependent reproduction rate \eqn{R_{dd}}{R_dd} is given by a Beverton-Holt type function:
+However there are other sources of density dependence that are not explicitly modelled mechanistically in mizer. An example would be a limited carrying capacity of suitable spawning grounds and other spatial effects. So mizer has another species parameter $R_{max}$ that gives the maximum possible rate of recruitment. Imposing a finite maximum reproduction rate leads to a non-linear relationship between energy invested and eggs hatched. This density-dependent reproduction rate $R_{dd}$ is given by a Beverton-Holt type function:
 
 $$ R_{dd} = R_{di} \frac{R_{max}}{R_{di} + R_{max}}$$
 
@@ -172,16 +172,17 @@ Rather than looking at the formula, let's look at a figure:
 
 ```{r}
 #| echo: false
-erepro <- 4
+E_R <- seq(0, 20, by = 0.5)
+
+erepro <- 0.4
 R_max <- 1
-E_R <- seq(0, 2, by = 0.05)
 R_di = erepro * E_R
 R_dd <- R_di * R_max / (R_di + R_max)
 df <- melt(data.frame(E_R, R_dd, R_di, R_max), id.vars = "E_R")
 df <- df[df$value < 1.6, ]
 df$dd <- "Low"
 
-erepro <- 1.5
+erepro <- 0.15
 R_max <- 3/2
 R_di = erepro * E_R
 R_dd <- R_di * R_max / (R_di + R_max)
@@ -191,19 +192,19 @@ df2$dd <- "High"
 
 ggplot(rbind(df, df2)) +
     geom_line(aes(x = E_R, y = value, linetype = variable,
-                  colour = dd, size = dd)) +
-    geom_point(aes(x = 5/4, y = 5/6), size = 2) +
+                  colour = dd, linewidth = dd)) +
+    geom_point(aes(x = 50/4, y = 5/6), size = 2) +
     labs(linetype = "", size = "R_max", colour = "R_max") +
     scale_y_continuous(name = "Reproduction rate [individuals/year]",
                        breaks = c(5/6), labels = c("R_dd")) +
     scale_x_continuous(name = "Energy invested [g/year]",
-                       breaks = c(5/4), labels = c("E_R")) +
-    scale_size_manual(values = c(1, 0.5)) +
+                       breaks = c(50/4), labels = c("E_R")) +
+    scale_discrete_manual("linewidth", values = c(1, 0.5)) +
     scale_colour_manual(values = c("black", "blue")) +
     scale_linetype_manual(values = c("solid", "dashed", "dotted"))
 ```
 
-This figure shows two graphs of $R_{dd}$ (solid lines), one for higher $R_{max}$ (black) and one for lower $R_{max}$ (blue). The values of $R_{max}$ are indicated by the dotted lines. The dashed lines show the density-independent rate $R_{di}$.
+This figure shows two graphs of $R_{dd}$ (solid lines), one for higher $R_{max}$ (black) and one for lower $R_{max}$ (blue). The values of $R_{max}$ are indicated by the dotted lines. The dashed lines show the density-independent rate $R_{di}$. Both graphs are for the same amount $E_R$ of energy invested into reproduction.
 
 The important fact to observe is that the solid curves becomes more shallow as $R_{max}$ gets closer to the actual reproduction rate $R_{dd}$. This slope determines how big the effect of a change in investment into reproduction (for example due to a change in spawning stock biomass) is on the reproduction rate. As the energy invested in reproduction changes away from the steady state value E_R on the x-axis, the the solid curves shows how much the reproduction rate changes on the y-axis. The change is smaller along the shallower blue line, the one that corresponds to the $R_{max}$ value that is closer to $R_{dd}$. The result is that a species with a low ratio between $R_{max}$ and $R_{dd}$ will be less impacted by depletion of its spawning stock by fishing, for example. This ratio we will refer to as the **reproduction level** and we will discuss it in the next section.
 
@@ -223,7 +224,7 @@ We have seen the two species parameters that determine how the energy invested i
 
 -   The ratio between $R_{dd}$ and $R_{max}$ at steady state. This determines the degree of density dependence.
 
-The ratio $R_{dd} / R_{max}$ we denote as the **reproduction level**. This name may remind you of the feeding level, which was the ratio betweenthe actual feeding rate and the  the maximum feeding rate and described the level of density dependence coming from satiation. It takes a value between 0 and 1. It follows from our discussion in the previous section that a species with a high reproduction level is more resilient to changes.
+The ratio $R_{dd} / R_{max}$ we denote as the **reproduction level**. This name may remind you of the feeding level, which was the ratio between the actual feeding rate and the maximum feeding rate and described the level of density dependence coming from satiation. It takes a value between 0 and 1. It follows from our discussion in the previous section that a species with a high reproduction level is more resilient to changes.
 
 We can get the reproduction levels of the different species with `getReproductionLevel()`:
 
@@ -261,7 +262,7 @@ animateSpectra(sim_lessRes9, total = TRUE, power = 2,
                ylim = c(1e-8, NA), wlim = c(1e-3, NA))
 ```
 
-Notice how the species have settled down to a new steady state after 30 years without any extinctions and the impact on species 1 is almost negligible. As expected, the higher reproduction level has made the species much more resilient to perturbations.
+Notice how the species have settled down to a new steady state after 30 years without any extinctions and the impact on species 1 is much less extreme. As expected, the higher reproduction level has made the species more resilient to perturbations.
 
 The problem of course is that in practice the reproduction level is hardly ever known. Instead one will need to use any information one has about the sensitivity of the system from observed past perturbations to calibrate the reproduction levels. We'll discuss this again in week 3.
 
@@ -273,7 +274,7 @@ Go back to the example with fishing on individuals above 1kg from the section on
 
 ## Resource dynamics
 
-The resource spectrum is not described by size spectrum dynamics, because in reality it is typically not made up of individuals that grow over a large size range during their life time. In mizer, the resource number density in each size class is describe by semichemostat dynamics: the resource number density in each size class increases recovers after depletion, and this biomass growth or recovery rate will decrease as the number density gets close to a carrying capacity. If you want the mathematical details, you can find them in the [mizer model description](https://sizespectrum.org/mizer/articles/model_description.html) in the section on [resource density](https://sizespectrum.org/mizer/articles/model_description.html#resource-density).
+The resource spectrum is not described by size spectrum dynamics, because in reality it is typically not made up of individuals that grow over a large size range during their life time. In mizer, the resource number density in each size class is describe by semichemostat dynamics: the resource number density in each size class recovers after depletion, and this biomass growth or recovery rate will decrease as the number density gets close to a carrying capacity. If you want the mathematical details, you can find them in the [mizer model description](https://sizespectrum.org/mizer/articles/model_description.html) in the section on [resource density](https://sizespectrum.org/mizer/articles/model_description.html#resource-density).
 
 The effect of these dynamics is that if the number of fish consuming the resource in a certain size range increases, the resource abundance in that size range will decrease, if it cannot recover quickly enough (regeneration rate of the resource is set by the user). So there is competition for the resource, which provides a stabilising influence on the fish abundances. We will be discussing this more in week 3.
 
