@@ -229,7 +229,7 @@ This is what we proposed in [this blog post](https://blog.mizer.sizespectrum.org
 We can now save the resulting model to disk for future use. We choose the file name to remind us that this is the version of the model with a single resource only. 
 
 ```{r}
-saveParams(cel_model, "cur_model_single.rds")
+saveParams(cel_model, "cel_model_single.rds")
 ```
 
 ## Exercise

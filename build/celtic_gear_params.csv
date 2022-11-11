@@ -1,18 +1,18 @@
-"species","gear","sel_func","knife_edge_size","catchability"
-"Herring","knife_edge_gear","knife_edge",101.515728300244,0.5361117564855
-"Sprat","knife_edge_gear","knife_edge",6.18196047362489,0.513601872864375
-"Cod","knife_edge_gear","knife_edge",1124.21582338652,0.465695620446958
-"Haddock","knife_edge_gear","knife_edge",208.231883526894,0.148063702684883
-"Whiting","knife_edge_gear","knife_edge",67.4556524855657,0.4842844155535
-"Blue whiting","knife_edge_gear","knife_edge",20.5302145779641,0.0526404522991118
-"Norway Pout","knife_edge_gear","knife_edge",18.6216187603765,0.0801341779365828
-"Poor Cod","knife_edge_gear","knife_edge",27.9130245235344,0.0105298622939252
-"European Hake","knife_edge_gear","knife_edge",281.269762527227,0.786853578923792
-"Monkfish","knife_edge_gear","knife_edge",543.46877204377,0.319006665012917
-"Horse Mackerel","knife_edge_gear","knife_edge",34.3455176990624,0.295744102686827
-"Mackerel","knife_edge_gear","knife_edge",161.383546797926,0.564377380688708
-"Common Dab","knife_edge_gear","knife_edge",9.32003433997716,0.682477301455292
-"Plaice","knife_edge_gear","knife_edge",117.919064538124,0.611284602838542
-"Megrim","knife_edge_gear","knife_edge",127.695045117798,0.687633349757792
-"Sole","knife_edge_gear","knife_edge",55.1007513951312,0.189167525945692
-"Boarfish","knife_edge_gear","knife_edge",14.2796382755789,0.127794416069846
+species,gear,sel_func,l50,l25,catchability
+Herring,Commercial,sigmoid_length,23.1,19.6,0.536
+Sprat,Commercial,sigmoid_length,9.4,8,0.514
+Cod,Commercial,sigmoid_length,47.9,40.7,0.466
+Haddock,Commercial,sigmoid_length,27.8,23.6,0.148
+Whiting,Commercial,sigmoid_length,20.1,17.1,0.484
+Blue whiting,Commercial,sigmoid_length,14.8,12.6,0.053
+Norway Pout,Commercial,sigmoid_length,13.2,11.2,0.08
+Poor Cod,Commercial,sigmoid_length,14,11.9,0.011
+European Hake,Commercial,sigmoid_length,34.5,29.4,0.787
+Monkfish,Commercial,sigmoid_length,32.1,27.3,0.319
+Horse Mackerel,Commercial,sigmoid_length,15.4,13.1,0.296
+Mackerel,Commercial,sigmoid_length,26.8,22.8,0.564
+Common Dab,Commercial,sigmoid_length,9.1,7.8,0.682
+Plaice,Commercial,sigmoid_length,22.3,18.9,0.611
+Megrim,Commercial,sigmoid_length,25.9,22,0.688
+Sole,Commercial,sigmoid_length,18.1,15.4,0.189
+Boarfish,Commercial,sigmoid_length,8.3,7,0.128
