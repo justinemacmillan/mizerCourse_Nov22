@@ -81,7 +81,7 @@ animateSpectra(sim_lessRes, total = TRUE, power = 2,
 
 Go ahead, press the Play button.
 
-**Note**, for some species size spectra at the largest size class drop all the way to very small values (e.g. 10\^-7) and for others they stop higher. This is just a discretisation artifact and is not important. Try to ignore it.
+**Note**, for some species size spectra at the largest size class drop all the way to very small values (e.g. 10\^-7) and for others they stop higher. This is just a discretisation artefact and is not important. Try to ignore it.
 
 Of course we can also get at the numeric values of the spectra at different times. First of all the function `getTimes()` gives the times at which simulation results are available in the MizerSim object:
 
