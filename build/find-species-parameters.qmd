@@ -51,7 +51,7 @@ You can find the complete list of species parameters used in mizer in the help p
 
 ## Parameters we provide
 
-For each of the species that we include in our model we have some information that we have put into a species parameter table and saved it as a .csv file. The table has one row for each species and one column for each species parameter. We can read this into a data frame with
+For each of the species that we include in our model we have some information that we have put into a species parameter table and saved as a .csv file. The table has one row for each species and one column for each species parameter. We can read this into a data frame with
 
 ```{r}
 celtic_species_params <- read.csv("celtic_species_params.csv", row.names = 1)
@@ -91,7 +91,7 @@ The parameter $h$ represents the maximum consumption rate of a fish, scaled by s
 The von Bertalanffy growth function is widely used in fisheries and ecology. However, it should be treated with some caution. To estimate the growth function coefficients reliably we need sufficient amounts of data from young and old individuals. The latter is often not the case for intensively fished species, because old fish are simply not present in the ecosystem. Young individuals are also often not observed, especially if data comes from fisheries rather than scientific surveys. If we do not have old fish in the sample the asymptotic length $L_\infty$ cannot be properly estimated. As a result, estimates of $K$ will also vary extensively across samples. You can see that for yourself in our exercise below.
 :::
 
-We have also included some parameters that mizer ignores, namely the maximum length ever recorded `max_l`, age at maturity `mat_age`,  the maximum age `max_age` and maximum size `w_max` derived from allometrically from maximum length . We find these useful as a sanity check on our choices for `w_mat`,  `k_vb` and `w_inf`. Expand the following section if you want to learn more.
+We have also included some parameters that mizer ignores, namely the maximum length ever recorded `max_l`, age at maturity `mat_age`,  the maximum age `max_age` and maximum size `w_max` derived allometrically from maximum length. We find these useful as a sanity check on our choices for `w_mat`,  `k_vb` and `w_inf`. Expand the following section if you want to learn more.
 
 ::: {.callout-note collapse="true"}
 ### Plotting Von-Bertalanffy parameters
@@ -139,7 +139,7 @@ You probably noticed that there is no curve for cod. Well, this is what Exercise
 
 4.  The **preferred predator-prey mass ratio** `beta`. We discussed the importance of the [predation kernel](../understand/predation-growth-and-mortality.html#the-predation-kernel) last week. The default value for `beta` in mizer is `beta = 30`. However, higher `beta` values are appropriate for fish that feed on plankton or benthic invertebrates. We need to keep in mind that `beta` represents a **preferred** predator prey size ratio, not the **realised** one. Most species prefer to eat larger prey, but their diets are dominated by small prey, since smaller individuals are more common.
 
-    For the Celtic Sea model the beta values are provided. But we can also set the following beta values: we assume 100 for for piscivores fish, 10000 for large benthivores, 8000 for  benthivores and 5000 for planktivorous fish. We can also set  the `sigma` values at their default of 2, although planktivores and benthivores would normally feed over a larger range of sizes and thus larger `sigma` values might be appropriate for them and smaller ones for predatory species. `sigma` is a standard deviation of the predation kernel on a natural log scale, but it is easier to understand it when looking at the predation kernel plots, which we will do in the last tutorial. We will revisit our preliminary choices in the [Refine your model](refine-model.qmd) tutorial when we can visualise what the resulting diets will look like.
+For the Celtic Sea model the beta values are provided. But we can also set the following beta values: we assume 100 for for piscivores fish, 10000 for large benthivores, 8000 for  benthivores and 5000 for planktivorous fish. We can also set  the `sigma` values at their default of 2, although planktivores and benthivores would normally feed over a larger range of sizes and thus larger `sigma` values might be appropriate for them and smaller ones for predatory species. `sigma` is a standard deviation of the predation kernel on a natural log scale, but it is easier to understand it when looking at the predation kernel plots, which we will do in the last tutorial. We will revisit our preliminary choices in the [Refine your model](refine-model.qmd) tutorial when we can visualise what the resulting diets will look like.
 
 5.  The **observed biomass** for each species in grams, `biomass_observed`. You will not be able to calibrate your model to a realistic system without some information on relative species abundances. Note, the `biomass_observed` reflects the average species biomasses in your model system for the period that you want to calibrate your system to. Usually we do not have data on observed biomasses of all fish sizes combined, since we usually do not observe larvae. This we can specify in the `biomass_cutoff` parameter, where we tell mizer the smallest size of fish to use for comparing model and observed biomasses. In our case we give the value of 2g for all species (about 6cm long), because observed data comes from scientific monitoring surveys.
 
@@ -153,7 +153,7 @@ Observed biomasses could be derived from **scientific surveys**, **underwater su
 
 6.  Fisheries **yields** in terms of total average yearly catches for each species in grams in `yield_observed`. While these are not used directly by mizer to set up the model, mizer can display this information in graphs that you can use to calibrate the model manually. We will discuss this in the [Refine your model](refine-model.qmd) tutorial.
 
-7.  Species **length-weight conversion** coefficients `a` and `b`. The length `l` in cm and the weight `w` in grams of an average individual are related as: $$w = a \cdot l^b$$ For many species the length-weight conversion coefficients $a$ and $b$ are available on FishBase. These coefficients are needed if maximum or maturation body size are provided in length or if we estimate `h` from Von Bertalanffy `v_bk`. If you do not provide values, mizer will assume $a = 0.01\ \mathrm{g/cm}^{-3}$ and $b = 3$. For the Celtic model we have taken values from FishBase.
+7.  Species **length-weight conversion** coefficients `a` and `b`. The length `l` in cm and the weight `w` in grams of an average individual are related as: $$w = a \cdot l^b$$ For many species the length-weight conversion coefficients $a$ and $b$ are available on FishBase. These coefficients are needed if maximum or maturation body size are provided in length or if we estimate `h` from Von Bertalanffy `v_bk`. For the Celtic sea model we have taken values from FishBase.
 
 We have included another column in our species parameter frame that mizer ignores: `funcgrp`. This is just information for ourselves. You can have an arbitrary number of additional columns that contain information meaningful to you but ignored by mizer.
 
@@ -161,11 +161,11 @@ We have included another column in our species parameter frame that mizer ignore
 
 There are many other parameters that are used to describe species properties, but which we have not provided in our species parameter data frame because mizer has default ways to calculate them based on the size theory expectations. You can read about the theory in various publications or in the excellent Ken H Andersen book ["Fish Ecology, Evolution, and Exploitation" (2019)](https://ken.haste.dk/home/publications). So you don't **need** to provide them, but you do need to understand the defaults and think whether you are happy with them. Mizer help pages provide [a good summary of species parameters](https://sizespectrum.org/mizer/reference/species_params.html) and links to functions that use these parameters.
 
-8.  The species **search volume** is set from the search rate constant `gamma` and its body size scaling exponent `q`. If no values are provided `gamma` and `q` are set so that when prey abundance is described by the power law with the exponent `lambda`, food search rate will lead to the juvenile feeding level `f0 = 0.6`.
+8.  The species **search volume** is set from the search rate constant `gamma` and its body size scaling exponent `q`. If no values are provided `gamma` and `q` are set so that when prey abundance is described by the power law with the exponent `lambda`, the search volume will lead to a juvenile feeding level of `f0 = 0.6`.
 
-9.  The species **maximum intake** rate is set using the constant `h` and the body size scaling exponent `n`. If no value is provided, the coefficient `h` is set so as to achieve Von-Bertalanffy growth rate based estimate of maturity size at a given maturity age (given the feeding level `f0 = 0.6`). In multi-species models the exponent `n` is by default set to 2/3 but we choose `n = 3/4`.
+9.  The species **maximum intake** rate is set using the constant `h` and the body size scaling exponent `n`. If no value is provided, the coefficient `h` is set so as to achieve a Von-Bertalanffy growth rate based estimate of maturity size at a given maturity age (given the feeding level `f0 = 0.6`). In multi-species models the exponent `n` is by default set to 2/3 but we choose `n = 3/4`.
 
-10. Species **metabolic rate** is set from the constants `ks` and body size scaling exponent `p`. If no values are provided the coefficient `ks` is set so that at maturation size metabolic expenditure requires a critical feeding level of `fc = 0.2`. In multi-species models the exponent `p` is by default set to 0.7 but we choose `p = n = 3/4`. Maintenance expenditure can also include activity related energetic costs, using species activity coefficient `k` which scales linearly with body size (exponent of 1). By default this value is set to 0 and most mizer models do not include it.
+10. The species **metabolic rate** is set from the constants `ks` and body size scaling exponent `p`. If no values are provided the coefficient `ks` is set so that at maturation size metabolic expenditure requires a critical feeding level of `fc = 0.2`. In multi-species models the exponent `p` is by default set to 0.7 but we choose `p = n = 3/4`. Maintenance expenditure can also include activity related energetic costs, using species activity coefficient `k` which scales linearly with body size (exponent of 1). By default this value is set to 0 and most mizer models do not include it.
 
 ::: {.callout-important collapse="false"}
 **Body size scaling exponents**
@@ -173,7 +173,7 @@ There are many other parameters that are used to describe species properties, bu
 We just said that we choose the allometric exponents `n` and `p` to be both equal to 3/4. There is a lot of debate about the correct values for these exponents. Some schools of thought argue that energy intake should scale with individual's surface area (exponent of $2/3$) whereas energy expenditure should scale with body volume (exponent of $1$). Others suggest that food intake and metabolism exponents should both scale with $3/4$. There are no clear rules and these exponents in reality are likely to vary across species.
 :::
 
-11. Species external (also called background or baseline) size-independent mortality rate constant `z0` This parameter determines the background mortality that affects all species size classes in the same way (it is a flat rate across sizes). If no values are provided mizer assumes that species with small maximum body sizes have much higher baseline mortality rate. For example, a species with `w_inf` = 35 g will have `z0` = 0.18, a species with `w_inf` = 150g will have `z0` = 0.11 and a species with `w_inf` = 14kg will have `z0` = 0.025.
+11. The external (also called background or baseline) size-independent mortality rate constant `z0` This parameter determines the background mortality that affects all size classes in the same way (it is a flat rate across sizes). If no values are provided mizer assumes that species with small maximum body sizes have much higher baseline mortality rate. For example, a species with `w_inf` = 35 g will have `z0` = 0.18, a species with `w_inf` = 150g will have `z0` = 0.11 and a species with `w_inf` = 14kg will have `z0` = 0.025.
 
 12. We already discussed the parameters involved in setting the [investment into reproduction](..understand/single-species-spectra.hqmd#investment-into-reproduction) last week. The reproduction investment parameter `m` determines the scaling of the investment into reproduction for mature individuals. By default `m` = 1 which means that after maturation the rate at which individual fish invests energy into reproduction scales linearly with size (if you want more information, you can find it [here](https://sizespectrum.org/mizer/reference/setReproduction.html#investment-into-reproduction)). This default can be changed to another value if different scaling is preferred (e.g. in case you might want to explore [hyper-allometric reproduction investment options](https://www.pnas.org/doi/abs/10.1073/pnas.2100695118)). The steepness of population level energy allocation to reproduction is determined by `w_mat25`, the size at which 25% of individuals are mature.
 
@@ -181,7 +181,7 @@ We just said that we choose the allometric exponents `n` and `p` to be both equa
 
 14. We discussed the parameters `R_max` and `erepro` last week in the section on [How reproduction is modelled](../understand/dynamics-of-spectra.qmd#how-reproduction-is-modelled).
 
-15. You can also modify availability of the resource to each of your species, as we have learned [during week 1](https://course.mizer.sizespectrum.org/understand/species-interactions.html#resource-interactions). This is set by the parameter `interaction_resource` and this value is set to 1 by default. We will however change this when we set up multiple resources in the next tutorial.
+15. You can also modify availability of the resource to each of your species, as we have learned [during week 1](https://course.mizer.sizespectrum.org/understand/species-interactions.html#resource-interactions). This is set by the parameter `interaction_resource` and this value is set to 1 by default.
 
 16. Species food **assimilation efficiency** `alpha`. If no value is provided mizer assumes 0.6.
 
@@ -191,7 +191,7 @@ If you want to change the default values for any of these parameters for any of 
 
 Our species parameter file is missing some parameters for cod (*Gadus morhua*). This is actually a well known species. Your goal in this exercise is to find good values for the missing parameters for cod. We suggest that you use FishBase, where many modellers get their species parameters.
 
-In your worksheet repository for this week you will find the spreadsheet file **celtic_species_params.csv** file. Open this in your favourite spreadsheet programme or editor. Then go to FishBase, use the knowledge you gained so far and:
+In your worksheet repository for this week you will find the spreadsheet file "celtic_species_params.csv". Open this in your favourite spreadsheet programme or editor. Then go to FishBase, use the knowledge you gained so far and:
 
 1\) Fill the NA values for cod.
 
