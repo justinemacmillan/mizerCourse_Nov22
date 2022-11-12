@@ -8,7 +8,6 @@ library(mizer)
 library(tidyverse)
 ```
 
-
 ## Selecting model species
 
 How do we decide which species to include in the model? There are many ways to approach it and no clearly set rules. Of course you want to include species that you are interested in, but then also perhaps some other important species in the ecosystem. Mizer actually has a powerful framework that allows you to explicitly model only your focus species and represent the rest of the ecosystem with 'background' species. The sizes and abundances of these 'background' species are assumed to follow the power law, so that the total community biomass approximately represents the Sheldon spectrum. This is only mentioned here for your information, as we will not go into these details during this week.
@@ -17,27 +16,25 @@ If you have your own ecosystem that you want to model during this week, then you
 
 The list of species and their general feeding habits or trophic group based on [Thompson et al. 2020](https://doi.org/10.1111/1365-2664.13662) are listed below. We include scientific and model name, the latter representing a short name that we can conveniently use and display in plots.
 
-| Scientific name                        | Model name | Trophic group |
-|----------------------------------------|------------|---------------|
-| Clupea harengus	| Herring	| Planktivore
-| Sprattus sprattus	| Sprat	| Zooplanktivore
-| Gadus morhua	|Cod	| Piscivore
-| Melanogrammus aeglefinus	| Haddock	| Zooplanktivore
-| Merlangius merlangus	| Whiting	| Piscivore
-| Micromesistius poutassou	| Blue whiting	| Planktivore
-| Trisopterus esmarkii	| Norway Pout	| Planktivore
-| Trisopterus minutus	| Poor Cod	| Zoobenthivore
-| Merluccius merluccius	| European Hake	| Piscivore
-| Lophius piscatorius	|Monkfish	| Piscivore
-| Trachurus trachurus	| Horse Mackerel	| Piscivore
-| Scomber scombrus	| Mackerel	| Planktivore
-| Limanda limanda	| Common Dab	| Benthivore
-| Pleuronectes platessa	| Plaice	| Benthivore
-|Lepidorhombus whiffiagonis	| Megrim	| Piscivore
-| Solea solea	| Sole	| Benthivore
-| Capros aper	 |Boarfish	| Zooplanktivore |
-
-
+| Scientific name            | Model name     | Trophic group  |
+|----------------------------|----------------|----------------|
+| Clupea harengus            | Herring        | Planktivore    |
+| Sprattus sprattus          | Sprat          | Zooplanktivore |
+| Gadus morhua               | Cod            | Piscivore      |
+| Melanogrammus aeglefinus   | Haddock        | Zooplanktivore |
+| Merlangius merlangus       | Whiting        | Piscivore      |
+| Micromesistius poutassou   | Blue whiting   | Planktivore    |
+| Trisopterus esmarkii       | Norway Pout    | Planktivore    |
+| Trisopterus minutus        | Poor Cod       | Zoobenthivore  |
+| Merluccius merluccius      | European Hake  | Piscivore      |
+| Lophius piscatorius        | Monkfish       | Piscivore      |
+| Trachurus trachurus        | Horse Mackerel | Piscivore      |
+| Scomber scombrus           | Mackerel       | Planktivore    |
+| Limanda limanda            | Common Dab     | Benthivore     |
+| Pleuronectes platessa      | Plaice         | Benthivore     |
+| Lepidorhombus whiffiagonis | Megrim         | Piscivore      |
+| Solea solea                | Sole           | Benthivore     |
+| Capros aper                | Boarfish       | Zooplanktivore |
 
 ## Summary of species parameters
 
@@ -91,12 +88,12 @@ The parameter $h$ represents the maximum consumption rate of a fish, scaled by s
 The von Bertalanffy growth function is widely used in fisheries and ecology. However, it should be treated with some caution. To estimate the growth function coefficients reliably we need sufficient amounts of data from young and old individuals. The latter is often not the case for intensively fished species, because old fish are simply not present in the ecosystem. Young individuals are also often not observed, especially if data comes from fisheries rather than scientific surveys. If we do not have old fish in the sample the asymptotic length $L_\infty$ cannot be properly estimated. As a result, estimates of $K$ will also vary extensively across samples. You can see that for yourself in our exercise below.
 :::
 
-We have also included some parameters that mizer ignores, namely the maximum length ever recorded `l_max`, age at maturity `age_mat`,  the maximum age `age_max` and maximum size `w_max` derived allometrically from maximum length. We find these useful as a sanity check on our choices for `w_mat`,  `k_vb` and `w_inf`. Expand the following section if you want to learn more.
+We have also included some parameters that mizer ignores, namely the maximum length ever recorded `l_max`, age at maturity `age_mat`, the maximum age `age_max` and maximum size `w_max` derived allometrically from maximum length. We find these useful as a sanity check on our choices for `w_mat`, `k_vb` and `w_inf`. Expand the following section if you want to learn more.
 
 ::: {.callout-note collapse="true"}
 ### Plotting Von-Bertalanffy parameters
 
-Once we collect species parameters from FishBase we might want to know how well these parameters reflect the actual growth data, or at least knowledge about maximum and maturation size. Of course if we have size-age data we can estimate the Von Bertalanffy growth curve parameters ourselves. But for now we will just plot some sample size-age observations of seven species on top of the von Bertalanffy curves defined by the parameters in our dataframe. The size-age data was sourced from 2020 Scientific, Technical and Economic Committee for Fisheries  [(STECF)](https://stecf.jrc.ec.europa.eu/dd/fdi). It was restricted to England and Wales.
+Once we collect species parameters from FishBase we might want to know how well these parameters reflect the actual growth data, or at least knowledge about maximum and maturation size. Of course if we have size-age data we can estimate the Von Bertalanffy growth curve parameters ourselves. But for now we will just plot some sample size-age observations of seven species on top of the von Bertalanffy curves defined by the parameters in our dataframe. The size-age data was sourced from 2020 Scientific, Technical and Economic Committee for Fisheries [(STECF)](https://stecf.jrc.ec.europa.eu/dd/fdi). It was restricted to England and Wales.
 
 ```{r}
 #| warning: false
@@ -139,10 +136,9 @@ You probably noticed that there is no curve for cod. Well, this is what Exercise
 
 4.  The **preferred predator-prey mass ratio** `beta`. We discussed the importance of the [predation kernel](../understand/predation-growth-and-mortality.html#the-predation-kernel) last week. The default value for `beta` in mizer is `beta = 30`. However, higher `beta` values are appropriate for fish that feed on plankton or benthic invertebrates. We need to keep in mind that `beta` represents a **preferred** predator prey size ratio, not the **realised** one. Most species prefer to eat larger prey, but their diets are dominated by small prey, since smaller individuals are more common.
 
-For the Celtic Sea model the beta and sigma values were sourced from [Spence et al. 2021.] (https://onlinelibrary.wiley.com/doi/10.1111/faf.12543). `sigma` is a standard deviation of the predation kernel on a natural log scale, but it is easier to understand it when looking at the predation kernel plots. We will revisit our preliminary choices in the [Refine your model](refine-model.qmd) tutorial when we can visualise what the resulting diets will look like.
+For the Celtic Sea model the beta and sigma values were sourced from \[Spence et al. 2021.\] (https://onlinelibrary.wiley.com/doi/10.1111/faf.12543). `sigma` is a standard deviation of the predation kernel on a natural log scale, but it is easier to understand it when looking at the predation kernel plots. We will revisit our preliminary choices in the [Refine your model](refine-model.qmd) tutorial when we can visualise what the resulting diets will look like.
 
-
-5.  The **observed biomass** for each species in grams, `biomass_observed`. These were derived from [ICES stock assessment reports] (https://standardgraphs.ices.dk/stockList.aspx) by averaging the spawning stock biomass over a 10-year period (2012 - 2021) and scaling it to a unit area. You will not be able to calibrate your model to a realistic system without some information on relative species abundances. Note, the `biomass_observed` reflects the average species biomasses in your model system for the period that you want to calibrate your system to. Usually we do not have data on observed biomasses of all fish sizes combined, since we usually do not observe larvae. This we can specify in the `biomass_cutoff` parameter, where we tell mizer the smallest size of fish to use for comparing model and observed biomasses. In our case we give the value of 2g for all species (about 6cm long), because observed data comes from scientific monitoring surveys.
+5.  The **observed biomass** for each species in grams, `biomass_observed`. These were derived from \[ICES stock assessment reports\] (https://standardgraphs.ices.dk/stockList.aspx) by averaging the spawning stock biomass over a 10-year period (2012 - 2021) and scaling it to a unit area. You will not be able to calibrate your model to a realistic system without some information on relative species abundances. Note, the `biomass_observed` reflects the average species biomasses in your model system for the period that you want to calibrate your system to. Usually we do not have data on observed biomasses of all fish sizes combined, since we usually do not observe larvae. This we can specify in the `biomass_cutoff` parameter, where we tell mizer the smallest size of fish to use for comparing model and observed biomasses. In our case we give the value of 2g for all species (about 6cm long), because observed data comes from scientific monitoring surveys.
 
 ::: {.callout-note collapse="true"}
 ### How to get observed biomasses
@@ -152,7 +148,7 @@ To calibrate the rate of reproduction (the rate at which eggs are entering the f
 Observed biomasses could be derived from **scientific surveys**, **underwater surveys** or other observations or knowledge about relative biomasses of species. In well studied systems you might have data about biomass estimates, **catches** and **fishing mortality** from stock assessments. These type of data are often used to calibrate mizer models, although we need to be aware of the fact that stock assessment estimates are also model estimates and come with their own assumptions (e.g. they are single species estimates).
 :::
 
-6.  Fisheries **yields** in terms of total average yearly catches for each species in grams in `yield_observed`. These were derived from [ICES stock assessment reports] (https://standardgraphs.ices.dk/stockList.aspx) by averaging the total catch over a 10-year period (2012 - 2021) and scaling it to a unit sea surface area. Two species poor cod and common dab had missing data. While `yield_observed` is not used directly by mizer to set up the model, mizer can display this information in graphs that you can use to calibrate the model manually. We will discuss this in the [Refine your model](refine-model.qmd) tutorial.
+6.  Fisheries **yields** in terms of total average yearly catches for each species in grams in `yield_observed`. These were derived from \[ICES stock assessment reports\] (https://standardgraphs.ices.dk/stockList.aspx) by averaging the total catch over a 10-year period (2012 - 2021) and scaling it to a unit sea surface area. Two species poor cod and common dab had missing data. While `yield_observed` is not used directly by mizer to set up the model, mizer can display this information in graphs that you can use to calibrate the model manually. We will discuss this in the [Refine your model](refine-model.qmd) tutorial.
 
 7.  Species **length-weight conversion** coefficients `a` and `b`. The length `l` in cm and the weight `w` in grams of an average individual are related as: $$w = a \cdot l^b$$ For many species the length-weight conversion coefficients $a$ and $b$ are available on FishBase. These coefficients are needed if maximum or maturation body size are provided in length or if we estimate `h` from Von Bertalanffy `v_bk`. For the Celtic sea model we have taken values from FishBase.
 
@@ -225,13 +221,12 @@ round(NS_interaction, 2)
 
 3.  **Species predator avoidance behaviour or vulnerability**. Some species may be less available to other species because they are good at hiding, have spikes, or live in large schools which reduces their vulnerability to predation compared to solitary species. This could also be included in the species interaction matrix, but in the prey column.
 
-    For our Celtic Sea example model we used interaction matrix from a study by [Spence et al. 2021.] (https://onlinelibrary.wiley.com/doi/10.1111/faf.12543):
+    For our Celtic Sea example model we used interaction matrix from a study by \[Spence et al. 2021.\] (https://onlinelibrary.wiley.com/doi/10.1111/faf.12543):
 
 ```{r}
 celtic_interaction <-  read.csv("celtic_interaction.csv")
 celtic_interaction
 ```
-
 
 In case the interaction matrix was derived by considering the interactions between stocks such as predation and competition for resources.
 
@@ -241,19 +236,18 @@ Because most ecosystems are fished and we are calibrating to biomasses observed 
 
 In mizer you can implement an arbitrary number of different gears, each with its own fishing effort, fishing different species with different selectivity and catchability. Gear selectivity curves can have different shapes (logistic, knife-edge and others). You can read more about this [here](https://sizespectrum.org/mizer/reference/setFishing.html).
 
-You provide the information about the gears in a data frame similar to the species parameter data frame. Here is the gear parameter data frame we will use initially for our Celtic Sea model was derived from [Spence et al. 2021.] (https://onlinelibrary.wiley.com/doi/10.1111/faf.12543):
+You provide the information about the gears in a data frame similar to the species parameter data frame. Here is the gear parameter data frame we will use initially for our Celtic Sea model was derived from \[Spence et al. 2021.\] (https://onlinelibrary.wiley.com/doi/10.1111/faf.12543):
 
 ```{r}
 celtic_gear_params <- read.csv("celtic_gear_params.csv", row.names = 1)
 celtic_gear_params
 ```
 
-You see that by default we only have a single gear, that we call "Commercial". It targets all species in our model. We have a sigmoid shaped selectivity with a value "sigmoid_length" in the `sel_func` column. We model the size selectivity of the gear by a sigmoidal curve that is specified by giving the length `l50` in cm at which 50% of the individuals are selected by the gear and the length `l25` in cm at which 25% of the individuals are selected by the gear. 
+You see that by default we only have a single gear, that we call "Commercial". It targets all species in our model. We have a sigmoid shaped selectivity with a value "sigmoid_length" in the `sel_func` column. We model the size selectivity of the gear by a sigmoidal curve that is specified by giving the length `l50` in cm at which 50% of the individuals are selected by the gear and the length `l25` in cm at which 25% of the individuals are selected by the gear.
 
 The `catchability` column specifies how vulnerable the species are to commercial fishing. Some species live close to the shore or are otherwise less vulnerable to commercial fishing, so we will set their `catchability` to 0.7 or even to 0.01 for poor cod.
 
 In mizer, the fishing mortality rates at size for each gear is the product of the size-dependent selectivity, the catchability and the fishing effort. We will use the above gear with a fishing effort of 0.3, which means that the fishing mortality for the fully selected individuals for the species with highest catchability will be 0.3 per year.
-
 
 ## Summary
 
