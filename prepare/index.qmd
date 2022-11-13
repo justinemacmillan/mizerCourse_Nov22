@@ -15,7 +15,7 @@ While the course only starts on Monday the 7th of November, if you like you can 
 
 That will allow for a flying start to the course.
 
-## Watch video introducing mizer"
+## Watch video introducing mizer
 
 In this video Ken Andersen introduces many of the concepts that we will be discussing in this course. However don't feel that you have to take it all in at once. We will come back to these topics (and others) during the course where we hope to make them concrete by working hands-on with mizer.
 
