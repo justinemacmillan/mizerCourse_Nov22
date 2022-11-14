@@ -4,7 +4,7 @@ title: "Create your first model"
 
 ## Introduction
 
-Setting up a mizer model that agrees with observations used to be difficult. That is not a surprise, because we have seen how all the species influence each other, as well as the resource, and how the reproduction rates of all species depend on the size spectra of all species and vice versa. So if you make changes in one corner of the model to make it agree with some observation, things change at another corner to mess things up again.
+Setting up a mizer model that agrees with observations used to be really difficult. That is not a surprise, because we have seen how all the species influence each other, as well as the resource, and how the reproduction rates of all species depend on the size spectra of all species and vice versa. So if you make changes in one corner of the model to make it agree with some observation, things change at another corner to mess things up again.
 
 There are three dynamic processes in action in a mizer model at the same time: size-spectrum dynamics, reproduction dynamics and resource dynamics. These are fully interacting with each other, with feedback loops. So for example the resource spectrum depends on the consumption by fish, which depends on the fish size spectra, which depend on the fish growth rates, which depends on the resource spectrum. Similarly the reproduction rate depends on the number of mature fish and on their energy income, which depends among other things on the rate at which new individuals are recruited, which depends among other things on the reproduction rate. And all of these feedbacks depend on the model parameters that we are supposed to choose in a way that reproduces observed behaviour. It seems hopeless!
 
@@ -14,7 +14,7 @@ Once we are happy with the steady state of the model, we turn the reproduction a
 
 We will concentrate on building models with the correct steady state this week and then tune the behaviour away from steady state next week.
 
-In this tutorial we will take the species parameters that we assembled in the previous tutorial for the Celtic Sea ICES (International Council for Exploration of the Seas) areas 7e-j, and use the `newMultispeciesParams()` function to build a mizer model with them. We will let mizer choose most of the defaults and then adjust a few things so that the model has a steady state that has the observed species biomasses. We will then do the fine-tuning in the following tutorials.
+In this tutorial we will take the species parameters that we assembled in the previous tutorial for the Celtic Sea ICES (International Council for Exploration of the Seas) areas 7e-j, and use the `newMultispeciesParams()` function to build a mizer model with them. We will let mizer choose most of the defaults and then adjust a few things so that the model has a steady state that has the observed species biomasses and growth rates. We will then do the fine-tuning in the following tutorials.
 
 As always, we start by updating and loading packages.
 
@@ -25,9 +25,9 @@ library(mizerExperimental)
 library(tidyverse)
 ```
 
-Now the creation of the mizer model is a 6-step process.
+Now the creation of the mizer model is an 8-step process.
 
-## Step 1: Collect parameters
+## Step 0: Collect parameters
 
 We did this in the [previous tutorial](find-species-parameters.qmd). We now have a species parameter data frame, a species interaction matrix (optional) and a gear paramter data frame. So here we only need to read in those files.
 
@@ -39,7 +39,7 @@ celtic_interaction <- read.csv("celtic_interaction.csv", row.names = 1)
 
 When you repeat this work in your worksheet, you can check that the data was read in correctly by clicking on `celtic_species_params`, `celtic_gear_params` and `celtic_interaction` in the "Environment" tab. That will open the data frames in your editor window for you to inspect.
 
-## Step 2: Create MizerParams object
+## Step 1: Create MizerParams object
 
 We will now set up a multi-species mizer model using the function `newMultispeciesParams()`. Besides the species parameters, the gear parameters and the interaction matrix, the other information that flows into a multi-species model are the resource parameters, the allometric exponents `n` and `p` and the fishing effort.
 
@@ -57,182 +57,192 @@ cel_model <- newMultispeciesParams(species_params = celtic_species_params,
                                    lambda = 2.05, n = 3/4, p = 3/4)
 ```
 
-Please ignore the first "Note:". It is due to a bug in the released version that will be fixed in the next release. The last two messages however are supposed to be there and they tell you that the `newMultispeciesParams()` function has made choices for some model parameters based on the information we supplied.
+Please ignore the note about "Dimnames". It is due to a bug in the released version that will be fixed in the next release. The last two messages however are supposed to be there and they tell you that the `newMultispeciesParams()` function has made choices for some model parameters based on the information we supplied.
 
-So for example mizer chose the coefficient `ks` of the metabolic rate for each species so that a proportion `fc` of the maximum intake rate would be enough to cover the metabolic expenses. We did not specify this critical feeding level `fc` so mizer chose `fc = 0.2`. Also mizer has set a constant background mortality `z0` that scales with the species' asymptotic size. Let's look at the result:
+In order to always know what a mizer model is about, it is a good idea to give it some metadata. This is of course optional.
 
 ```{r}
-species_params(cel_model) |> select(ks, z0)
+cel_model <- 
+    setMetadata(cel_model, 
+                title = "Celtic Sea model from mizer course in Nov 2022",
+                description = "See https://mizer.course.nov22.sizespectrum.org/build")
 ```
+
+You can get that metadata back later with `getMetadata()`.
 
 ## Step 2: Project to steady state
 
 The `newMultispeciesParams()` function does not currently put much effort into choosing a good initial community configuration. Let's have a look at what it has set up:
 
 ```{r}
-plotSpectra(cel_model, power = 2)
+plotlySpectra(cel_model, power = 2)
 ```
 
 There is a lot wrong here. The species spectra lack the characteristic bulge at adult sizes. Also the species spectra do not line up nicely with the abundance of the resource. But most importantly, these spectra are not close to their steady state values.
 
-We will now project to the steady state, which will finally give us realistic species spectra. To do this we use the special function `steady()` which implements our trick of keeping the reproduction rate and the resource spectrum constant.
+We will now project to the steady state, which will finally give us realistic species spectra. To do this we use the special function `steady()` which implements our trick of keeping the reproduction rate and the resource spectrum constant while running the dynamics until the system has settled down in its steady state.
 
 ```{r}
-cel_model <- steady(cel_model)
+cel_model2 <- steady(cel_model)
 ```
 
 We can ignore the warning from the `setBevertonHolt()` function about unrealistic reproductive efficiencies. Those warnings are an artefact of how the reproduction level is set by default. We could fix those defaults, but we are not yet concerned with the reproduction dynamics so we don't have to do that and just ignore the warnings.
 
-::: {.callout-important collapse="false"}
-Remember, the steady() function does not yet calibrate your model to any observed biomasses or catches. It simply runs the model to find a state where species spectra stop changing. If you start a simulation from initial biomasses that the set of current species and resource parameters cannot support, species biomasses will change drastically at the start. Perhaps there are too many predators at the start, or too many fish for the resource to support it. After a while these fluctuations will settle down (hopefully) and species biomasses will be stable for a given set of parameters. Of course, since we are keeping reproduction and resource levels constant, this is not yet a final model.
-:::
-
 Now let us look at the spectra in the steady state:
 
 ```{r}
-plotlySpectra(cel_model, power = 2)
+plotlySpectra(cel_model2, power = 2)
 ```
+
+They look a lot more like species size spectra should look like, although there are still clearly some oddities, like the very low abundance of Monkfish among others.
 
 ::: {.callout-caution collapse="true"}
-### If step 2 fails
+### If this step fails
 
-The `steady()` function is not guaranteed to find the steady state. By default it stops after running the dynamics for a maximum of 99 years. If it warns you that it has not reached a steady state, then you should first try to run it again. But if that still does not help, it may be that the steady state is actually unstable. In that case the system evolves towards an oscillating state instead. Luckily, this is rare for realistic parameters, but may well happen while you are still trying to find the correct parameters. If you encounter this phenomenon with your parameter choices, please let us know in the comments. We can then use your example to discuss the solution.
+The `steady()` function is not guaranteed to find the steady state. By default it stops after running the dynamics for a maximum of 99 years. If it warns you that it has not reached a steady state, then you should first try to run it again to see if within the next 99 years it reaches steay state. But if that still does not help, it may be that the steady state is actually unstable. In that case the system evolves towards an oscillating state instead. Luckily, this is rare for realistic parameters, but may well happen while you are still trying to find the correct parameters. If you encounter this phenomenon with your parameter choices, please let us know in the comments. We can then use your example to discuss the solution.
 :::
 
-## Step 5: Calibrate growth
-
-```{r}
-age_mat(cel_model)
-```
-
-```{r}
-species_params(cel_model)$age_mat
-```
-
-```{r}
-cel_model <- matchGrowth(cel_model)
-age_mat(cel_model)
-```
-
-```{r}
-cel_model <- steady(cel_model)
-plotlySpectra(cm, power = 2)
-```
-
-## Step 3: Calibrate the scale
+## Step 3: Calibrate the model scale
 
 Mizer is agnostic of whether you want to measure biomass per square meter, or per square kilometer, or for the entire area of the fishery or whatever. So initially it had set things up on an arbitrarily chosen scale. We can see this if we compare the biomasses of the species in the model with the observed biomasses from your species parameter file with the `plotBiomassVsSpecies()` function:
 
-```{r}
-plotBiomassVsSpecies(cel_model)
+```{r warning=FALSE}
+plotBiomassVsSpecies(cel_model2)
 ```
 
-This shows for each species the model biomass (open circle) and the observed biomass (filled square) on a logarithmic y-axis. The line connecting model value and observed value is for visual purposes only. We see that model values and observed values are many orders of magnitude apart.
+This shows for each species the model biomass (open circle) and the observed biomass (filled square, if available) on a logarithmic y-axis. The line connecting model value and observed value is for visual purposes only. We see that model values and observed values are many orders of magnitude apart.
 
 Using your supplied biomass observations, mizer can now change the scale of our model so that the total biomass in the model coincides with the total observed biomass, summed over all species.
 
 ```{r}
-cel_model <- calibrateBiomass(cel_model)
+cel_model3 <- calibrateBiomass(cel_model2)
 ```
 
 Of course for the individual species the model biomasses will still disagree with the observed biomasses, with some being too high while others are too low. Just the total summed over all species agrees between model and observation.
 
-```{r}
-plotBiomassVsSpecies(cel_model)
+```{r warning=FALSE}
+plotBiomassVsSpecies(cel_model3)
 ```
 
-## Step 4: Rescale species spectra
+We see that the biomasses of Monkfish, European Hake and Cod are far too low in the model, as was already apparent from the size spectrum plot. So we should fix this in the next step.
+
+## Step 4: Match biomasses
 
 To fix the discrepancy between the model biomasses and the observed biomasses we simply need to rescale the model abundance of each species by the appropriate factor. The `matchBiomasses()` function does this for us.
 
-```{r}
-cel_model <- matchBiomasses(cel_model)
-plotBiomassVsSpecies(cel_model)
+```{r warning=FALSE}
+cel_model4 <- matchBiomasses(cel_model3)
+plotBiomassVsSpecies(cel_model4)
 ```
 
-Now the circles and squares lie exactly on top of each other. This is expected, because we simply changed the relative biomasses of species in the model.
+Now the circles and squares lie exactly on top of each other. This is expected, because we simply changed the relative biomasses of species in the model. The size spectrum plot also look more healthy now, although the size spectrum of Herring looks surprisingly high. I wonder whether we mis-estimated its observed biomass.
+
+```{r}
+plotlySpectra(cel_model4, power = 2)
+```
 
 There are similar functions `matchNumbers()` and `matchYields()` that you would use in case either total numbers of individuals or fisheries yields are known instead of total biomasses.
 
-```{r}
-cel_model <- cel_model |>
-    matchGrowth() |>
-    singleSpeciesSteady()
-plotlySpectra(cel_model, power = 2)
-```
+## Step 5: Project to steady state
 
-
-## Step 5: Rinse and repeat
-
-After we have rescaled the spectra of the individual species, the system is no longer in a steady state. All species now experience a new prey distribution and a new predator distribution and so their growth and death rates have changed, which requires us to run the dynamics again to find the new steady state. So we essentially go back to step 2 and project to steady state:
+After we have rescaled the spectra of the individual species to reproduce the observed biomasses and have rescaled the rate parameters to reproduce the observed growth rate, the system is no longer in a steady state. All species now experience a new prey distribution and a new predator distribution and so their growth and death rates have changed, which requires us to run the dynamics again to find the new steady state:
 
 ```{r warning=FALSE}
-cel_model <- steady(cel_model)
+cel_model5 <- steady(cel_model4)
+plotlySpectra(cel_model5, power = 2, total = TRUE)
 ```
 
-The function tell us that running the dynamics for 22.5 years was enough to converge sufficiently close to the steady state. In other words, the state is not changing after 22.5 years. While this case converges, there are cases where convergence may not happen due to two possibilities: 1) we simply need to be a bit more patient or 2) the dynamics will never converge to a steady state but instead continue to oscillate for ever. Let's hope for the first option and call `steady()` repeatedly in the hope to eventually converge to a steady state.
+Of course this has now messed up our biomasses again:
 
 ```{r warning=FALSE}
-cel_model <- steady(cel_model)
+plotBiomassVsSpecies(cel_model5)
 ```
 
-We were lucky and it worked eventually.
+However the discrepancies are now much smaller than they were before. So perhaps we should simply iterate the procedure to get the discrepancies even smaller. However before we do that, there is another things we need to attend to in the next step.
 
-But while the system settled down to the new steady state, the species biomasses have changed, so they now no longer agree with observation.
+## Step 6: Calibrate growth
+
+The growth rates in the model are not quite right yet. We can see that by calculating the age at which the fish in the steady state of the model would reach maturity size, using the `age_mat()` function, and comparing it to the observed age at maturity in the real world that we extracted from FishBase in the previous tutorial and saved in the species parameters.
 
 ```{r}
-plotBiomassVsSpecies(cel_model)
+age_mat_model = age_mat(cel_model5)
+age_mat_observed = celtic_species_params$age_mat
+data.frame(age_mat_model, age_mat_observed)
 ```
 
-We appear to be in a bind: If we match the biomasses we are no longer at steady state, if we run to steady state we no longer match the biomasses. But notice that the discrepancies are not as big as previously. So we don't give up but simply keep iterating, by repeatedly matching biomasses and running to steady state.
-
-After repeating the cycle of matching biomasses and running to steady state 10 more times we get this picture:
+We can fix that with the `matchGrowth()` function which rescales the search volume, the maximum consumption rate and the metabolic rate all by the appropriate factor while keeping the feeding level and the critical feeding level unchanged.
 
 ```{r}
-#| warning: false
-cel_model <- cel_model |>
-    matchBiomasses() |> steady() |> matchBiomasses() |> steady() |>
-    matchBiomasses() |> steady() |> matchBiomasses() |> steady() |>
-    matchBiomasses() |> steady() |> matchBiomasses() |> steady() |>
-    matchBiomasses() |> steady() |> matchBiomasses() |> steady() |>
-    matchBiomasses() |> steady() |> matchBiomasses() |> steady()
-plotBiomassVsSpecies(cel_model)
+cel_model6 <- matchGrowth(cel_model5)
+
+age_mat_model = age_mat(cel_model6)
+data.frame(age_mat_model, age_mat_observed)
 ```
 
-And here is how the spectra look with the correct observed biomasses:
+## Step 7: Project to steady state
+
+Now that we have corrected the growth rates, the system is of course again out of its steady state. So again we run the dynamics until the system has settled into its new steady state.
+
+```{r warning=FALSE}
+cel_model7 <- steady(cel_model6)
+plotlySpectra(cel_model7, power = 2, total = TRUE)
+```
+
+You see a pattern emerging. Whenever we have made a change to the system we have to run the dynamics with the `steady()` function to get to the new steady state.
+
+## Step 8: Rinse and repeat
+
+Running to steady state has again messed up our biomasses:
+
+```{r warning=FALSE}
+plotBiomassVsSpecies(cel_model7)
+```
+
+And it has also messed up our growth rates:
 
 ```{r}
-plotSpectra(cel_model, power = 2)
+age_mat_model = age_mat(cel_model7)
+data.frame(age_mat_model, age_mat_observed)
 ```
 
-Note that above we only repeated `matchBiomasses()` and `steady()`. We did not repeat `calibrateBiomasses()`. We could have done that, i.e., we could have run
+We appear to be in a bind: If we match the biomasses and growth rates we are no longer at steady state, if we run to steady state we no longer match the biomasses and growth rates. But notice that the discrepancies are not as big as previously. So we don't give up but simply keep iterating.
 
 ```{r}
-#| eval: false
-cel_model <- cel_model |>
-    calibrateBiomass() |> matchBiomasses() |> steady() |>
-    calibrateBiomass() |> matchBiomasses() |> steady() |>
-    calibrateBiomass() |> matchBiomasses() |> steady() |>
-    calibrateBiomass() |> matchBiomasses() |> steady()
+cel_model8 <- cel_model7 |>
+    calibrateBiomass() |> matchBiomasses() |> matchGrowth() |> steady() |>
+    calibrateBiomass() |> matchBiomasses() |> matchGrowth() |> steady()
 ```
 
-This is what we proposed in [this blog post](https://blog.mizer.sizespectrum.org/posts/2021-08-20-a-5-step-recipe-for-tuning-the-model-steady-state/). Either method works.
+It turns out that in this example iterating twice more was enough. Even in the steady state the biomasses are now spot on:
 
-We can now save the resulting model to disk for future use. We choose the file name to remind us that this is the version of the model with a single resource only.
+```{r warning=FALSE}
+plotBiomassVsSpecies(cel_model8)
+```
+
+And the growth rates too are matched much more precisely than really necessary:
 
 ```{r}
-saveParams(cel_model, "cel_model_single.rds")
+age_mat_model = age_mat(cel_model8)
+data.frame(age_mat_model, age_mat_observed)
 ```
+
+We can now save the resulting model to disk for future use.
+
+```{r}
+saveParams(cel_model8, "cel_model.rds")
+```
+
+Of course there are still things wrong with this model. We will improve the model in the next two tutorials.
 
 ## Exercise
 
-Now use your species parameter data frame that you assembled in the exercise in the previous tutorial. Use the worksheet for this tutorial "worksheet-2-create-first-model.Rmd" to go through the 5 steps that we went through above to build your own mizer model based on your species parameters.
+Now use your species parameter data frame that you assembled in the exercise in the previous tutorial. Use the worksheet for this tutorial "worksheet-2-create-first-model.Rmd" to go through the 8 steps that we went through above to build your own mizer model based on your species parameters.
 
 There are ways how the above method can fail. If that happens, there are various ways to rescue the situation. But rather than discussing such eventualities in the abstract, we will wait to see if you run into concrete difficulties. If you do, please save your code and email gustav.delius\@gmail.com. We will then use your example to discuss the solutions.
 
 ## Summary
 
-We have gone through the 5-step process of building a mizer model from your species parameters and your interaction matrix. The 5 steps were:
+We have gone through the 8-step process of building a mizer model from your species parameters and your interaction matrix. The 8 steps were:
 
 1.  Create a MizerParams object with `newMultispeciesParams()`.
 
@@ -242,4 +252,10 @@ We have gone through the 5-step process of building a mizer model from your spec
 
 4.  Use `matchBiomass()` to move the size spectra of the species up or down to match the observed biomasses. This will spoil the steady state.
 
-5.  Iterate steps 2 and 4 as often as you like to get the steady-state biomasses to agree as precisely with your observations as you like.
+5. Project back to steady state with `steady()`.
+
+6. Use `matchGrowth()` to adjust the physiological rates so that the species reach their maturity size at maturity age.
+
+7. Project back to steady state with `steady()`.
+
+8.  Iterate steps 4 through 7 as often as you like to get the steady-state biomasses to agree as precisely with your observations as you like.
