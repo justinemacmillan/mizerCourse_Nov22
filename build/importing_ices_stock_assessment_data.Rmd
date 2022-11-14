@@ -49,7 +49,7 @@ data_sp<- summary_data|>
   filter (Year %in% (2012:2021),
           SSB>0,
           landings>0,
-          stockSizeDescription == c('SSB', 'Spawning Stock Biomass'))|>
+          stockSizeDescription %in% c('SSB', 'Spawning Stock Biomass'))|>
   # since some records of some stocks do not have values on total catch
   mutate (cat = landings + discards)|>
   # since some records of some stocks where total catch is provided but landings and discards are missing
