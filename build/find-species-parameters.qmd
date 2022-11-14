@@ -370,8 +370,10 @@ The `catchability` column specifies how vulnerable the species are to commercial
 
 2\) Only a `species` name and the maximum size `w_inf` of each species is strictly required. But for a realistic model you should try to also provide estimates of the maturity size `w_mat`, the maturity age `age_mat`, the preferred predator prey mass ratio `beta` and the observed biomasses `biomass_observed`.
 
-3\) We briefly explained how mizer chooses defaults for many other parameters, often using allometric scaling assumptions.
+3\) It is extremely important to document the origin of your parameter values and to preserve the code for extracting the values from the data sources.
 
-4\) If predation is determined not solely by size but also by species identity, we need to specify this in the interaction matrix.
+4\) We briefly explained how mizer chooses defaults for many other parameters, often using allometric scaling assumptions.
 
-5\) Fishing can be set up with multiple gears, each possibly targeting multiple species. The parameters for these fishing gears are specified in a data frame with one row for each gear-species pair and one column for each parameter.
+5\) If predation is determined not solely by size but also by species identity, we need to specify this in the interaction matrix.
+
+6\) Fishing can be set up with multiple gears, each possibly targeting multiple species. The parameters for these fishing gears are specified in a data frame with one row for each gear-species pair and one column for each parameter.
