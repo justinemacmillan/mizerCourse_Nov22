@@ -48,7 +48,8 @@ data_sp<- summary_data|>
   #filter the years of interest
   filter (Year %in% (2012:2021),
           SSB>0,
-          landings>0)|>
+          landings>0,
+          stockSizeDescription == c('SSB', 'Spawning Stock Biomass'))|>
   # since some records of some stocks do not have values on total catch
   mutate (cat = landings + discards)|>
   # since some records of some stocks where total catch is provided but landings and discards are missing
@@ -84,7 +85,7 @@ Finally we will add a dataframe with species codes
  # species are coded differently, therefore we will change the names
 species_codes<- read.csv("species_codes.csv")
 
-data_sp<- left_join(species_codes,data_sp, by =c ('species' = 'code_ices') )
+data_sp<- left_join(data_sp, species_codes, by = c('species' = 'code_ices') )
   
 write.csv(data_sp, "biomass_yield_df.csv")
 ```
