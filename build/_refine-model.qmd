@@ -1,0 +1,353 @@
+---
+title: "Refine model"
+---
+
+## Introduction
+
+We have a basic model with one background resource. This model produces somewhat reasonable diets, reasonable growth and we also managed to fit the model to the observed average biomasses. But there are more things we want to tune and match, while still staying in a steady state, with constant reproduction and resource levels. We have average catch data and size distributions of catches. We also want predators to eat more fish. So let's explore how we can tune our model further.
+
+A large fraction of tuning can be done using a `tuneParams()` R Shiny gadget that is integrated into mizerExperimental. You might need to restart your R session for this to work.
+
+```{r}
+#| message: false
+remotes::install_github("sizespectrum/mizerExperimental")
+library(mizerExperimental)
+library(tidyverse)
+```
+
+Now let's load our latest model with a background resource. If you found your own species parameters for cod and used those parameters in tutorial 2 and 3, you will load your own model version.
+
+```{r}
+cel_model_coarse <- readParams("cel_model_single.rds")
+```
+
+## Catch data
+
+We will also load data on the size distribution of catches. Such data is often collected in data-poor fisheries, so it will be useful to see how we can use such data for model calibration. This specific dataset was sourced from Scientific, Technical and Economic Committee for Fisheries [(STECF)](https://stecf.jrc.ec.europa.eu/dd/fdi) and was restricted to England and Wales.
+
+```{r}
+catch_lengths <- read.csv("catch.csv")
+head(catch_lengths)
+```
+
+You can see that for each species we have numbers of individuals observed in 1cm wide length bins (the `dl` column indicates the width of each bin).
+
+Remember that in the species parameter data frame we included a column of `yield_observed` that gives the average annual commercial catches over a certain time period. These are not accurate, but it does not matter here because we use them for illustration purposes only.
+
+```{r}
+species_params(cel_model_coarse) |> select(species, yield_observed)
+```
+
+## Calibrating total yield
+
+Let's first check whether the model yield matches the observed yield.
+
+```{r}
+#| warning: false
+plotYieldVsSpecies(cel_model_coarse)
+```
+
+The observed yield is some orders of magnitude larger/smaller than model yield. This is because our yield and biomasses are in different units or scales. The biomasses we used for calibration are relative biomasses from scientific surveys. It is hard to know how exactly to scale them to area, so we just used the relative values. The yield, on the other hand, is the reported commercial yield for the entire model area. So naturally they are on very different scales. What we need to do now is to rescale our biomasses so they are in approximately the same units.
+
+Let's calibrate the yield, like we calibrated biomasses. If you didn't have the biomasses for your system, but know the yield and fishing mortalities, this is how you would calibrate your model.
+
+```{r}
+cel_model <- calibrateYield(cel_model_coarse)
+plotYieldVsSpecies(cel_model)
+```
+
+Now the yields are in a similar scale, and this has rescaled abundances of all species by the same factor (like one would calibrate a device). We now still need to rescale our biomass observations by the same factor so convert them from their relative scale to the same absolute scale as the yields.
+
+```{r}
+# Find the scaling factor by dividing abundances of calibrated and initial model 
+# (We can use any species and any size, because they all were scaled by the 
+# same factor.)
+scaling_factor <- initialN(cel_model)[1, 1] / initialN(cel_model_coarse)[1, 1]
+scaling_factor
+# Rescale the observed biomass values by that factor
+species_params(cel_model)$biomass_observed <- 
+    species_params(cel_model)$biomass_observed * scaling_factor
+```
+
+Now that we have scaled both the model biomasses and the observed biomasses by the same factor, they are of course again in agreement:
+
+```{r}
+plotBiomassVsSpecies(cel_model)
+```
+
+## Exploring catch size distributions
+
+Now we want to know whether our modelled and observed catch size distributions agree. The `plotYieldVsSize()` function lets us see how well they match:
+
+```{r}
+plotYieldVsSize(cel_model, species = "Haddock", catch = catch_lengths, 
+                x_var = "Length")
+```
+
+They don't match very well at all. The modelled catch has a peak earlier than the observed catch. There are R tools to estimate selectivity curves, but we will just assume that 50% selectivity is at 45cm (inflection point of the logistic selectivity curve) and 25% selectivity is at 40 cm (value, defining steepness of the curve). We will adjust these values using gear_params() function.
+
+Let us look at the current gear parameter data frame first.
+
+```{r}
+# Let's look at our gear params first 
+gear_params(cel_model)
+```
+
+We notice that the row names are made up of the species name and the gear name, separated by a comma. So we can change the selectivity parameters specifically for haddock with
+
+```{r}
+# Modify the l50 and l25 for haddock
+gear_params(cel_model)["Haddock, Commercial", "l50"] <- 45
+gear_params(cel_model)["Haddock, Commercial", "l25"] <- 40
+
+#check the match between model and observed catch size distributions
+plotYieldVsSize(cel_model, species = "Haddock", catch = catch_lengths, 
+                x_var = "Length")
+```
+
+This looks much better. But now that we have changed fishing selectivity we need to find a new steady state. It is important to run `steady()` frequently, while making small changes to the model parameters. If we accumulate too many changes, finding a new steady state might be harder.
+
+```{r}
+cel_model <- steady(cel_model)
+```
+
+Note that even this small change in the selectivity of the gear has increased the biomass of haddock, as would be expected.
+
+```{r}
+plotBiomassVsSpecies(cel_model)
+```
+
+This illustrates a general point: as we change parameters to get one aspect of the model to agree with observations, other aspects will stop to agree.
+
+Now you can look at the catch size distributions for some other species.
+
+Of course, the size distributions of catches will depends on fishing mortality, on correct representation of species growth and predation mortality. We can see that setting the same selectivity for ruffe was not correct, because it is a small bodied species and it would not be caught with the same gear. This and many other aspects we can explore further using the R Shiny gadget, which we call with the `tuneParams()` function. If you have catch length data, make sure to pass it into the `tuneParams()` function via the `catch` argument.
+
+```{r}
+#| eval: false
+cel_model <- tuneParams(cel_model, catch = catch_lengths)
+```
+
+Note how we assign the return value from the `tuneParams()` function back to the `cel_model` variable. That way we capture the changes that we make in the gadget.
+
+```{r}
+#| echo: false
+vembedr::embed_url("https://youtu.be/SdiM0Iru8GQ") |>
+    vembedr::use_align("center") |>
+    vembedr::use_rounded(10)
+```
+
+The `tuneParams()` gadget has a lot of useful panels and allows you to play with the parameters interactively. But most of these plots are also available as separate plot functions in mizer or in mizerExperimental.
+
+::: {.callout-note collapse="true"}
+## Stomach data
+
+### Distribution of ppmr based on stomach data and mizer model
+
+First, we load our mizer model and the stomach data collated by [Thompson et al. 2020](https://doi.org/10.1111/1365-2664.13662). Then we create a species list that we use to get a subset of the stomach data. We will be working with data sourced from the Integrated Database and Portal for Fish Stomach Records `Dapstom` and explore the distribution of `ppmr` across `pred_weight_g`.
+
+```{r}
+params<- cel_model
+load('stomach_dataset.Rdata')
+
+spp_list = c('Clupea harengus','Sprattus sprattus','Gadus morhua','Melanogrammus aeglefinus', 'Merlangius merlangus','Micromesistius poutassou','Trisopterus esmarkii','Trisopterus minutus', 'Merluccius merluccius','Lophius piscatorius','Trachurus trachurus','Scomber scombrus', 'Limanda limanda', 'Pleuronectes platessa', 'Lepidorhombus whiffiagonis', 'Solea solea', 'Capros aper')
+
+stomach <- stom_df %>% 
+  filter(pred_species %in% spp_list, #this filters data on 17 species
+         data == "Dapstom",
+         !is.na(year),
+         !is.na(pred_taxa),
+         !is.na(pred_weight_g),
+         !is.na(prey_weight_g),
+         prey_ind_weight_g > 0)%>% # filters out data where the prey weight is > 0
+  mutate(log_ppmr = log(ppmr))
+```
+
+### Distribution of ppmr
+
+To allow comparison with the mizer model results, we require that our species names are matched. Then we plot the relationship of predator weight in grams with log of ppmr.
+
+```{r warning=FALSE, message=FALSE}
+stomach<-stomach%>% 
+mutate(predator_species = case_when 
+         (pred_species == "Clupea harengus" ~ "Herring",
+           pred_species == "Sprattus sprattus" ~ "Sprat",
+           pred_species == "Gadus morhua" ~ "Cod", 
+           pred_species== "Melanogrammus aeglefinus" ~ "Haddock",
+           pred_species == "Merlangius merlangus"~ "Whiting",
+           pred_species == "Micromesistius poutassou" ~ "Blue whiting", 
+           pred_species == "Trisopterus esmarkii" ~ "Norway Pout", 
+           pred_species == "Trisopterus minutus" ~ "Poor Cod",
+           pred_species== "Merluccius merluccius" ~ "European Hake", 
+           pred_species == "Lophius piscatorius"~ "Monkfish", 
+           pred_species == "Trachurus trachurus" ~ "Horse Mackerel", 
+           pred_species == "Scomber scombrus" ~ "Mackerel", 
+           pred_species == "Limanda limanda" ~ "Common Dab", 
+           pred_species== "Pleuronectes platessa" ~ "Plaice", 
+           pred_species == "Lepidorhombus whiffiagonis"~ "Megrim",
+           pred_species == "Solea solea" ~ "Sole", 
+           pred_species == "Capros aper" ~ "Boarfish",
+           TRUE ~ "others"))
+
+ggplot(stomach, aes(x = log(pred_weight_g), y = log_ppmr)) +
+    geom_point() +
+    geom_smooth(aes(weight = prey_weight_g), col = "red",
+        se = TRUE,
+        size = 1)+
+  facet_wrap(~predator_species, ncol = 3, scales = "free")+
+  ggtitle("PMMR distribution - stomach")+
+  xlab("log of predator weight [g]") + ylab("Log of predator/prey mass ratio")
+```
+
+The red curves represent the smoothed mean weighed by biomass and there are indications to show a lot of over-plotting especially at smaller and larger predator sizes, where fewer observations were recorded. We also observe vertical stripes in most plots, which can be explained by the rounding of the predator size during data recording.
+
+Having looked at the relationships of predator/prey mass ratio with predator size based on the stomach data, next will be to explore these relationship but now using the mean predator/prey mass ratio extracted from mizer `params` object.
+
+```{r message=FALSE}
+#The mean predator/prey mass ratio can be derived from the mizer model by calling the function `getMeanLogPPMR.
+# @param params A MizerParams object
+# @return A matrix (predator species x predator size) holding the mean predator/prey mass ratio for predators of the given species and size.
+getMeanLogPPMR <- function(params, exponent = 1/3) {
+  no_sp <- nrow(params@species_params)
+  no_w <- length(params@w)
+  no_w_full <- length(params@w_full)
+  fish_sel <- (no_w_full - no_w + 1):no_w_full
+  phi <- pred_kernel(params)
+  theta_n <- outer(params@species_params$interaction_resource,
+                   params@initial_n_pp)
+  theta_n[, fish_sel] <- theta_n[, fish_sel] +
+    params@interaction %*% params@initial_n
+  theta_n_phi <- sweep(phi, c(1, 3), theta_n, "*")
+  denom <- rowSums(sweep(theta_n_phi, 3, 
+                         params@dw_full * params@w_full^exponent *
+                             log(params@w_full), "*"), 
+                   dims = 2)
+  num <- rowSums(sweep(theta_n_phi, 3, 
+                       params@dw_full * params@w_full^exponent, "*"), 
+                 dims = 2)
+  log_w <- matrix(log(params@w), nrow = no_sp, ncol = no_w, byrow = TRUE)
+  log_ppmr <- log_w - denom / num
+  return(log_ppmr)
+}
+
+# the getMeanLogPPMR extracts the ppmr data from the Mizerparams object. We set exponent at 4/3 to cater for digestion.
+ppmr_m <- getMeanLogPPMR(params, exponent = 4/3)
+
+#We convert the data into the long table format using `melt` function. This makes it easy to apply `ggplot2` to plot a scatter plot of  `pred_weight` against `log(ppmr)`.
+
+ppmr_m <- melt(ppmr_m, id.vars = c("sp", "w_pred"))%>%
+  rename(predator_species = sp)
+
+ppmr_m<-ppmr_m%>%
+  mutate(log_ppmr = log(value), log_pred_weight_g = log(w_pred)) #creates a new column with similar name as that created for stomach data
+ggplot(ppmr_m, aes(x = log_pred_weight_g, y = log_ppmr)) +         geom_point()+
+  geom_smooth(col = "green", size = 1)+
+  facet_wrap(~predator_species, ncol = 3, scales = "free")+
+  ggtitle("PMMR distribution - stomach")+
+   xlab("log of predator weight [g])") + 
+  ylab("Log of predator/prey mass ratio")
+```
+
+The plots show the values in black derived from the model and the smoothed mean curves in green. In general large size individuals are consuming relatively smaller prey items. This is evidenced by the bump at around log 5-6 predator size. We also note that the smoothed means across all species do not exceed log of 1.6.
+
+We will now plot the model and stomach into one plot for easy of visualisation and comparison. Unlike the previous scatter plots using the stomach data, we will use colour to indicate the density of points. The scatter plot will be created using binned data in both the x and y direction and logarithmic scale applied to indicate the number of observations in each bin.
+
+```{r warning=FALSE, message=FALSE}
+stomach|>ggplot( aes(x = log(pred_weight_g), y = log_ppmr)) +
+    stat_summary_2d(aes(z = prey_weight_g),
+                    fun = "sum", bins = 60) + 
+    scale_fill_viridis_c(trans = "log") +
+  geom_smooth(aes(weight = prey_weight_g),col = "red", size = 1)+
+  facet_wrap(~predator_species, ncol = 3, scales = "free")+
+  geom_line(data = ppmr_m, aes(log_pred_weight_g, log_ppmr), col = "green", size = 1)+
+  facet_wrap(~predator_species, ncol = 3, scales = "free")+
+  labs(x = "log (predator weight)", y = "log (ppmr)")+
+  ggtitle("Combined plot showing the fits on the stomach data (red) and mizer model (green)")
+
+```
+
+Lets zoom in on one species `Blue whiting`
+
+```{r warning=FALSE, message=FALSE}
+stomach|>filter (predator_species =='Blue whiting')|>
+                 ggplot( aes(x = log(pred_weight_g), y = log_ppmr)) +
+    stat_summary_2d(aes(z = prey_weight_g),
+                    fun = "sum", bins = 60) + 
+    scale_fill_viridis_c(trans = "log") +
+  geom_smooth(aes(weight = prey_weight_g),col = "red", size = 1)+
+  facet_wrap(~predator_species, ncol = 3, scales = "free")+
+  geom_line(data = filter(ppmr_m, predator_species == 'Blue whiting'), aes(log_pred_weight_g, log_ppmr), col = "green", size = 1)+
+  facet_wrap(~predator_species, ncol = 3, scales = "free")+
+  labs(x = "log (predator weight)", y = "log (ppmr)")+
+  ggtitle("Combined plot showing the fits on the stomach (red) and mizer model (green)")
+
+```
+
+The observation from the stomach data are represented using the colored bins with the yellow bins indicating a high density of observations. The huge number of observations appears to occur in relatively larger predators particularly for cod, haddock and whiting. A red smooth line is fitted on the stomach scatter plots showing there is over-fitting but now at the smaller predator sizes.
+
+Also plotted are the green smoothed curves from the mizer model. Overall, the green and red smoothed curves show there are differences between the stomach and mizer model, with the latter showing lower predator/prey mass ratios at all predator sizes for the seven species.
+
+The next figure shows the distribution of the log of the predator/prey mass ratio as a violin plot. We work with 10 predator size classes and for each size class we show the distribution.
+
+```{r warning=FALSE, message=FALSE}
+binned <- stomach %>% 
+    # bin data
+    mutate(bin = cut_number(pred_weight_g * 
+                                rnorm(length(pred_weight_g), 1, 0.1), 
+                            10))
+
+ggplot(binned, aes(bin, log_ppmr)) +
+    geom_violin(aes(weight = prey_count),
+                draw_quantiles = 0.5) +
+  facet_wrap(~predator_species, ncol = 3, scales = "free")+
+    xlab("Predator weight [g]") +
+    ylab("Log of predator/prey mass ratio")
+```
+
+There are observational artefacts with the stomach, which may be due to small prey items not being measured. Perhaps, averaging the predator/prey mass ratio over these observations, would help improve the distribution.
+
+```{r warning=FALSE, message=FALSE}
+ggplot(binned, aes(bin, log_ppmr)) +
+    geom_violin(aes(weight = prey_weight_g),
+                draw_quantiles = 0.5) +
+     facet_wrap(~predator_species, ncol = 3, scales = "free")+ xlab("Predator weight [g]") +
+    ylab("Log of predator/prey mass ratio")
+```
+
+The violin plots now shows how the prey biomass is distributed over the log predator/prey mass ratio for different predator size classes. These distributions look much more normal for certain species (e.g. cod, megrim, whiting) where they seem to not depend much on the predator size class. A different distribution is evident among the European hake, monkfish, Norway pout.
+
+Let's fit a normal distribution and check the type of distribution.
+
+```{r warning=FALSE}
+weighted.sd <- function(x, w) {
+  sqrt(sum(w * (x - weighted.mean(x, w))^2))
+}
+
+
+est_mean = weighted.mean(stomach$log_ppmr, stomach$prey_weight_g / 
+    sum(stomach$prey_weight_g))
+          
+est_sd = weighted.sd(stomach$log_ppmr, stomach$prey_weight_g / 
+    sum(stomach$prey_weight_g))
+
+
+ggplot(stomach |> filter(log_ppmr < 12)) +
+    geom_density(aes(log_ppmr, 
+                     weight = prey_weight_g)) +
+  stat_function(fun = dnorm, 
+                  args = list(mean = est_mean+ est_sd^2, 
+                              sd = est_sd), 
+                  colour = "blue") +
+     facet_wrap(~predator_species, ncol = 3)+
+    xlab("Log of Predator/Prey mass ratio") +
+    ylab("Normalised biomass density")
+```
+
+It is clear that normal distribution works only for few species.
+
+The comparisons between stomach data and mizer model can therefore be used to adjust our `beta` values to be in line with the observation.
+:::
+
+## Exercise: Use tuneParams gadget to refine your model
+
+In our video we only started refining the model by adjusting some parameters for a few species. We ask you to do something similar but for all species in order to refine the model you have built in the previous tutorial. We are very interested in seeing the model that you come up with. We will collect the models from all participants to give us an ensemble of models to use next week. Please use the worksheet "worksheet-4-refine-model.Rmd" to commit your model.

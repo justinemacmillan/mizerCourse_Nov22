@@ -1,51 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://mizer.course.nov22.sizespectrum.org/build/index.html</loc>
+    <lastmod>2022-11-14T02:20:52.616Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mizer.course.nov22.sizespectrum.org/build/find-species-parameters.html</loc>
+    <lastmod>2022-11-14T02:21:00.240Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mizer.course.nov22.sizespectrum.org/build/refine-landings.html</loc>
+    <lastmod>2022-11-14T02:21:00.604Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mizer.course.nov22.sizespectrum.org/build/refine-diet.html</loc>
+    <lastmod>2022-11-14T02:21:01.112Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mizer.course.nov22.sizespectrum.org/build/create-first-model.html</loc>
+    <lastmod>2022-11-14T02:21:01.440Z</lastmod>
+  </url>
+  <url>
     <loc>https://mizer.course.nov22.sizespectrum.org/troubleshooting.html</loc>
-    <lastmod>2022-11-07T01:02:10.161Z</lastmod>
+    <lastmod>2022-11-14T02:21:01.872Z</lastmod>
   </url>
   <url>
     <loc>https://mizer.course.nov22.sizespectrum.org/understand/dynamics-of-spectra.html</loc>
-    <lastmod>2022-11-07T12:18:15.724Z</lastmod>
+    <lastmod>2022-11-14T02:21:07.124Z</lastmod>
   </url>
   <url>
     <loc>https://mizer.course.nov22.sizespectrum.org/understand/index.html</loc>
-    <lastmod>2022-11-07T01:02:16.405Z</lastmod>
+    <lastmod>2022-11-14T02:21:08.148Z</lastmod>
   </url>
   <url>
     <loc>https://mizer.course.nov22.sizespectrum.org/understand/species-interactions.html</loc>
-    <lastmod>2022-11-07T12:18:28.208Z</lastmod>
+    <lastmod>2022-11-14T02:21:12.328Z</lastmod>
   </url>
   <url>
     <loc>https://mizer.course.nov22.sizespectrum.org/understand/single-species-spectra.html</loc>
-    <lastmod>2022-11-07T01:02:28.397Z</lastmod>
+    <lastmod>2022-11-14T02:21:20.608Z</lastmod>
   </url>
   <url>
     <loc>https://mizer.course.nov22.sizespectrum.org/understand/predation-growth-and-mortality.html</loc>
-    <lastmod>2022-11-07T12:27:20.956Z</lastmod>
+    <lastmod>2022-11-14T02:21:25.496Z</lastmod>
   </url>
   <url>
     <loc>https://mizer.course.nov22.sizespectrum.org/understand/observed-size-spectra.html</loc>
-    <lastmod>2022-11-07T01:02:39.160Z</lastmod>
+    <lastmod>2022-11-14T02:21:32.572Z</lastmod>
   </url>
   <url>
     <loc>https://mizer.course.nov22.sizespectrum.org/index.html</loc>
-    <lastmod>2022-11-07T01:02:39.564Z</lastmod>
+    <lastmod>2022-11-14T02:21:32.992Z</lastmod>
   </url>
   <url>
     <loc>https://mizer.course.nov22.sizespectrum.org/prepare/use-git-and-github.html</loc>
-    <lastmod>2022-11-07T01:02:41.712Z</lastmod>
+    <lastmod>2022-11-14T02:21:35.408Z</lastmod>
   </url>
   <url>
     <loc>https://mizer.course.nov22.sizespectrum.org/prepare/index.html</loc>
-    <lastmod>2022-11-07T01:02:42.572Z</lastmod>
+    <lastmod>2022-11-14T02:21:36.292Z</lastmod>
   </url>
   <url>
     <loc>https://mizer.course.nov22.sizespectrum.org/prepare/install-tools.html</loc>
-    <lastmod>2022-11-07T01:02:44.028Z</lastmod>
+    <lastmod>2022-11-14T02:21:38.112Z</lastmod>
   </url>
   <url>
     <loc>https://mizer.course.nov22.sizespectrum.org/prepare/introduce-yourself.html</loc>
-    <lastmod>2022-11-07T01:02:44.360Z</lastmod>
+    <lastmod>2022-11-14T02:21:38.484Z</lastmod>
   </url>
 </urlset>

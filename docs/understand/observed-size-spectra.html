@@ -131,6 +131,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 }}});
   </script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 <link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="mizer course - Observed size spectra">
+<meta property="og:description" content="In this tutorial you will take observational data and plot the resulting size spectra for the community and for individual species.">
+<meta property="og:site-name" content="mizer course">
 <meta name="twitter:title" content="mizer course - Observed size spectra">
 <meta name="twitter:description" content="In this tutorial you will take observational data and plot the resulting size spectra for the community and for individual species.">
 <meta name="twitter:creator" content="gustavdelius">
@@ -220,8 +223,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Week 2: Build</span>
-  </li>
+      <div class="sidebar-item-container"> 
+            <a href="../build/index.html" class="sidebar-item-text sidebar-link">Week 2: Build</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../build/find-species-parameters.html" class="sidebar-item-text sidebar-link">Find species parameters</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../build/create-first-model.html" class="sidebar-item-text sidebar-link">Create your first model</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../build/refine-landings.html" class="sidebar-item-text sidebar-link">Use landings data</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../build/refine-diet.html" class="sidebar-item-text sidebar-link">Use diet data</a>
+  </div>
+</li>
+      </ul>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">Week 3: Use</span>
   </li>
@@ -368,7 +398,7 @@ Expand for R details
 </div>
 <p>This data was assembled by Ken Andersen at DTU Aqua in Copenhagen. The <code>length</code> in centimetres was converted to <code>weight</code> in grams using the standard allometric relationship</p>
 <p><span class="math display"> \mathrm{weight} = a\, \mathrm{length} ^ b,</span></p>
-<p>where the coefficient <span class="math inline">a</span> and the exponent <span class="math inline">b</span> are species-specific parameters (we’ll discuss how to find such species parameters in a <a href="../build/find-species-parameters.qmd">later tutorial</a>).</p>
+<p>where the coefficient <span class="math inline">a</span> and the exponent <span class="math inline">b</span> are species-specific parameters (we’ll discuss how to find such species parameters in a <a href="../build/find-species-parameters.html">later tutorial</a>).</p>
 <p>The reason we like to work with weight as the measure of a fish’s size is that there are well-known allometric relationships between weight <span class="math inline">w</span> and physiological rates. For example, metabolic rate is generally expected to scale as <span class="math inline">w^{3/4}</span> and mortality to scale as <span class="math inline">w^{-1/4}</span>, as we will be discussing in the section on <a href="../understand/single-species-spectra.html#allometric-rates">allometric rates</a> in the next tutorial.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">

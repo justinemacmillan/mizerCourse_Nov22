@@ -115,6 +115,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script><link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script><link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="mizer course - Use Git and GitHub">
+<meta property="og:description" content="In this course we will collaborate via Git and GitHub. This means that if you have not used these tools before, then you will have to learn some new concepts and get used to a particular workflow.">
+<meta property="og:site-name" content="mizer course">
 <meta name="twitter:title" content="mizer course - Use Git and GitHub">
 <meta name="twitter:description" content="In this course we will collaborate via Git and GitHub. This means that if you have not used these tools before, then you will have to learn some new concepts and get used to a particular workflow.">
 <meta name="twitter:creator" content="gustavdelius">
@@ -204,8 +207,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Week 2: Build</span>
-  </li>
+      <div class="sidebar-item-container"> 
+            <a href="../build/index.html" class="sidebar-item-text sidebar-link">Week 2: Build</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../build/find-species-parameters.html" class="sidebar-item-text sidebar-link">Find species parameters</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../build/create-first-model.html" class="sidebar-item-text sidebar-link">Create your first model</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../build/refine-landings.html" class="sidebar-item-text sidebar-link">Use landings data</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../build/refine-diet.html" class="sidebar-item-text sidebar-link">Use diet data</a>
+  </div>
+</li>
+      </ul>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">Week 3: Use</span>
   </li>
@@ -302,7 +332,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>Copy the token to your clipboard (using the button circled in the above screenshot). Switch to RStudio and issue the command</p>
 <div class="cell" data-hash="use-git-and-github_cache/html/unnamed-chunk-2_9fe64d1bbe38cf9c0f59e8284050fc70">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">gitcreds</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gitcreds/man/gitcreds_get.html">gitcreds_set</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">gitcreds</span><span class="fu">::</span><span class="fu"><a href="https://gitcreds.r-lib.org/reference/gitcreds_get.html">gitcreds_set</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This will prompt you to enter your token. Paste in that token from your clipboard and press Enter. That completes the set-up. You will not have to do this again on this computer, but if you switch to a new computer, you will need the token again. Therefore it is a good idea to save this token somewhere safe. But you can also always create new tokens in the same way as described above.</p>
 <p>If you run into difficulties with the above, please post about it in the comments section at the bottom of this page. If you want to dig in deeper yourself, you can take a look at the <a href="https://happygitwithr.com/troubleshooting.html">troubleshooting</a> section in “<a href="https://happygitwithr.com/index.html">Happy Git and GitHub for the useR</a>”. But even if you manage to solve some problem yourself, please let us know about it in the comments.</p>
