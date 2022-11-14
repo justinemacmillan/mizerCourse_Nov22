@@ -19,7 +19,7 @@ library(ggplot2)
 
 icesSAG provides R functions that enable users to access the web services of the ICES Stock Assessment database.
 
-To download the summary data for stocks of a partcular species, the user needs to provide the name of the `species` and the `year` published.
+To download the summary data for stocks of a particular species, the user needs to provide the name of the `species` and the `year` published.
 
 The summary data for `cod` for the `year` 2021 is derived by calling the `getSAG` and specifying the `stock` name and the `year` E.g.
 
@@ -27,6 +27,13 @@ The summary data for `cod` for the `year` 2021 is derived by calling the `getSAG
 summary_data <- getSAG(stock = "cod", year = 2021)
 head(summary_data)
 ```
+
+We get information about all the stock assessments in 2021 with
+```{r}
+stocks <- getListStocks(2021)
+head(stocks)
+```
+
 
 ## Species
 But, we are interested in the `biomass` and `landings` of some 17 species over the last ten years i.e. 2012 - 2021. This information is necessary for calibrating and tuning the `mizer` model for the South West fisheries. So we will 
@@ -73,6 +80,8 @@ data_sp <- summary_data |>
         total_catch = exp(mean(log(catches_nw), na.rm = TRUE)),
         F = exp(mean(log(as.numeric(F)), na.rm = TRUE))
     ) |>
+    left_join(stocks, by = c("fishstock" = "StockKeyLabel")) |>
+    filter(Purpose == "Advice") |>
     separate(fishstock,
              into = c('species', 'ices_area'),
              sep = 4)
@@ -100,7 +109,7 @@ Finally we will add a dataframe with species codes
 
 ```{r}
  # species are coded differently, therefore we will change the names
-species_codes<- read.csv("species_codes.csv")
+species_codes <- read.csv("species_codes.csv")
 
 data_sp <- data_sp |>
     left_join(species_codes, by = c('species' = 'code_ices')) |> 
