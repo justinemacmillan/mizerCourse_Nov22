@@ -74,16 +74,16 @@ website:
         - text: Dynamics of size spectra
           href: understand/dynamics-of-spectra.qmd
       - section: "Week 2: Build"
-        # href: build/index.qmd
-        # contents:
-        #   - text: Find species parameters
-        #     href: build/find-species-parameters.qmd
-        #   - text: Create your first model
-        #     href: build/create-first-model.qmd
-        #   - text: Set up multiple resources
-        #     href: build/set-multiple-resources.qmd
-        #   - text: Refine your model
-        #     href: build/refine-model.qmd
+        href: build/index.qmd
+        contents:
+          - text: Find species parameters
+            href: build/find-species-parameters.qmd
+          - text: Create your first model
+            href: build/create-first-model.qmd
+          - text: Use landings data
+            href: build/refine-landings.qmd
+          - text: Use diet data
+            href: build/refine-diet.qmd
       - section: "Week 3: Use"
         # href: use/index.qmd
         # contents:
