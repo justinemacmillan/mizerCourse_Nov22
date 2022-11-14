@@ -27,7 +27,7 @@ How do we decide which species to include in the model? There are many ways to a
 
 If you only have information on a very small number of species, mizer has a powerful framework that allows you to explicitly model only your focus species and represent the rest of the ecosystem with 'background' species. The sizes and abundances of these 'background' species are assumed to follow the power law, so that the total community biomass approximately represents the Sheldon spectrum. This is only mentioned here for your information, as we will not go into these details during this week.
 
-One good approach is to build on the efforts of others. There may already be a multi-species model in existence for your ecosystem and initially you could keep some of the choices made for that model. That is what we do in this tutorial. We build on a mizer model described in [Spence et al. (2021)](https://doi.org/10.1111/faf.12543). The model parameters are given in the [supplementary material](https://onlinelibrary.wiley.com/action/downloadSupplement?doi=10.1111%2Ffaf.12543&file=faf12543-sup-0002-material.pdf) of that paper. James Martindale had the species parameters in a file and shared that with us. Let's load that and print the list of parameter names.
+One good approach is to build on the efforts of others. There may already be a multi-species model in existence for your ecosystem and initially you could keep some of the choices made for that model. That is what we do in this tutorial. We want to build a model for the Celtic Sea. We build on a mizer model described in [Spence et al. (2021)](https://doi.org/10.1111/faf.12543). The model parameters are given in the [supplementary material](https://onlinelibrary.wiley.com/action/downloadSupplement?doi=10.1111%2Ffaf.12543&file=faf12543-sup-0002-material.pdf) of that paper. James Martindale had the species parameters in a file and shared that with us. Let's load that and print the list of parameter names.
 
 ```{r}
 sp_spence <- readRDS("species_params_spence_et_al.rds")
@@ -185,7 +185,9 @@ Now it is time again to add comments to remind us of the origin of our parameter
 comment(sp$a) <- "Taken from the `a` column in the 'estimates' table on FishBase."
 comment(sp$a) <- "Taken from the `b` column in the 'estimates' table on FishBase."
 comment(sp$l_max) <- "See https://mizer.course.nov22.sizespectrum.org/build/find-species-parameters.html#asymptotic-size "
-comment(sp$w_inf) <- "Calculated from `l_max` using weight-length parameters `a` and `b`."
+# Due to a bug in the released version of mizer, we should not comment on `w_inf`.
+# This will be fixed in the next release.
+# comment(sp$w_inf) <- "Calculated from `l_max` using weight-length parameters `a` and `b`."
 ```
 
 ### Growth parameters
@@ -275,13 +277,14 @@ comment(sp$biomass_cutoff) <- "Set to `w_mat` because `biomass_observed` represe
 ```
 
 ## Exercise
+
 Do you think you can improve on the parameter choices we have made? Do you think a species should be added or removed? If so, simply modify the corresponding entries in the `sp` data frame. Perhaps add a comment about where your values come from.
 
-When you are happy with the species parameters, save them:
+When you are happy with the species parameters, save them with
 ```{r}
 saveRDS(sp, "celtic_species_params.rds")
 ```
-
+and commit them to your worksheet repository and push to GitHub.
 
 ## Default parameters
 
@@ -327,6 +330,8 @@ By default, mizer assumes that all species can interact with each other equally 
 celtic_interaction <-  read.csv("celtic_interaction.csv")
 celtic_interaction
 ```
+
+We use `rownames = 1` to let `read.csv` know that the first column in the spreadsheet in "celtic_interaction.csv", which contains the predator names, should be used as the names of the rows of the interaction matrix.
 
 2.  **Species diet preferences** **or trophic groups**. Sometimes we know that certain species do not eat other species. For example, some species are strictly bentivorous or herbivorous and they never eat any other fish, not even their larvae. In other cases we might have good evidence for specific diet preferences, although ideally such evidence should come from food selection experiments and these are very rare and maybe too specific to certain conditions. It is important to know that diet contents do not necessarily reflect preferences, but realised feeding. A species might prefer to eat bananas, but if nothing else is available it will eat other fish. The species interaction matrix, if reflecting diet preferences, should reflect preferred diets, not realised diets.
 
