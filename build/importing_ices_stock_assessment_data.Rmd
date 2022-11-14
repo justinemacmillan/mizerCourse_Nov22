@@ -104,7 +104,7 @@ species_codes<- read.csv("species_codes.csv")
 
 data_sp <- data_sp |>
     left_join(species_codes, by = c('species' = 'code_ices')) |> 
-    filter(!(species == 'cod.' & ices_areas == '27.5a')) |> 
+    filter(!(species == 'cod.' & ices_area == '27.5a')) |> 
     select(Species, biomass_observed, yield_observed) |>
     rename('species' = 'Species')
 # this code can be added to update the biomass_observed for boarfish
