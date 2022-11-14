@@ -85,8 +85,10 @@ Finally we will add a dataframe with species codes
  # species are coded differently, therefore we will change the names
 species_codes<- read.csv("species_codes.csv")
 
-data_sp<- left_join(data_sp, species_codes, by = c('species' = 'code_ices') )
+data_sp<- left_join(data_sp, species_codes, by = c('species' = 'code_ices') )|> filter (species != 'cod. '& ices_area != '27.5a' )|>select(Species,  biomass_observed, yield_observed)|>rename('species' = 'Species')
+# this code can be added to update the biomass_observed for boarfish
+# |>mutate(biomass_observed = ifelse(species == "Boarfish",  432882/306942.11, biomass_observed))
   
-write.csv(data_sp, "biomass_yield_df.csv")
+write.csv(data_sp, "celtic_sea_ssb.csv")
 ```
 
