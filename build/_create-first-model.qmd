@@ -67,7 +67,7 @@ species_params(cel_model) |> select(ks, z0)
 
 ## Step 2: Project to steady state
 
-The `newMultispeciesParams()` function is not very good at choosing a good initial community configuration. Let's have a look at what it has set up:
+The `newMultispeciesParams()` function does not currently put much effort into choosing a good initial community configuration. Let's have a look at what it has set up:
 
 ```{r}
 plotSpectra(cel_model, power = 2)
@@ -93,6 +93,14 @@ Now let us look at the spectra in the steady state:
 plotlySpectra(cel_model, power = 2)
 ```
 
+::: {.callout-caution collapse="true"}
+### If step 2 fails
+
+The `steady()` function is not guaranteed to find the steady state. By default it stops after running the dynamics for a maximum of 99 years. If it warns you that it has not reached a steady state, then you should first try to run it again. But if that still does not help, it may be that the steady state is actually unstable. In that case the system evolves towards an oscillating state instead. Luckily, this is rare for realistic parameters, but may well happen while you are still trying to find the correct parameters. If you encounter this phenomenon with your parameter choices, please let us know in the comments. We can then use your example to discuss the solution.
+:::
+
+## Step 5: Calibrate growth
+
 ```{r}
 age_mat(cel_model)
 ```
@@ -106,44 +114,10 @@ cel_model <- matchGrowth(cel_model)
 age_mat(cel_model)
 ```
 
-::: {.callout-caution collapse="true"}
-### If step 2 fails
-
-The `steady()` function is not guaranteed to find the steady state. It may be that the steady state is actually unstable. In that case the system evolves towards an oscillating state instead. Luckily, this is rare for realistic parameters, but may well happen while you are still trying to find the correct parameters. Let us illustrate this in a modified model. We decrease the width of the feeding kernel for all species to `sigma = 1` and increase the slope of the resource spectrum to `lambda = 2.2`. We know from mathematical studies that both of these changes have a destabilising effect.
-
 ```{r}
-modified_species_params <- celtic_species_params
-modified_species_params$sigma <- 1
-
-modified_model <- 
-    newMultispeciesParams(species_params = modified_species_params,
-                          interaction = celtic_interaction,
-                          initial_effort = 0.3,
-                          lambda = 2.2, n = 3/4, p = 3/4)
+cel_model <- steady(cel_model)
+plotlySpectra(cm, power = 2)
 ```
-
-Now let us see what happens when we try to run this system to steady state:
-
-```{r}
-modified_model <- steady(modified_model)
-```
-
-The simulation converged to a steady state after running the simulation for 25.5 years. There are cases when the simulation fails to converge. In such an event there are two possibilities: 1) we just need to be a bit more patient and run the simulations for longer or 2) the system will continue to oscillate for ever. To diagnose this, we want to see the time evolution. We tell the `steady()` function that we want it to return a MizerSim object with the time series of spectra from the simulation.
-
-```{r}
-sim <- steady(modified_model, return_sim = TRUE)
-```
-
-We can now plot the time series of the species biomasses:
-
-```{r}
-plotBiomass(sim)
-```
-
-We see that the system has indeed settled into a periodic state.
-
-We will not go into a discussion of whether the oscillating state reflects the true state of the system. We know that we can stabilise the steady state by moving the power-law exponent closer to 2 and/or by increasing the widths of the feeding kernels `sigma`, so unless we have good information about these parameters, it is probably easiest to just change them to stabilise the steady state, at least while tuning the model. Investigation of possible oscillatory behaviour can always happen at a later stage of model development.
-:::
 
 ## Step 3: Calibrate the scale
 
@@ -179,6 +153,14 @@ plotBiomassVsSpecies(cel_model)
 Now the circles and squares lie exactly on top of each other. This is expected, because we simply changed the relative biomasses of species in the model.
 
 There are similar functions `matchNumbers()` and `matchYields()` that you would use in case either total numbers of individuals or fisheries yields are known instead of total biomasses.
+
+```{r}
+cel_model <- cel_model |>
+    matchGrowth() |>
+    singleSpeciesSteady()
+plotlySpectra(cel_model, power = 2)
+```
+
 
 ## Step 5: Rinse and repeat
 
