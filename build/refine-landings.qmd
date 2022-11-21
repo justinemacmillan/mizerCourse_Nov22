@@ -1,10 +1,8 @@
 ---
-title: "Refine model"
+title: "Refine model: Landings"
 ---
 
-## Introduction
-
-In this tutorial we will refine our mizer model that we created in the [previous tutorial](create-first-model.qmd). In our model all the species we decided to include are already coexisting in a steady state with the desired biomasses and growth rates. Mizer itself determined the size distribution of the species. We did not need to specify many parameters to achieve that. For most of the parameters that we did supply we said that it did not matter that we could only make educated guesses for their values or even just put `NA`, because we could refine the model later. We will start this refinement process in this tutorial.
+We will now continue to refine our model by matching it to observed landings.
 
 As always, we start by updating and loading packages.
 
@@ -15,87 +13,11 @@ library(mizerExperimental)
 library(tidyverse)
 ```
 
-We load the model we created in the [previous tutorial](create-first-model.qmd). 
+We load the model we created in the [previous tutorial](refine-diet.qmd).
 
 ```{r}
-cel_model <- readParams("cel_model.rds")
+cel_model <- readParams("cel_model_diet.rds")
 ```
-
-When you work through this material in worksheet 3 in [your worksheet repository for this week](https://classroom.github.com/a/gS1LgX3B) you will be using your own model that you created in worksheet 2.
-
-## Resource abundance
-
-One bit of information that we did not supply when we set up the model was the abundance of the resource. Let us take a look at the size-spectrum plot to see what value mizer chose:
-
-```{r}
-plotlySpectra(cel_model, power = 2, total = TRUE)
-```
-
-We have put `total = TRUE` to include the total community spectrum in the plot in black. At the smallest sizes the community is comprised of the resource only, plotted in green, but then at larger sizes the fish contribute. Sheldon's observation was that the community size spectrum would be approximately flat all the way from bacteria to whales. We notice that the above plot does not quite conform to that observation. Instead, the spectrum is quite a bit lower at small sizes, then rises at the sizes where the fish dominate. It then drops off again because we have not included anything larger than cod in our model. No whales here. To get a community spectrum more in line with Sheldon's observation we should increase the resource abundance 
-
-There is another plot that shows us that our model currently has too little resource. We plot the feeding level:
-```{r}
-plotFeedingLevel(cel_model)
-```
-
-Recall from the [section on the feeding level](../understand/predation-growth-and-mortality.qmd#feeding-level) last week that the feeding level is the ratio between the maximum intake rate and the actual intake rate, so can never exceed 1. The closer it is to 1 the more satiated the fish is and the less of the encountered prey it will consume. The reason the feeding levels in the above plot is higher at larger sizes than at smaller sizes is that at larger sizes the fish start feeding on other fish while at smaller sizes they have to rely on the resource. 
-
-We will now want to increase the abundance of resource both to get the community abundance more in line with Sheldon's observation and to give the fish a more constant feeding level throughout their life. We will first start doing this the tedious way in code and then introduce the `tuneParams()` shiny gadget to do it with point and click. 
-
-### Code
-
-We don't know by exactly what factor we need to scale up the resource. Let's try increasing it by a factor of 2:
-
-```{r warning=FALSE}
-cel_model <- scaleDownBackground(cel_model, factor = 1/2)
-```
-
-That the function scales down rather than up, so that we need to set the scaling factor to 1/2 rather than 2, is a historical accident. Let's look at the spectrum plot now:
-
-```{r}
-plotlySpectra(cel_model, power = 2, total = TRUE)
-```
-
-The resource has increased by a factor of 2, even if this is not very noticeable on this logarithmic y axis. But we are now no longer in steady state. As always after we have made a modification, we need to run the dynamics to get back to steady state. But before we do that, we also want to match the growth rates again because they will of course have increased by increasing the resource abundance. So we do
-```{r message=FALSE, warning=FALSE}
-cel_model <- cel_model |> matchGrowth() |> steady()
-```
-
-This has now messed up the biomasses in the model:
-
-```{r warning=FALSE}
-plotBiomassVsSpecies(cel_model)
-```
-
-So we also do
-
-```{r message=FALSE, warning=FALSE}
-cel_model <- cel_model |> matchGrowth() |> steady()
-```
-
-This is what the feeding levels look like now:
-
-```{r}
-plotFeedingLevel(cel_model)
-```
-
-A little bit better but clearly not enough. So we need to do it again. But you will already have gotten the sense that this is going to be tedious: making the change, running to steady state, plotting the result, trying again ....
-
-### Shiny gadget
-
-We will now introduce a [shiny gadget](https://shiny.rstudio.com/articles/gadgets.html) (that is a technical term) that greatly facilitates this iterative tuning of the model. The gadget allows quick experimentation with changes to model parameters. It provides sliders for adjusting model parameters and tabs with various plots to immediately see the result of the changes. You can choose which parameter sliders and which plot tabs to include.
-
-We start the gadget by calling the `tuneParams()` function. Here we choose to include only three tabs, because they suffice for our current purpose. Interesting is the `match = c("growth", "biomass")` argument. It tells the gadget to try to keep growth rates and biomasses close to the levels we specified in the species parameters, even as we mess around with the parameters in the model.
-```{r warning=FALSE, message=FALSE, eval=FALSE}
-cel_model <-
-    tuneParams(cel_model, 
-               tabs = c("Spectra", "Abundance", "Growth"),
-               match = c("growth", "biomass"))
-```
-
-This will open the gadget in your web browser with our current model `cel_model` loaded. The following video shows what we do on that web page. After making the changes we want to make, we click the "Return" button in the gadget and the `tuneParams()` function returns the model in that updated state. The above code then assigns that updated model to the variable `cel_model`.
-
-Next we will use the gadget to refine our model using landings data.
 
 
 ## Landings data
@@ -107,68 +29,62 @@ catch_lengths <- read.csv("catch.csv")
 head(catch_lengths)
 ```
 
-You can see that for each species we have numbers of individuals observed in 1cm wide length bins (the `dl` column indicates the width of each bin).
+For each species we have numbers of individuals observed in 1cm wide length bins (the `dl` column indicates the width of each bin).
 
 In addition to this information about the size distribution of the catches we have the total biomass of the annual commercial landings for each species, i.e., the fisheries yield. Like the spawning stock biomass estimates we used in the tutorial on [finding species parameters](find-species-parameters.qmd), we obtained the values for the yield in tonnes per square kilometre (or, equivalently, grams per square metre) from the 2021 [ICES stock assessment database](https://stecf.jrc.ec.europa.eu/dd/fdi) by dividing the total yield of the assessed stock by the area of the assessment region in square kilometres and taking the geometric mean over the time period from 2012 to 2021. Here we just load them in from a file we prepared and store them in a `yield_observed` column in the species parameter dataframe of our model:
+
 ```{r}
 species_params(cel_model)$yield_observed <- readRDS("celtic_yields.rds")
 ```
 
-We can now use `plotYieldVsSpecies()` to make a plot that for each species compares the observed yield to the yield currently achieved in the steady state of our model. 
+We can now use `plotYieldVsSpecies()` to make a plot that for each species compares the observed yield to the yield currently achieved in the steady state of our model.
 
 ```{r}
 #| warning: false
 plotYieldVsSpecies(cel_model)
 ```
 
+We'll have to do something about those yield values in the model. But first let's have a look at the size distribution of the catches.
 
 ## Exploring catch size distributions
 
-Now we want to know whether our modelled and observed catch size distributions agree. The `plotYieldVsSize()` function lets us see how well they match:
+The `plotYieldVsSize()` function lets us see how well our modelled and the observed catch size distributions agree. Let's take a look at the case of cod:
 
 ```{r}
 plotYieldVsSize(cel_model, species = "Cod", catch = catch_lengths, 
                 x_var = "Length")
 ```
 
-They don't match very well at all. The modelled catch has a peak earlier than the observed catch. There are R tools to estimate selectivity curves, but we will just assume that 50% selectivity is at 45cm (inflection point of the logistic selectivity curve) and 25% selectivity is at 40 cm (value, defining steepness of the curve). We will adjust these values using gear_params() function.
+We see that the red curve (model) and the blue curve (observations) match surprisingly well. This means that the selectivity parameters for cod are already chosen quite well in our model. However the match could be made even better by steepening the selectivity curve.
 
-Let us look at the current gear parameter data frame first.
+Let us look at the current gear parameter data frame:
 
 ```{r}
 # Let's look at our gear params first 
 gear_params(cel_model)
 ```
 
-We notice that the row names are made up of the species name and the gear name, separated by a comma. So we can change the selectivity parameters specifically for haddock with
+We notice that the row names are made up of the species name and the gear name, separated by a comma. So we can change the selectivity parameters specifically for cod with
 
 ```{r}
-# Modify the l50 and l25 for haddock
-gear_params(cel_model)["Cod, Commercial", "l50"] <- 42
-gear_params(cel_model)["Cod, Commercial", "l25"] <- 38
+# Modify the l50 and l25 for cod
+gear_params(cel_model)["Cod, Commercial", "l50"] <- 44
+gear_params(cel_model)["Cod, Commercial", "l25"] <- 39.5
 
 #check the match between model and observed catch size distributions
 plotYieldVsSize(cel_model, species = "Cod", catch = catch_lengths, 
                 x_var = "Length")
 ```
 
-This looks much better. But now that we have changed fishing selectivity we need to find a new steady state. It is important to run `steady()` frequently, while making small changes to the model parameters. If we accumulate too many changes, finding a new steady state might be harder.
+This looks better. We should have no scruples adjusting the gear selectivity parameters using our mizer model because they are hard to estimate outside a model.
 
-```{r}
+Now that we have changed fishing selectivity we need to find a new steady state. It is important to run `steady()` frequently, while making small changes to the model parameters. If we accumulate too many changes, finding a new steady state might be harder.
+
+```{r message=FALSE, warning=FALSE}
 cel_model <- steady(cel_model)
 ```
 
-Note that even this small change in the selectivity of the gear has increased the biomass of haddock, as would be expected.
-
-```{r}
-plotBiomassVsSpecies(cel_model)
-```
-
-This illustrates a general point: as we change parameters to get one aspect of the model to agree with observations, other aspects will stop to agree.
-
-Now you can look at the catch size distributions for some other species.
-
-Of course, the size distributions of catches will depends on fishing mortality, on correct representation of species growth and predation mortality. We can see that setting the same selectivity for ruffe was not correct, because it is a small bodied species and it would not be caught with the same gear. This and many other aspects we can explore further using the R Shiny gadget, which we call with the `tuneParams()` function. If you have catch length data, make sure to pass it into the `tuneParams()` function via the `catch` argument.
+You probably wondered how I knew what the right values for the `l50` and `l25` parameter were for cod. The answer is that I used trial and error with the help of the `tuneParams()`. We'll do some more of that in the following video. We pass the catch length data into the `tuneParams()` function via the `catch` argument:
 
 ```{r}
 #| eval: false
@@ -177,6 +93,7 @@ cel_model <- tuneParams(cel_model, catch = catch_lengths)
 
 Note how we assign the return value from the `tuneParams()` function back to the `cel_model` variable. That way we capture the changes that we make in the gadget.
 
+The following is an old video. The new one is in preparation.
 ```{r}
 #| echo: false
 vembedr::embed_url("https://youtu.be/SdiM0Iru8GQ") |>
@@ -186,8 +103,6 @@ vembedr::embed_url("https://youtu.be/SdiM0Iru8GQ") |>
 
 The `tuneParams()` gadget has a lot of useful panels and allows you to play with the parameters interactively. But most of these plots are also available as separate plot functions in mizer or in mizerExperimental.
 
-
-
 ## Exercise: Use tuneParams gadget to refine your model
 
-In our video we only started refining the model by adjusting some parameters for a few species. We ask you to do something similar but for all species in order to refine the model you have built in the previous tutorial. We are very interested in seeing the model that you come up with. We will collect the models from all participants to give us an ensemble of models to use next week. Please use the worksheet "worksheet-4-refine-model.Rmd" to commit your model.
+In our video we only started refining the model by adjusting some parameters for a few species. We ask you to do something similar but for more species in order to refine the model you have built in the previous tutorial. But don't spend too much time on this until we have improved the fit of the model to diet data.

@@ -1,0 +1,9 @@
+---
+title: "Tune resilience"
+---
+
+## Introduction
+
+In the previous week we tuned our model parameters so that the steady state of the model agrees with observed growth rates, average observed biomasses and with observed catches. We did not yet tune how sensitively our model reacts to changes away from its steady state. In particular, we did not tune how resilient the species are to fishing. We will do that in this tutorial.
+
+## In preparation

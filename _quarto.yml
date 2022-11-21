@@ -80,20 +80,20 @@ website:
             href: build/find-species-parameters.qmd
           - text: Create your first model
             href: build/create-first-model.qmd
-          - text: Use landings data
-            href: build/refine-landings.qmd
-          - text: Use diet data
+          - text: Tune to diet data
             href: build/refine-diet.qmd
+          - text: Tune to landings data
+            href: build/refine-landings.qmd
       - section: "Week 3: Use"
-        # href: use/index.qmd
-        # contents:
-        #   - text: Tune resilience
-        #     href: use/tune-resilience.qmd
-        #   - text: Explore fishing scenarios
-        #     href: use/fishing-scenarios.qmd
-        #   - text: Change resources
-        #     href: use/change-resources.qmd
-        #   - text: Explore further scenarios
-        #     href: use/further-scenarios.qmd
+        href: use/index.qmd
+        contents:
+          - text: Tune resilience
+            href: use/tune-resilience.qmd
+          - text: Explore fishing scenarios
+            href: use/fishing-scenarios.qmd
+          - text: Change resources
+            href: use/change-resources.qmd
+          - text: Explore further scenarios
+            href: use/further-scenarios.qmd
       - text: Troubleshooting
         href: troubleshooting.qmd
