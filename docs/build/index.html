@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 </style>
 
 
@@ -177,18 +182,45 @@ ul.task-list{list-style: none;}
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../build/refine-landings.html" class="sidebar-item-text sidebar-link">Use landings data</a>
+  <a href="../build/refine-diet.html" class="sidebar-item-text sidebar-link">Tune to diet data</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../build/refine-diet.html" class="sidebar-item-text sidebar-link">Use diet data</a>
+  <a href="../build/refine-landings.html" class="sidebar-item-text sidebar-link">Tune to landings data</a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Week 3: Use</span>
+      <div class="sidebar-item-container"> 
+            <a href="../use/index.html" class="sidebar-item-text sidebar-link">Week 3: Use</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../use/tune-resilience.html" class="sidebar-item-text sidebar-link">Tune resilience</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../use/fishing-scenarios.html" class="sidebar-item-text sidebar-link">Explore fishing scenarios</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../use/change-resources.html" class="sidebar-item-text sidebar-link">Change resources</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../use/further-scenarios.html" class="sidebar-item-text sidebar-link">Explore further scenarios</a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
@@ -229,10 +261,10 @@ ul.task-list{list-style: none;}
 Here we will explore the main species parameters that should be provided by the user to start building a multi-species model. We will also look at assumptions and defaults that mizer uses to fill non-essential parameter values. Your task will be to collect essential parameters from FishBase or other sources.</p></li>
 <li><p><a href="../build/create-first-model.html"><strong>Create your first model</strong></a><br>
 Now that you have species parameters you can build the first model. In this part we will focus on achieving the correct species abundances and growth rates.</p></li>
-<li><p><a href="../build/refine-landings.html"><strong>Refine your model: landings data</strong></a><br>
-In this tutorial we will use an R shiny application to explore how changes in parameters will affect model behaviour and to adjust it to agree with landings data, in particular the size distribution of the landings.</p></li>
 <li><p><a href="../build/refine-diet.html"><strong>Refine your model: diet data</strong></a><br>
-In this tutorial we will explore how the diet emerges in the model from the interplay between predation preference and prey abundance and adjust the model parameters to reproduce observed diets.</p></li>
+In this tutorial we will introduce the <code>tuneParams()</code> shiny gadget which makes it much easier to make changes to model parameters and observe their effects on the system. We will use it to explore how the diet emerges in the model from the interplay between predation preference and prey abundance and adjust the model parameters to reproduce observed diets.</p></li>
+<li><p><a href="../build/refine-landings.html"><strong>Refine your model: landings data</strong></a><br>
+Finally we will tune the model parameters to make the model predictions for the catches agree with landings data, in particular the size distribution of the landings. We will again be using the <code>tuneParams()</code> gadget.</p></li>
 </ol>
 <p>To get your worksheet repository for this week, follow this link:</p>
 <p><a href="https://classroom.github.com/a/gS1LgX3B" class="uri">https://classroom.github.com/a/gS1LgX3B</a></p>
@@ -309,7 +341,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
@@ -351,7 +384,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
 });
 </script>
-<script src="https://giscus.app/client.js" data-repo="sizespectrum/mizerCourse_Nov22" data-repo-id="R_kgDOISYpnA" data-category="Comments" data-category-id="DIC_kwDOISYpnM4CSJOj" data-mapping="title" data-reactions-enabled="0" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+<script src="https://giscus.app/client.js" data-repo="sizespectrum/mizerCourse_Nov22" data-repo-id="R_kgDOISYpnA" data-category="Comments" data-category-id="DIC_kwDOISYpnM4CSJOj" data-mapping="title" data-reactions-enabled="0" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" data-loading="lazy" async="">
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">

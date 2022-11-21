@@ -1,22 +1,86 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
-
+<meta name="generator" content="quarto-1.1.189">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
-<title>mizer course - Refine your model: landings data</title>
+<title>mizer course - Refine model: Landings</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
-
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
@@ -25,8 +89,8 @@ ul.task-list{list-style: none;}
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../build/refine-diet.html" rel="next">
-<link href="../build/create-first-model.html" rel="prev">
+<link href="../use/index.html" rel="next">
+<link href="../build/refine-diet.html" rel="prev">
 <link href="../images/favicon-16x16.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -36,8 +100,7 @@ ul.task-list{list-style: none;}
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -55,35 +118,29 @@ ul.task-list{list-style: none;}
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script>
-
-
-<link rel="stylesheet" href="../styles.css">
-<meta property="og:title" content="mizer course - Refine your model: landings data">
+}</script><link href="../site_libs/vembedr-0.1.5/css/vembedr.css" rel="stylesheet">
+<link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script><link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="mizer course - Refine model: Landings">
+<meta property="og:description" content="We will now continue to refine our model by matching it to observed landings.">
 <meta property="og:site-name" content="mizer course">
-<meta name="twitter:title" content="mizer course - Refine your model: landings data">
+<meta name="twitter:title" content="mizer course - Refine model: Landings">
+<meta name="twitter:description" content="We will now continue to refine our model by matching it to observed landings.">
 <meta name="twitter:creator" content="gustavdelius">
 <meta name="twitter:card" content="summary">
 </head>
-
 <body class="nav-sidebar docked">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Refine your model: landings data</h1>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Refine model: Landings</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../">mizer course</a> 
     </div>
@@ -95,15 +152,15 @@ ul.task-list{list-style: none;}
       </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item sidebar-item-section">
+<li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../prepare/index.html" class="sidebar-item-text sidebar-link">Prepare</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../prepare/introduce-yourself.html" class="sidebar-item-text sidebar-link">Introduce yourself</a>
   </div>
@@ -119,7 +176,7 @@ ul.task-list{list-style: none;}
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../understand/index.html" class="sidebar-item-text sidebar-link">Week 1: Understand</a>
@@ -127,8 +184,8 @@ ul.task-list{list-style: none;}
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../understand/observed-size-spectra.html" class="sidebar-item-text sidebar-link">Observed size spectra</a>
   </div>
@@ -154,7 +211,7 @@ ul.task-list{list-style: none;}
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../build/index.html" class="sidebar-item-text sidebar-link">Week 2: Build</a>
@@ -162,8 +219,8 @@ ul.task-list{list-style: none;}
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../build/find-species-parameters.html" class="sidebar-item-text sidebar-link">Find species parameters</a>
   </div>
@@ -175,43 +232,65 @@ ul.task-list{list-style: none;}
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../build/refine-landings.html" class="sidebar-item-text sidebar-link active">Use landings data</a>
+  <a href="../build/refine-diet.html" class="sidebar-item-text sidebar-link">Tune to diet data</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../build/refine-diet.html" class="sidebar-item-text sidebar-link">Use diet data</a>
+  <a href="../build/refine-landings.html" class="sidebar-item-text sidebar-link active">Tune to landings data</a>
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Week 3: Use</span>
-  </li>
+      <div class="sidebar-item-container"> 
+            <a href="../use/index.html" class="sidebar-item-text sidebar-link">Week 3: Use</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../use/tune-resilience.html" class="sidebar-item-text sidebar-link">Tune resilience</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../use/fishing-scenarios.html" class="sidebar-item-text sidebar-link">Explore fishing scenarios</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../use/change-resources.html" class="sidebar-item-text sidebar-link">Change resources</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../use/further-scenarios.html" class="sidebar-item-text sidebar-link">Explore further scenarios</a>
+  </div>
+</li>
+      </ul>
+</li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../troubleshooting.html" class="sidebar-item-text sidebar-link">Troubleshooting</a>
   </div>
 </li>
     </ul>
-    </div>
-</nav>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">On this page</h2>
+</div>
+</nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#in-preparation" id="toc-in-preparation" class="nav-link active" data-scroll-target="#in-preparation">In preparation</a></li>
-  </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sizespectrum/mizerCourse_Nov22/edit/main/build/refine-landings.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/sizespectrum/mizerCourse_Nov22/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<li><a href="#landings-data" id="toc-landings-data" class="nav-link active" data-scroll-target="#landings-data">Landings data</a></li>
+  <li><a href="#exploring-catch-size-distributions" id="toc-exploring-catch-size-distributions" class="nav-link" data-scroll-target="#exploring-catch-size-distributions">Exploring catch size distributions</a></li>
+  <li><a href="#exercise-use-tuneparams-gadget-to-refine-your-model" id="toc-exercise-use-tuneparams-gadget-to-refine-your-model" class="nav-link" data-scroll-target="#exercise-use-tuneparams-gadget-to-refine-your-model">Exercise: Use tuneParams gadget to refine your model</a></li>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sizespectrum/mizerCourse_Nov22/edit/main/build/refine-landings.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/sizespectrum/mizerCourse_Nov22/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title d-none d-lg-block">Refine your model: landings data</h1>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title d-none d-lg-block">Refine model: Landings</h1>
 </div>
 
 
@@ -223,16 +302,107 @@ ul.task-list{list-style: none;}
   </div>
   
 
-</header>
+</header><p>We will now continue to refine our model by matching it to observed landings.</p>
+<p>As always, we start by updating and loading packages.</p>
+<div class="cell" data-hash="refine-landings_cache/html/unnamed-chunk-1_558caecff83cbf2ff51ee3ead811a955">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="fu">unload</span><span class="op">(</span><span class="st">"mizerExperimental"</span><span class="op">)</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"sizespectrum/mizerExperimental"</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sizespectrum/mizerExperimental">mizerExperimental</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We load the model we created in the <a href="../build/refine-diet.html">previous tutorial</a>.</p>
+<div class="cell" data-hash="refine-landings_cache/html/unnamed-chunk-2_2dfaaac888c903eae449f36a3776205b">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cel_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sizespectrum.org/mizer/reference/saveParams.html">readParams</a></span><span class="op">(</span><span class="st">"cel_model_diet.rds"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="landings-data" class="level2"><h2 class="anchored" data-anchor-id="landings-data">Landings data</h2>
+<p>We will load data on the size distribution of catches. Such data is often collected in data-poor fisheries, so it will be useful to see how we can use such data for model calibration. This specific dataset was sourced from Scientific, Technical and Economic Committee for Fisheries <a href="https://stecf.jrc.ec.europa.eu/dd/fdi">(STECF)</a> and was restricted to England and Wales.</p>
+<div class="cell" data-hash="refine-landings_cache/html/unnamed-chunk-3_62edb18e6516cb24052fc6fcf019838c">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">catch_lengths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"catch.csv"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">catch_lengths</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-<section id="in-preparation" class="level1">
-<h1>In preparation</h1>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["species"],"name":[1],"type":["chr"],"align":["left"]},{"label":["length"],"name":[2],"type":["int"],"align":["right"]},{"label":["catch"],"name":[3],"type":["int"],"align":["right"]},{"label":["dl"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"Blue whiting","2":"2","3":"2","4":"1","_rn_":"1"},{"1":"Blue whiting","2":"3","3":"2","4":"1","_rn_":"2"},{"1":"Blue whiting","2":"4","3":"2","4":"1","_rn_":"3"},{"1":"Blue whiting","2":"5","3":"2","4":"1","_rn_":"4"},{"1":"Blue whiting","2":"6","3":"2","4":"1","_rn_":"5"},{"1":"Blue whiting","2":"7","3":"2","4":"1","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>For each species we have numbers of individuals observed in 1cm wide length bins (the <code>dl</code> column indicates the width of each bin).</p>
+<p>In addition to this information about the size distribution of the catches we have the total biomass of the annual commercial landings for each species, i.e., the fisheries yield. Like the spawning stock biomass estimates we used in the tutorial on <a href="../build/find-species-parameters.html">finding species parameters</a>, we obtained the values for the yield in tonnes per square kilometre (or, equivalently, grams per square metre) from the 2021 <a href="https://stecf.jrc.ec.europa.eu/dd/fdi">ICES stock assessment database</a> by dividing the total yield of the assessed stock by the area of the assessment region in square kilometres and taking the geometric mean over the time period from 2012 to 2021. Here we just load them in from a file we prepared and store them in a <code>yield_observed</code> column in the species parameter dataframe of our model:</p>
+<div class="cell" data-hash="refine-landings_cache/html/unnamed-chunk-4_030a90d3f7e76cb5f23be31abe6f4182">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/species_params.html">species_params</a></span><span class="op">(</span><span class="va">cel_model</span><span class="op">)</span><span class="op">$</span><span class="va">yield_observed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"celtic_yields.rds"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can now use <code><a href="https://rdrr.io/pkg/mizerExperimental/man/plotYieldVsSpecies.html">plotYieldVsSpecies()</a></code> to make a plot that for each species compares the observed yield to the yield currently achieved in the steady state of our model.</p>
+<div class="cell" data-hash="refine-landings_cache/html/unnamed-chunk-5_61a73a3ebadb72e182dcb58e5ebbfaf3">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mizerExperimental/man/plotYieldVsSpecies.html">plotYieldVsSpecies</a></span><span class="op">(</span><span class="va">cel_model</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="refine-landings_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We’ll have to do something about those yield values in the model. But first let’s have a look at the size distribution of the catches.</p>
+</section><section id="exploring-catch-size-distributions" class="level2"><h2 class="anchored" data-anchor-id="exploring-catch-size-distributions">Exploring catch size distributions</h2>
+<p>The <code><a href="https://rdrr.io/pkg/mizerExperimental/man/plotYieldVsSize.html">plotYieldVsSize()</a></code> function lets us see how well our modelled and the observed catch size distributions agree. Let’s take a look at the case of cod:</p>
+<div class="cell" data-hash="refine-landings_cache/html/unnamed-chunk-6_c7e5bd915d4aa255bbef2cff57c52577">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mizerExperimental/man/plotYieldVsSize.html">plotYieldVsSize</a></span><span class="op">(</span><span class="va">cel_model</span>, species <span class="op">=</span> <span class="st">"Cod"</span>, catch <span class="op">=</span> <span class="va">catch_lengths</span>, </span>
+<span>                x_var <span class="op">=</span> <span class="st">"Length"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="refine-landings_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We see that the red curve (model) and the blue curve (observations) match surprisingly well. This means that the selectivity parameters for cod are already chosen quite well in our model. However the match could be made even better by steepening the selectivity curve.</p>
+<p>Let us look at the current gear parameter data frame:</p>
+<div class="cell" data-hash="refine-landings_cache/html/unnamed-chunk-7_c5b05c493018ec0477ff4edb0545f909">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Let's look at our gear params first </span></span>
+<span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/gear_params.html">gear_params</a></span><span class="op">(</span><span class="va">cel_model</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["species"],"name":[1],"type":["chr"],"align":["left"]},{"label":["gear"],"name":[2],"type":["chr"],"align":["left"]},{"label":["sel_func"],"name":[3],"type":["chr"],"align":["left"]},{"label":["l50"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["l25"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["catchability"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"Herring","2":"Commercial","3":"sigmoid_length","4":"23.1","5":"19.6","6":"0.536","_rn_":"Herring, Commercial"},{"1":"Sprat","2":"Commercial","3":"sigmoid_length","4":"9.4","5":"8.0","6":"0.514","_rn_":"Sprat, Commercial"},{"1":"Cod","2":"Commercial","3":"sigmoid_length","4":"47.9","5":"40.7","6":"0.466","_rn_":"Cod, Commercial"},{"1":"Haddock","2":"Commercial","3":"sigmoid_length","4":"27.8","5":"23.6","6":"0.148","_rn_":"Haddock, Commercial"},{"1":"Whiting","2":"Commercial","3":"sigmoid_length","4":"20.1","5":"17.1","6":"0.484","_rn_":"Whiting, Commercial"},{"1":"Blue whiting","2":"Commercial","3":"sigmoid_length","4":"14.8","5":"12.6","6":"0.053","_rn_":"Blue whiting, Commercial"},{"1":"Norway Pout","2":"Commercial","3":"sigmoid_length","4":"13.2","5":"11.2","6":"0.080","_rn_":"Norway Pout, Commercial"},{"1":"Poor Cod","2":"Commercial","3":"sigmoid_length","4":"14.0","5":"11.9","6":"0.011","_rn_":"Poor Cod, Commercial"},{"1":"European Hake","2":"Commercial","3":"sigmoid_length","4":"34.5","5":"29.4","6":"0.787","_rn_":"European Hake, Commercial"},{"1":"Monkfish","2":"Commercial","3":"sigmoid_length","4":"32.1","5":"27.3","6":"0.319","_rn_":"Monkfish, Commercial"},{"1":"Horse Mackerel","2":"Commercial","3":"sigmoid_length","4":"15.4","5":"13.1","6":"0.296","_rn_":"Horse Mackerel, Commercial"},{"1":"Mackerel","2":"Commercial","3":"sigmoid_length","4":"26.8","5":"22.8","6":"0.564","_rn_":"Mackerel, Commercial"},{"1":"Common Dab","2":"Commercial","3":"sigmoid_length","4":"9.1","5":"7.8","6":"0.682","_rn_":"Common Dab, Commercial"},{"1":"Plaice","2":"Commercial","3":"sigmoid_length","4":"22.3","5":"18.9","6":"0.611","_rn_":"Plaice, Commercial"},{"1":"Megrim","2":"Commercial","3":"sigmoid_length","4":"25.9","5":"22.0","6":"0.688","_rn_":"Megrim, Commercial"},{"1":"Sole","2":"Commercial","3":"sigmoid_length","4":"18.1","5":"15.4","6":"0.189","_rn_":"Sole, Commercial"},{"1":"Boarfish","2":"Commercial","3":"sigmoid_length","4":"8.3","5":"7.0","6":"0.128","_rn_":"Boarfish, Commercial"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>We notice that the row names are made up of the species name and the gear name, separated by a comma. So we can change the selectivity parameters specifically for cod with</p>
+<div class="cell" data-hash="refine-landings_cache/html/unnamed-chunk-8_23063545042b740bbfd50ab20870a6d7">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Modify the l50 and l25 for cod</span></span>
+<span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/gear_params.html">gear_params</a></span><span class="op">(</span><span class="va">cel_model</span><span class="op">)</span><span class="op">[</span><span class="st">"Cod, Commercial"</span>, <span class="st">"l50"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">44</span></span>
+<span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/gear_params.html">gear_params</a></span><span class="op">(</span><span class="va">cel_model</span><span class="op">)</span><span class="op">[</span><span class="st">"Cod, Commercial"</span>, <span class="st">"l25"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">39.5</span></span>
+<span></span>
+<span><span class="co">#check the match between model and observed catch size distributions</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/mizerExperimental/man/plotYieldVsSize.html">plotYieldVsSize</a></span><span class="op">(</span><span class="va">cel_model</span>, species <span class="op">=</span> <span class="st">"Cod"</span>, catch <span class="op">=</span> <span class="va">catch_lengths</span>, </span>
+<span>                x_var <span class="op">=</span> <span class="st">"Length"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="refine-landings_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This looks better. We should have no scruples adjusting the gear selectivity parameters using our mizer model because they are hard to estimate outside a model.</p>
+<p>Now that we have changed fishing selectivity we need to find a new steady state. It is important to run <code>steady()</code> frequently, while making small changes to the model parameters. If we accumulate too many changes, finding a new steady state might be harder.</p>
+<div class="cell" data-hash="refine-landings_cache/html/unnamed-chunk-9_440c4cba035353e59429d16d5fbc742e">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cel_model</span> <span class="op">&lt;-</span> <span class="fu">steady</span><span class="op">(</span><span class="va">cel_model</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You probably wondered how I knew what the right values for the <code>l50</code> and <code>l25</code> parameter were for cod. The answer is that I used trial and error with the help of the <code><a href="https://rdrr.io/pkg/mizerExperimental/man/tuneParams.html">tuneParams()</a></code>. We’ll do some more of that in the following video. We pass the catch length data into the <code><a href="https://rdrr.io/pkg/mizerExperimental/man/tuneParams.html">tuneParams()</a></code> function via the <code>catch</code> argument:</p>
+<div class="cell" data-hash="refine-landings_cache/html/unnamed-chunk-10_44a03256cb835bd976e994693d831aa1">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cel_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mizerExperimental/man/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">cel_model</span>, catch <span class="op">=</span> <span class="va">catch_lengths</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note how we assign the return value from the <code><a href="https://rdrr.io/pkg/mizerExperimental/man/tuneParams.html">tuneParams()</a></code> function back to the <code>cel_model</code> variable. That way we capture the changes that we make in the gadget.</p>
+<p>The following is an old video. The new one is in preparation.</p>
+<div class="cell" data-hash="refine-landings_cache/html/unnamed-chunk-11_1bbc5e4d7b0eeb9f2bbef9c14f63a7da">
+<div class="cell-output-display">
+<div class="vembedr" align="center">
+<div class="vembedr-rounded" style="border-radius: 10px;">
+<iframe src="https://www.youtube.com/embed/SdiM0Iru8GQ" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+</div>
+</div>
+<p>The <code><a href="https://rdrr.io/pkg/mizerExperimental/man/tuneParams.html">tuneParams()</a></code> gadget has a lot of useful panels and allows you to play with the parameters interactively. But most of these plots are also available as separate plot functions in mizer or in mizerExperimental.</p>
+</section><section id="exercise-use-tuneparams-gadget-to-refine-your-model" class="level2"><h2 class="anchored" data-anchor-id="exercise-use-tuneparams-gadget-to-refine-your-model">Exercise: Use tuneParams gadget to refine your model</h2>
+<p>In our video we only started refining the model by adjusting some parameters for a few species. We ask you to do something similar but for more species in order to refine the model you have built in the previous tutorial. But don’t spend too much time on this until we have improved the fit of the model to diet data.</p>
 
 
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -301,7 +471,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
@@ -342,18 +513,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
 });
-</script>
-<script src="https://giscus.app/client.js" data-repo="sizespectrum/mizerCourse_Nov22" data-repo-id="R_kgDOISYpnA" data-category="Comments" data-category-id="DIC_kwDOISYpnM4CSJOj" data-mapping="title" data-reactions-enabled="0" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
-</script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-      <a href="../build/create-first-model.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Create your first model</span>
+</script><script src="https://giscus.app/client.js" data-repo="sizespectrum/mizerCourse_Nov22" data-repo-id="R_kgDOISYpnA" data-category="Comments" data-category-id="DIC_kwDOISYpnM4CSJOj" data-mapping="title" data-reactions-enabled="0" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" data-loading="lazy" async="">
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="../build/refine-diet.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Tune to diet data</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../build/refine-diet.html" class="pagination-link">
-        <span class="nav-page-text">Use diet data</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../use/index.html" class="pagination-link">
+        <span class="nav-page-text">Week 3: Use</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
