@@ -96,7 +96,7 @@ Note how we assign the return value from the `tuneParams()` function back to the
 The following is an old video. The new one is in preparation.
 ```{r}
 #| echo: false
-vembedr::embed_url("https://youtu.be/SdiM0Iru8GQ") |>
+vembedr::embed_url("https://youtu.be/hg4M6-G0-L4") |>
     vembedr::use_align("center") |>
     vembedr::use_rounded(10)
 ```
