@@ -120,7 +120,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script><script src="../site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="../site_libs/plotly-binding-4.10.1/plotly.js"></script><script src="../site_libs/typedarray-0.1/typedarray.min.js"></script><script src="../site_libs/jquery-3.5.1/jquery.min.js"></script><link href="../site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
 <script src="../site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><link href="../site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
-<script src="../site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script><link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script><link href="../site_libs/vembedr-0.1.5/css/vembedr.css" rel="stylesheet">
+<link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script><link rel="stylesheet" href="../styles.css">
 <meta property="og:title" content="mizer course - Refine your model: Diet">
 <meta property="og:description" content="In this tutorial we will start to refine the mizer model that we created in the previous tutorial.">
@@ -386,12 +387,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cel_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mizerExperimental/man/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">cel_model</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This will open the gadget in your web browser with our current model <code>cel_model</code> loaded. The following video shows what we do on that web page. After making the changes we want to make, we click the “Return” button in the gadget and the <code><a href="https://rdrr.io/pkg/mizerExperimental/man/tuneParams.html">tuneParams()</a></code> function returns the model in that updated state. The above code then assigns that updated model to the variable <code>cel_model</code>.</p>
-<p>Video still uploading</p>
+<div class="cell" data-hash="refine-diet_cache/html/unnamed-chunk-12_b668edb42222f1154ab70edfb1134901">
+<div class="cell-output-display">
+<div class="vembedr" align="center">
+<div class="vembedr-rounded" style="border-radius: 10px;">
+<iframe src="https://www.youtube.com/embed/BJK26AvshQ4" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+</div>
+</div>
 <p>Next we will use the gadget to refine our model using diet data.</p>
 </section></section><section id="diet-data" class="level2"><h2 class="anchored" data-anchor-id="diet-data">Diet data</h2>
 </section><section id="in-preparation" class="level2"><h2 class="anchored" data-anchor-id="in-preparation">In preparation</h2>
 <p>We’ll skip this for now and just save the model in its present state</p>
-<div class="cell" data-hash="refine-diet_cache/html/unnamed-chunk-12_61b8c8a8fab503d57ff41f334664913c">
+<div class="cell" data-hash="refine-diet_cache/html/unnamed-chunk-13_06c1e244ac4f56d1b6dc372f4b9a206f">
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/saveParams.html">saveParams</a></span><span class="op">(</span><span class="va">cel_model</span>, <span class="st">"cel_model_diet.rds"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
