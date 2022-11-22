@@ -95,7 +95,12 @@ cel_model <- tuneParams(cel_model)
 
 This will open the gadget in your web browser with our current model `cel_model` loaded. The following video shows what we do on that web page. After making the changes we want to make, we click the "Return" button in the gadget and the `tuneParams()` function returns the model in that updated state. The above code then assigns that updated model to the variable `cel_model`.
 
-Video still uploading
+```{r}
+#| echo: false
+vembedr::embed_url("https://youtu.be/BJK26AvshQ4") |>
+   vembedr::use_align("center") |>
+   vembedr::use_rounded(10)
+```
 
 Next we will use the gadget to refine our model using diet data.
 
