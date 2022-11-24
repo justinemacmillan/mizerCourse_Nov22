@@ -82,7 +82,7 @@ Let's look at the reproduction levels and the yield curve for toothfish:
 ```{r,message=FALSE}
 getReproductionLevel(params)
 
-plotYieldCurve(params, species = "D.ele", no_steps = 30, F_max = 2)
+plotYieldVsF(params, species = "D.ele", no_steps = 30, F_max = 2)
 
 ```
 
