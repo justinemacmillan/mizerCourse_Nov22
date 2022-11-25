@@ -15,10 +15,12 @@ library(dplyr)
 load("species_rankdf.Rdata")
 ```
 
+
 ## FishBase in R
 An R package `rfishbase` is available for importing data from FishBase. The original rfishbase package is described in Boettiger et al. (2012).
 
 All fishbase tables can be accessed by name using the `fb_tbl()` function. But first it is important to create a list of either the `Genus` or `species` one is interested in.
+
 
 ```{r}
 ## Specify the genus/ species you are interested in
@@ -30,13 +32,17 @@ fish <- species_list(Species = c('Clupea harengus','Sprattus sprattus','Gadus mo
 
 ```
 
+
 ## How many species we looking at? 
 To know how many species one is looking at, especially if you had specify the genus, you can run this code.
+
 ```{r}
 length(fish) 
 ```
 
+
 One can also check the names of the traits that are available on FishBase
+
 
 ```{r}
 #Traits 
@@ -45,7 +51,9 @@ traits <-  species(fish)
 colnames(traits) 
 ```
 
+
 There are 101 traits. But there are none on Von Bertalanffy. For life history parameters we need a function called `popgrowth()`
+
 
 ```{r}
 ## Life history
@@ -53,7 +61,9 @@ pop <- popgrowth(fish)
 colnames(pop) 
 ```
 
+
 Running this results to 80 parameters with parameter 19 being on Von Bertalanffy `K`. Of course we can select the parameters we are interested in using `dplyr` operators.
+
 
 ```{r}
 #select traits you are interested
@@ -66,12 +76,16 @@ head(pop_short) #oof. lots of NAs.
 
 ```
 
+
 How many have SD or SE on Loo?
+
 ```{r}
 nrow(filter(pop_short, !is.na(SE_Loo)|!is.na(SD_Loo)))
 ```
 
+
 Richard has provided Rdata file `species_rankdf.Rdata` with the top 60 species in the survey data (ranked by number of individuals caught).  The following codes extract von Bertalanffy growth parameters (Linf, k) from Fishbase. The data will be used  to extend the results on production rate. 
+
 ```{r}
 species_sw = c('Micromesistius poutassou',
 'Melanogrammus aeglefinus',

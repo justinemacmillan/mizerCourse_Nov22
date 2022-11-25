@@ -67,7 +67,7 @@ comment(sp$species)
 While common names are convenient for presentation, they are ambiguous. We can use `rfishbase::common_to_sci()` to look up all the latin names of all the species that might correspond to a common name. For example
 
 ```{r}
-herring_latin <- common_to_sci("Herring")
+herring_latin <- rfishbase::common_to_sci("Herring")
 herring_latin
 ```
 
