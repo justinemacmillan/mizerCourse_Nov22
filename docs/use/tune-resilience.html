@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.1.189">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
 <title>mizer course - Tune resilience</title>
 <style>
 code{white-space: pre-wrap;}
@@ -20,8 +17,70 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
-
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
@@ -41,8 +100,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -60,9 +118,21 @@ ul.task-list li input[type="checkbox"] {
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script>
-
-
+}</script><link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script><script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script><script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 <link rel="stylesheet" href="../styles.css">
 <meta property="og:title" content="mizer course - Tune resilience">
 <meta property="og:description" content="In the previous week we tuned our model parameters so that the steady state of the model agrees with observed growth rates, average observed biomasses and with observed catches.">
@@ -72,25 +142,18 @@ ul.task-list li input[type="checkbox"] {
 <meta name="twitter:creator" content="gustavdelius">
 <meta name="twitter:card" content="summary">
 </head>
-
 <body class="nav-sidebar docked">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
       <h1 class="quarto-secondary-nav-title">Tune resilience</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../">mizer course</a> 
     </div>
@@ -102,15 +165,15 @@ ul.task-list li input[type="checkbox"] {
       </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item sidebar-item-section">
+<li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../prepare/index.html" class="sidebar-item-text sidebar-link">Prepare</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../prepare/introduce-yourself.html" class="sidebar-item-text sidebar-link">Introduce yourself</a>
   </div>
@@ -126,7 +189,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../understand/index.html" class="sidebar-item-text sidebar-link">Week 1: Understand</a>
@@ -134,8 +197,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../understand/observed-size-spectra.html" class="sidebar-item-text sidebar-link">Observed size spectra</a>
   </div>
@@ -161,7 +224,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../build/index.html" class="sidebar-item-text sidebar-link">Week 2: Build</a>
@@ -169,8 +232,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../build/find-species-parameters.html" class="sidebar-item-text sidebar-link">Find species parameters</a>
   </div>
@@ -191,7 +254,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../use/index.html" class="sidebar-item-text sidebar-link">Week 3: Use</a>
@@ -199,8 +262,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../use/tune-resilience.html" class="sidebar-item-text sidebar-link active">Tune resilience</a>
   </div>
@@ -221,31 +284,34 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../troubleshooting.html" class="sidebar-item-text sidebar-link">Troubleshooting</a>
   </div>
 </li>
     </ul>
-    </div>
-</nav>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+</div>
+</nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#in-preparation" id="toc-in-preparation" class="nav-link" data-scroll-target="#in-preparation">In preparation</a></li>
+<li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#reproduction-dynamics" id="toc-reproduction-dynamics" class="nav-link" data-scroll-target="#reproduction-dynamics">Reproduction dynamics</a></li>
+  <li><a href="#how-resilient-should-species-be" id="toc-how-resilient-should-species-be" class="nav-link" data-scroll-target="#how-resilient-should-species-be">How resilient should species be?</a></li>
+  <li><a href="#constant-reproductive-efficiency" id="toc-constant-reproductive-efficiency" class="nav-link" data-scroll-target="#constant-reproductive-efficiency">Constant reproductive efficiency</a></li>
+  <li>
+<a href="#tuning-reproduction-level" id="toc-tuning-reproduction-level" class="nav-link" data-scroll-target="#tuning-reproduction-level">Tuning reproduction level</a>
+  <ul class="collapse">
+<li><a href="#exploring-yield-curves" id="toc-exploring-yield-curves" class="nav-link" data-scroll-target="#exploring-yield-curves">Exploring yield curves</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sizespectrum/mizerCourse_Nov22/edit/main/use/tune-resilience.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/sizespectrum/mizerCourse_Nov22/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+</li>
+  <li><a href="#exercise" id="toc-exercise" class="nav-link" data-scroll-target="#exercise">Exercise:</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sizespectrum/mizerCourse_Nov22/edit/main/use/tune-resilience.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/sizespectrum/mizerCourse_Nov22/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title d-none d-lg-block">Tune resilience</h1>
 </div>
 
@@ -258,20 +324,255 @@ ul.task-list li input[type="checkbox"] {
   </div>
   
 
-</header>
-
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+</header><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>In the previous week we tuned our model parameters so that the steady state of the model agrees with observed growth rates, average observed biomasses and with observed catches. We did not yet tune how sensitively our model reacts to changes away from its steady state. In particular, we did not tune how resilient the species are to fishing. We will do that in this tutorial.</p>
-</section>
-<section id="in-preparation" class="level2">
-<h2 class="anchored" data-anchor-id="in-preparation">In preparation</h2>
+<p>As always, we start by updating and loading packages</p>
+<div class="cell" data-hash="tune-resilience_cache/html/unnamed-chunk-1_0eefb655e74b0cd7c6b06af9f2828326">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="fu">unload</span><span class="op">(</span><span class="st">"mizerExperimental"</span><span class="op">)</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"sizespectrum/mizerExperimental"</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sizespectrum/mizerExperimental">mizerExperimental</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>and load the latest version of our model:</p>
+<div class="cell" data-hash="tune-resilience_cache/html/unnamed-chunk-2_14fba570e4d39fd75f37b88630c43d43">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cel_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sizespectrum.org/mizer/reference/saveParams.html">readParams</a></span><span class="op">(</span><span class="st">"../build/cel_model_landings.rds"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="reproduction-dynamics" class="level2"><h2 class="anchored" data-anchor-id="reproduction-dynamics">Reproduction dynamics</h2>
+<p>In this tutorial we are going to look at an aspect of the model that has a big impact on the resilience of species to perturbations: the reproduction dynamics. In the tutorial on <a href="../understand/dynamics-of-spectra.html#reproduction-level">dynamics of size spectra</a> in week 1 we briefly looked at how density dependence of reproduction can influence how species react to changes in mortality, such as from fishing. It might be good if you go back to that tutorial and remind yourself.</p>
+<p>When we built our models in week 2 we were not concerned about the parameters that specify the reproduction dynamics. We were only concerned with setting the resulting reproduction rate for each species to the levels that produced the observed species biomass. But because the parameters for the reproduction dynamics will affect how resilient species are, we will choose appropriate values for them in this tutorial.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Stock-recruitment relationships
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In usual fisheries models, the reproduction dynamics is captured in the <strong>stock-recruitment relationship</strong> which relates the number of new recruits to the spawning stock biomass. Recruits are the fish that survive up to a size where they enter the fishery, which is the size at which the fisheries model starts modelling them.</p>
+<p>Mizer is different in that it tracks individuals from the size at which they hatch (egg size) all the way to adult sizes. Therefore much of the density dependence that is usually encoded in stock-recruitment relationships is modelled explicitly in mizer through the growth and mortality that larvae and juveniles experience until they reach recruitment size. So in mizer we specify the <em>reproduction rate</em> (the rate at which individuals enter the smallest size class) instead of the <em>recruitment rate</em>.</p>
+<p>There are many density-dependent effects that mizer does not capture explicitly, like for example limits on the available spawning grounds. This additional density dependence is encoded in a non-linear relationship between the energy that a species invests into reproduction and the rate at which new individuals enter the smallest size class in the model, as we will now discuss.</p>
+</div>
+</div>
+<p>There are several quantities that were introduced in that earlier tutorial that we would like to recall now:</p>
+<ul>
+<li><p>The rate <span class="math inline">E_R</span> at which a species invests energy into reproduction. We discussed how this depends on the species parameters in a section of the tutorial on <a href="../understand/single-species-spectra.html#investment-into-reproduction">single species spectra</a> in the first week of the course. In standard fisheries models the energy invested is assumed to be proportional to the spawning stock biomass. In mizer the energy invested also depends on how much food is available for the spawning stock. But nevertheless you won’t go wrong too much if in your head you think of <span class="math inline">E_R</span> as being proportional to the spawning stock biomass.</p></li>
+<li><p>The parameter <strong><code>erepro</code></strong> that describes the efficiency with which the energy that a species invests into reproduction is converted to eggs. Multiplying <span class="math inline">E_R</span> by <code>erepro</code> and by the conversion factor from biomass to number of eggs gives the quantity that we called <span class="math inline">R_{di}</span>: the rate of egg production. We also sometimes refer to <span class="math inline">R_{di}</span> as the <em>“density-independent reproduction rate”</em>. The efficiency <code>erepro</code> can be quite small because a lot of the energy expended on reproduction goes not into the production of eggs but into associated processes, like for example migration to the spawning grounds.</p></li>
+<li><p>The rate <span class="math inline">R_{dd}</span> at which new individuals can enter the smallest size class in the model (usually this represents the hatching of eggs). This depends in a non-linear way on the rate <span class="math inline">R_{di}</span> of egg production and therefore also non-linearly on the rate at <span class="math inline">E_R</span> at which the species invests energy into reproduction. We therefore sometimes refer to this as the <em>“density-dependent reproduction rate”</em>.</p></li>
+<li><p>The parameter <strong><code>R_max</code></strong> that gives the maximum rate at which individuals can join the smallest size class, no matter how much energy the species invests.</p></li>
+</ul>
+<p>These concepts are nicely illustrated by the following figure that you saw earlier:</p>
+<div class="cell" data-hash="tune-resilience_cache/html/unnamed-chunk-3_0178ce83365241dd3607b418fd1e4a1e">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="tune-resilience_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The black dot in the diagram represents the steady-state values for <span class="math inline">E_R</span> and <span class="math inline">R_{dd}</span>. The solid curves represents how the density-dependent reproduction rate <span class="math inline">R_{dd}</span> depends on the rate <span class="math inline">E_R</span>. Both the solid blue line and the solid black line go through the black dot, which means that they result in the same steady-state reproduction. They differ by the choice of the maximum reproduction rate <code>R_max</code> (the height of the dotted line) and the reproductive efficiency <code>erepro</code> (the slope of the dashed line representing <span class="math inline">R_{di}</span>).</p>
+<p>We can see in the diagram how, as <span class="math inline">E_R</span> is changed, for example through a depletion of spawning stock biomass due to fishing, the resulting change in the reproduction rate <span class="math inline">R_{dd}</span> is more pronounced along the solid black curve than along the blue curve. This is why an increase in <span class="math inline">R_{max}</span> will make the species less resilient to fishing.</p>
+<p>Note how both <code>R_max</code> and <code>erepro</code> need to be changed at the same time in order for the resulting curve for the reproduction rate to still go through the black dot, i.e., in order not to change the reproduction rate in the steady state. As we discussed earlier, the function <code><a href="https://sizespectrum.org/mizer/reference/setBevertonHolt.html">setBevertonHolt()</a></code> automatically changes both parameters together in the correct manner. In that function we can specify the desired reproduction curve by specifying either <code>R_max</code> or <code>erepro</code> or the ratio between <span class="math inline">R_{dd}</span> at steady state and <span class="math inline">R_{max}</span>, which we refer to as the <strong>reproduction level</strong>.</p>
+<p>We like to work with the reproduction level because it is a number between 0 and 1, where 0 means that the rate of reproduction increases in proportion to <span class="math inline">E_R</span> and 1 means that the rate of reproduction is independent of <span class="math inline">E_R</span>. The higher the value of the reproduction level the less impact a change in <span class="math inline">E_R</span> will have on the species’ reproduction. Thus higher levels of the reproduction level make the species more resilient for example to fishing.</p>
+</section><section id="how-resilient-should-species-be" class="level2"><h2 class="anchored" data-anchor-id="how-resilient-should-species-be">How resilient should species be?</h2>
+<p>We will need to tune the reproduction level of each species to make sure that their response to fishing is reasonable. How do we know what is reasonable? It is not a straightforward question.</p>
+<p>https://ices-library.figshare.com/articles/report/Celtic_Seas_ecoregion_Fisheries_overview_including_mixed-fisheries_considerations/18639782</p>
+<p>For our Celtic Sea model we will use the F<sub>MSY</sub> values from the ICES fisheries advice. So we will try to set the reproduction levels so that so that the species give the maximum sustainable yield at the published F<sub>MSY</sub> values. However what would you do if such values from fisheries advice are not available?</p>
+<p>You could start by consulting general fisheries models. You can read about the principles of basic fisheries surplus production models in this excellent book by Malcolm Haddon “<a href="https://haddonm.github.io/URMQMF/surplus-production-models.html">Using R for Modelling and Quantitative Methods in Fisheries</a>”.</p>
+<p>In the simplest of these models, the population dynamics are specified in terms of a maximum population growth rate <strong><em>r</em></strong> (not to be confused with the maximum hatching rate <code>R_max</code> used in mizer) and a carrying capacity, which represents the unfished biomass level. Under these simplest standard assumptions about density dependence, maximum sustainable yield (MSY) is obtained when the stock is at 50% of the unfished biomass level. MSY is approximately <span class="math inline">r/4 \cdot</span> unfished biomass and the fishing mortality which gives this MSY is <span class="math inline">r/2</span>. This fishing mortality is referred to as <span class="math inline">F_{MSY}</span>. This means that if for example <span class="math inline">r = 0.5</span> then the peak of the yield curve should be at about <span class="math inline">F_{MSY} = 0.25</span>. If unfished biomass is <span class="math inline">1000</span> tons, <span class="math inline">MSY</span> will be at <span class="math inline">125</span> tons.</p>
+<p>We usually do not know population growth rates <span class="math inline">r</span> for our species, but we can look up estimates in the FishBase life-history tool section. Or we can use <a href="https://studylib.net/doc/5888624/doc---fishbase">generic estimates</a> which suggest <span class="math inline">r</span> of 0.6-1.5 for high resilience species (Von Bertalanffy growth rate K&gt;0.3, maturation age &lt; 1, high fecundity) and r of 0.2-1 for medium resilience species. We reproduce the table from this reference here:</p>
+<p><img src="../images/PopGrowthRates.png" class="img-fluid"></p>
+<p>These values are derived from single species models with very different assumptions to those of ours, so they can only be used as very general guides.</p>
+<p>If you do not have other information, you could tune your model so that the species give the maximum sustainable yield at the fishing mortalities that are in the range suggested by the table above, i.e.&nbsp;so that <span class="math inline">F_{MSY} = r/2</span> with <span class="math inline">r</span> in the range given in the last row of that table. We are not saying that this is the only or best method.</p>
+<p>Alternatively, you can use <a href="https://books.google.dk/books?hl=en&amp;lr=lang_en&amp;id=M-6YDwAAQBAJ&amp;oi=fnd&amp;pg=PP1&amp;ots=XbQp07hJ2w&amp;sig=59ugnqv17dH-KsbV2LVRB8rB9CM&amp;redir_esc=y#v=onepage&amp;q&amp;f=false">Ken Andersen’s book</a> and expectations for species with different asymptotic sizes, as estimated from trait-based models (where all species parameters are determined in terms of the asymptotic size) and when all species are fished with 50% selectivity at 5% of their asymptotic size. The panels below represents species with different asymptotic sizes: 333 g (top), 10 g (bottom left), and 10 kg (bottom right). The lines show yield (solid black lines), yield per recruit (dashed lines), spawning stock biomass (dark gray lines), and recruitment (light gray lines), all scaled by their maximum value. We will not deal with yield per recruit, so ignore the dashed lines. This figure shows that highest yields are expected at fishing mortality of about 0.3-0.5/year.</p>
+<p><img src="../images/ReferencePointCurves.png" class="img-fluid"></p>
+</section><section id="constant-reproductive-efficiency" class="level2"><h2 class="anchored" data-anchor-id="constant-reproductive-efficiency">Constant reproductive efficiency</h2>
+<p>The reproduction parameters in our model are currently rather random:</p>
+<div class="cell" data-hash="tune-resilience_cache/html/unnamed-chunk-4_dc961be9e7ff3463a1b4ceea816d48fa">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/getReproductionLevel.html">getReproductionLevel</a></span><span class="op">(</span><span class="va">cel_model</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Herring          Sprat            Cod        Haddock        Whiting 
+     0.9734878      0.9966888      0.9971724      0.7569318      0.9538825 
+  Blue whiting    Norway Pout       Poor Cod  European Hake       Monkfish 
+     0.9892638      0.9798886      0.9950881      0.9990410      0.9883076 
+Horse Mackerel       Mackerel     Common Dab         Plaice         Megrim 
+     0.9944085      0.9681944      0.9952773      0.9913926      0.9983078 
+          Sole       Boarfish 
+     0.8862835      0.9999991 </code></pre>
+</div>
+</div>
+<p>We will tune them to achieve the desired value for F<sub>MSY</sub>.</p>
+<p>We need to decide what reproduction parameters we should set to start our tuning. We will follow the approach of <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/faf.12171">Jacobsen et al.&nbsp;2016</a> and initially set the reproductive efficiency <code>erepro</code> to the same value for all species.</p>
+<p>We use the <code><a href="https://sizespectrum.org/mizer/reference/setBevertonHolt.html">setBevertonHolt()</a></code> function to set the values for <code>erepro</code>. That function automatically also adjusts the values for <code>R_max</code> to keep the steady state reproduction rate <span class="math inline">R_{dd}</span> the same, as we discussed above.</p>
+<p>If we try to set the value for <code>erepro</code> very low, the <code><a href="https://sizespectrum.org/mizer/reference/setBevertonHolt.html">setBevertonHolt()</a></code> function will issue a warning:</p>
+<div class="cell" data-hash="tune-resilience_cache/html/unnamed-chunk-5_ed81afe2b375ce09d3c9e64dddf2d875">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cel_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sizespectrum.org/mizer/reference/setBevertonHolt.html">setBevertonHolt</a></span><span class="op">(</span><span class="va">cel_model</span>, erepro <span class="op">=</span> <span class="fl">0.0001</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in setBevertonHolt(cel_model, erepro = 1e-04): For the following species
+`erepro` has been increased to the smallest possible value: erepro[Herring]
+= 0.000647; erepro[Sprat] = 0.000814; erepro[Blue whiting] = 0.000265;
+erepro[Norway Pout] = 0.000704; erepro[Poor Cod] = 0.000359; erepro[Horse
+Mackerel] = 0.000303; erepro[Common Dab] = 0.000173; erepro[Megrim] = 0.000218;
+erepro[Boarfish] = 0.00076</code></pre>
+</div>
+</div>
+<p>Because we want all species to have the same value, we choose a value that is larger than those required. So we choose <code>erepro = 0.001</code>.</p>
+<div class="cell" data-hash="tune-resilience_cache/html/unnamed-chunk-6_e6ff69bf2f6d1e7ed4839eed5ae8d52f">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cel_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sizespectrum.org/mizer/reference/setBevertonHolt.html">setBevertonHolt</a></span><span class="op">(</span><span class="va">cel_model</span>, erepro <span class="op">=</span> <span class="fl">0.001</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/species_params.html">species_params</a></span><span class="op">(</span><span class="va">cel_model</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">erepro</span>, <span class="va">R_max</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["erepro"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["R_max"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.001","2":"0.3369135240","_rn_":"Herring"},{"1":"0.001","2":"0.9592472746","_rn_":"Sprat"},{"1":"0.001","2":"0.0000653820","_rn_":"Cod"},{"1":"0.001","2":"0.0003347841","_rn_":"Haddock"},{"1":"0.001","2":"0.0005564558","_rn_":"Whiting"},{"1":"0.001","2":"0.2309752956","_rn_":"Blue whiting"},{"1":"0.001","2":"0.2055672725","_rn_":"Norway Pout"},{"1":"0.001","2":"0.0017380261","_rn_":"Poor Cod"},{"1":"0.001","2":"0.0016200795","_rn_":"European Hake"},{"1":"0.001","2":"0.0001134333","_rn_":"Monkfish"},{"1":"0.001","2":"0.0898418890","_rn_":"Horse Mackerel"},{"1":"0.001","2":"0.0139503716","_rn_":"Mackerel"},{"1":"0.001","2":"0.0013293500","_rn_":"Common Dab"},{"1":"0.001","2":"0.0002653793","_rn_":"Plaice"},{"1":"0.001","2":"0.0075371245","_rn_":"Megrim"},{"1":"0.001","2":"0.0002506685","_rn_":"Sole"},{"1":"0.001","2":"0.1340020866","_rn_":"Boarfish"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Let’s see what reproduction levels this gives:</p>
+<div class="cell" data-hash="tune-resilience_cache/html/unnamed-chunk-7_6d6de3a9e2493dc291fddd98b272f94f">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/getReproductionLevel.html">getReproductionLevel</a></span><span class="op">(</span><span class="va">cel_model</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Herring          Sprat            Cod        Haddock        Whiting 
+     0.3530674      0.1860801      0.9504024      0.9904808      0.9872004 
+  Blue whiting    Norway Pout       Poor Cod  European Hake       Monkfish 
+     0.7354517      0.2958390      0.6414372      0.9444962      0.9921768 
+Horse Mackerel       Mackerel     Common Dab         Plaice         Megrim 
+     0.6966567      0.9518501      0.8274521      0.9578539      0.7824624 
+          Sole       Boarfish 
+     0.9905045      0.2395725 </code></pre>
+</div>
+</div>
+<p>It is quite typical that large slow-growing species have a higher reproduction level than smaller fast-growing species.</p>
+<p>Remember: the reproduction level is the ratio between <code>RDD</code> and <code>R_max</code> and can vary between 0 and 1. It tells us how close the actual reproduction (after applying density dependence) is to the theoretical maximum, set by <code>R_max</code>. So instead of using the <code><a href="https://sizespectrum.org/mizer/reference/getReproductionLevel.html">getReproductionLevel()</a></code> function we could also have done the calculation ourselves:</p>
+<div class="cell" data-hash="tune-resilience_cache/html/unnamed-chunk-8_2fcee5fdad6c642f9917f6bc4692e00c">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/getRDD.html">getRDD</a></span><span class="op">(</span><span class="va">cel_model</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://sizespectrum.org/mizer/reference/species_params.html">species_params</a></span><span class="op">(</span><span class="va">cel_model</span><span class="op">)</span><span class="op">$</span><span class="va">R_max</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Herring          Sprat            Cod        Haddock        Whiting 
+     0.3530674      0.1860801      0.9504024      0.9904808      0.9872004 
+  Blue whiting    Norway Pout       Poor Cod  European Hake       Monkfish 
+     0.7354517      0.2958390      0.6414372      0.9444962      0.9921768 
+Horse Mackerel       Mackerel     Common Dab         Plaice         Megrim 
+     0.6966567      0.9518501      0.8274521      0.9578539      0.7824624 
+          Sole       Boarfish 
+     0.9905045      0.2395725 </code></pre>
+</div>
+</div>
+<p>We can also look how close the density dependent reproduction rate RDD is to the density independent reproduction rate RDI:</p>
+<div class="cell" data-hash="tune-resilience_cache/html/unnamed-chunk-9_8b8bcedee024ee641d1d0219fe406476">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/getRDI.html">getRDI</a></span><span class="op">(</span><span class="va">cel_model</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://sizespectrum.org/mizer/reference/getRDD.html">getRDD</a></span><span class="op">(</span><span class="va">cel_model</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Herring          Sprat            Cod        Haddock        Whiting 
+      1.545756       1.228622      20.162286     105.050457      78.127562 
+  Blue whiting    Norway Pout       Poor Cod  European Hake       Monkfish 
+      3.780028       1.420130       2.788912      18.016799     127.825441 
+Horse Mackerel       Mackerel     Common Dab         Plaice         Megrim 
+      3.296595      20.768462       5.795492      23.726971       4.596906 
+          Sole       Boarfish 
+    105.313110       1.315050 </code></pre>
+</div>
+</div>
+<p>This tells us that many species can produce large amounts of eggs, but the actual reproduction is strongly capped by the <code>R_max</code> parameter.</p>
+</section><section id="tuning-reproduction-level" class="level2"><h2 class="anchored" data-anchor-id="tuning-reproduction-level">Tuning reproduction level</h2>
+<p>We now want to adjust the reproduction levels so that the resilience of the species in our model matches expectations.</p>
+<section id="exploring-yield-curves" class="level3"><h3 class="anchored" data-anchor-id="exploring-yield-curves">Exploring yield curves</h3>
+<p>To measure the resilience of our species to fishing, we will change the fishing mortality for one species at a time and check how their yields change in response. We keep the fishing mortality for the other species fixed. For our selected species we run through a range of fishing mortalities. For each fishing mortality we run the projection until the system has settled down to a new steady state. Then we calculates the yield in that steady state. After doing that for all fishing mortalities we can plot all the results in a graph showing yield on the y axis versus fishing mortality F on the x axis. The <code><a href="https://rdrr.io/pkg/mizerExperimental/man/plotYieldVsF.html">plotYieldVsF()</a></code> function does all that for us. Here we plot the yield curve for haddock:</p>
+<div class="cell" data-hash="tune-resilience_cache/html/unnamed-chunk-10_7afa1817aabd23eb6add3b62bdcdcf32">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mizerExperimental/man/plotYieldVsF.html">plotYieldVsF</a></span><span class="op">(</span><span class="va">cel_model</span>, species <span class="op">=</span> <span class="st">"Haddock"</span>, </span>
+<span>             F_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.9</span>, <span class="fl">0.02</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tune-resilience_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We refer to the yield achieved in the steady state as the <em>sustainable yield</em> (SY) because it can be sustained indefinitely. The sustainable yield for this species has a maximum (MSY) at a fishing mortality of about 0.3. We refer to this value as F<sub>MSY</sub>. This is close enough to the value of 0.35 that is given for F<sub>MSY</sub> in <a href="https://figshare.com/articles/report/Haddock_Melanogrammus_aeglefinus_in_divisions_7_b_k_southern_Celtic_Seas_and_English_Channel_/19447961">the ICES advice for our haddock stock</a>.</p>
+<p>Next we look at hake, for which <a href="https://figshare.com/articles/report/Hake_Merluccius_merluccius_in_subareas_4_6_and_7_and_in_divisions_3_a_8_a_b_and_8_d_Northern_stock_Greater_North_Sea_Celtic_Seas_and_the_northern_Bay_of_Biscay_/18635171/1">the ICES advice</a> gives a value for F<sub>MSY</sub> of only 0.26.</p>
+<div class="cell" data-hash="tune-resilience_cache/html/unnamed-chunk-11_219d414ad11a40fe360d6016b48cba6f">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mizerExperimental/man/plotYieldVsF.html">plotYieldVsF</a></span><span class="op">(</span><span class="va">cel_model</span>, species <span class="op">=</span> <span class="st">"European Hake"</span>, </span>
+<span>             F_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.02</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tune-resilience_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We read off that for hake the current value of F<sub>MSY</sub> in the model is too high. In other words, it is not sensitive enough to fishing. We have probably put on too much extra density dependence on the reproduction. Let us look at the reproduction level we have currently chosen:</p>
+<div class="cell" data-hash="tune-resilience_cache/html/unnamed-chunk-12_f3531701ec033978e51ace4806617ac5">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://sizespectrum.org/mizer/reference/getReproductionLevel.html">getReproductionLevel</a></span><span class="op">(</span><span class="va">cel_model</span><span class="op">)</span><span class="op">[</span><span class="st">"European Hake"</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>European Hake 
+    0.9444962 </code></pre>
+</div>
+</div>
+<p>Let us see what the yield curve would look like when we only include the density depencence in recruitment that is automatically included in the mizer model and do not add anything extra. So we set the reproduction level to 0.</p>
+<div class="cell" data-hash="tune-resilience_cache/html/unnamed-chunk-13_ba61f8f51a0d42d8a040b54c223d335b">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># First we save current reproduction level into a vector </span></span>
+<span><span class="va">rep_level</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sizespectrum.org/mizer/reference/getReproductionLevel.html">getReproductionLevel</a></span><span class="op">(</span><span class="va">cel_model</span><span class="op">)</span></span>
+<span><span class="co"># then we replace our species' reproduction level with a new value </span></span>
+<span><span class="va">rep_level</span><span class="op">[</span><span class="st">"European Hake"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span><span class="co"># and assign it back to the model </span></span>
+<span><span class="va">cel_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sizespectrum.org/mizer/reference/setBevertonHolt.html">setBevertonHolt</a></span><span class="op">(</span><span class="va">cel_model</span>, </span>
+<span>                             reproduction_level <span class="op">=</span> <span class="va">rep_level</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># and plot F curves again</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/mizerExperimental/man/plotYieldVsF.html">plotYieldVsF</a></span><span class="op">(</span><span class="va">cel_model</span>, species <span class="op">=</span> <span class="st">"European Hake"</span>, </span>
+<span>               F_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.02</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tune-resilience_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The F<sub>MSY</sub> is now closer to the one in the ICES advice. Next we look at whiting where <a href="https://ices-library.figshare.com/articles/report/Whiting_Merlangius_merlangus_in_divisions_7_b_c_and_7_e_k_southern_Celtic_Seas_and_western_English_Channel_/18633200">the ICES advice</a> suggests a quite high F<sub>MSY</sub> of 0.52.</p>
+<div class="cell" data-hash="tune-resilience_cache/html/unnamed-chunk-14_c865d143204152fdd115cd4b1c312f4e">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mizerExperimental/man/plotYieldVsF.html">plotYieldVsF</a></span><span class="op">(</span><span class="va">cel_model</span>, species <span class="op">=</span> <span class="st">"Whiting"</span>, </span>
+<span>             F_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">0.02</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tune-resilience_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>So in this case the model F<sub>MSY</sub> is lower than the ICES one, so whiting in the model is less resilient to fishing than ICES estimated. To make whiting more resilient in the model we can put more density dependence on the reproduction. Let’s put the reproduction level very close to 1, which means that the reproduction rate is almost totally independent of the investment into reproduction.</p>
+<div class="cell" data-hash="tune-resilience_cache/html/unnamed-chunk-15_742be34e107b3cb32ce7a195559cd6a9">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rep_level</span><span class="op">[</span><span class="st">"Whiting"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0.999</span></span>
+<span><span class="va">cel_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sizespectrum.org/mizer/reference/setBevertonHolt.html">setBevertonHolt</a></span><span class="op">(</span><span class="va">cel_model</span>, </span>
+<span>                             reproduction_level <span class="op">=</span> <span class="va">rep_level</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/mizerExperimental/man/plotYieldVsF.html">plotYieldVsF</a></span><span class="op">(</span><span class="va">cel_model</span>, species <span class="op">=</span> <span class="st">"Whiting"</span>, </span>
+<span>               F_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">0.02</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tune-resilience_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We see that even with this extreme choice the F<sub>MSY</sub> in the model is smaller than the one estimated by ICES. This shows the limitation with the approach of trying to make the predictions from the mizer model agree with the predictions by ICES which uses single-species models. At some point we will need to start trusting the multi-species model. Ideally we would tune the mizer model to actual observational data rather than to the output of single-species stock assessment models. We should use mizer as the actual stock assessment model. Unfortunately, this will require more development because currently mizer is not yet stochastic, so can not model the flucutations in the real-world data. But stay tuned …</p>
+<p>One minor point: if you are wondering why the above yield curve is not smooth but has that kink around F=0.45. That is just because the simulation did not run long enough to really capture the final steady state. The projection stops when the dynamics has settled down to within some tolerance. If we decrease the tolerance we get more precise values for the steady state yield:</p>
+<div class="cell" data-hash="tune-resilience_cache/html/unnamed-chunk-16_d8441d0b56ad8a8b9ac1dbd87747e41e">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mizerExperimental/man/plotYieldVsF.html">plotYieldVsF</a></span><span class="op">(</span><span class="va">cel_model</span>, species <span class="op">=</span> <span class="st">"Whiting"</span>, </span>
+<span>               F_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">0.02</span><span class="op">)</span>, tol <span class="op">=</span> <span class="fl">0.0001</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tune-resilience_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you run the above code yourself in your worksheet, you will notice that for some fishing mortalities, <code>plotYieldCurve()</code> gives a warning that convergence was not reached within the 99 years for which we ran the projection. This means that we stopped the simulation before the species had settled into a new stable state for that fishing level and thus the result for this specific fishing level is only approximate. But approximate values are good enough for our purpose. Usually we find that it is the more extreme values of F where we do not get convergence.</p>
+</div>
+</div>
+</section></section><section id="exercise" class="level2"><h2 class="anchored" data-anchor-id="exercise">Exercise:</h2>
+<p>We leave it to you now to look at the yield curves of other species and to compare the F<sub>MSY</sub> values with those from ICES advice. You can find links to the relevant ICES reports in Table A1 at the end of the <a href="https://ices-library.figshare.com/articles/_/18639782">Fisheries overview for the Celtic Seas ecoregion</a>. You can use worksheet 5 in your worksheet repository for that purpose.</p>
+</section><section id="summary" class="level2"><h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<ol type="1">
+<li><p>Identifying an appropriate reproduction level for our model species is very important, because the reproduction level will determine a species’ resilience to fishing.</p></li>
+<li><p>To judge whether a reproduction level is appropriate, we estimate the fishing mortality that will give maximum sustainable yield (F<sub>MSY</sub>) by looking at the maximum of the yield curve. We then compare the model F<sub>MSY</sub> to estimates of F<sub>MSY</sub> from other sources.</p></li>
+<li><p>Even by adjusting the reproduction level we can not always get the model F<sub>MSY</sub> to match the estimates for F<sub>MSY</sub> that were obtained from single-species assessment models. That is not surprising because the resilience to fishing is a true multi-species phenomenon.</p></li>
+</ol>
 
 
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -382,11 +683,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
 });
-</script>
-<script src="https://giscus.app/client.js" data-repo="sizespectrum/mizerCourse_Nov22" data-repo-id="R_kgDOISYpnA" data-category="Comments" data-category-id="DIC_kwDOISYpnM4CSJOj" data-mapping="title" data-reactions-enabled="0" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" data-loading="lazy" async="">
-</script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
+</script><script src="https://giscus.app/client.js" data-repo="sizespectrum/mizerCourse_Nov22" data-repo-id="R_kgDOISYpnA" data-category="Comments" data-category-id="DIC_kwDOISYpnM4CSJOj" data-mapping="title" data-reactions-enabled="0" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" data-loading="lazy" async="">
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="../use/index.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Week 3: Use</span>
       </a>          
